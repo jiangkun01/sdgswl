@@ -5,13 +5,16 @@ let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     key: i,
-    disabled: ((i % 6) === 0),
+    disabled: 0,
     href: 'https://ant.design',
     avatar: ['https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png', 'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png'][i % 2],
-    no: `TradeCode ${i}`,
+    no: Math.random().toString(19),
     title: `一个任务名称 ${i}`,
     owner: '曲丽丽',
-    description: '这是一段描述',
+    bName: `氧化铝业务 ${i}`,
+    IName: `氧化铝 ${i}`,
+    gSku: `纯度${i}`,
+    BType: Math.floor(Math.random() * 2),
     callNo: Math.floor(Math.random() * 1000),
     status: Math.floor(Math.random() * 10) % 4,
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
@@ -54,7 +57,12 @@ export function getRule(req, res, u) {
   if (params.no) {
     dataSource = dataSource.filter(data => data.no.indexOf(params.no) > -1);
   }
-
+  if (params.b_name) {
+    dataSource = dataSource.filter(data => data.bName.indexOf(params.b_name) > -1);
+  }
+  if (params.i_name) {
+    dataSource = dataSource.filter(data => data.IName.indexOf(params.i_name) > -1);
+  }
   let pageSize = 10;
   if (params.pageSize) {
     pageSize = params.pageSize * 1;
@@ -82,8 +90,7 @@ export function postRule(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, no, description } = body;
-
+  const { method, no, bName, IName, gSku, BType } = body;
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
@@ -95,12 +102,15 @@ export function postRule(req, res, u, b) {
         key: i,
         href: 'https://ant.design',
         avatar: ['https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png', 'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png'][i % 2],
-        no: `TradeCode ${i}`,
+        no: Math.random().toString(19),
+        bName,
+        IName,
+        gSku,
+        BType,
         title: `一个任务名称 ${i}`,
         owner: '曲丽丽',
-        description,
         callNo: Math.floor(Math.random() * 1000),
-        status: Math.floor(Math.random() * 10) % 2,
+        status: 2,
         updatedAt: new Date(),
         createdAt: new Date(),
         progress: Math.ceil(Math.random() * 100),

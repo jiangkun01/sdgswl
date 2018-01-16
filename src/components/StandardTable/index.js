@@ -1,37 +1,36 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
+import { connect } from 'dva';
 import moment from 'moment';
-import { Table, Alert, Badge, Divider } from 'antd';
+import { Table, Alert, Badge, Menu, Modal, Divider, message } from 'antd';
 import styles from './index.less';
 
+const { confirm } = Modal;
+const { SubMenu } = Menu;
 const statusMap = ['default', 'processing', 'success', 'error'];
+@connect(({ rule }) => ({
+  rule,
+}))
 class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
-    totalCallNo: 0,
+    visible: false,
+    BussGoods: {},
+    confirmLoading: false,
   };
-
   componentWillReceiveProps(nextProps) {
-    // clean state
     if (nextProps.selectedRows.length === 0) {
       this.setState({
         selectedRowKeys: [],
-        totalCallNo: 0,
       });
     }
   }
-
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-    const totalCallNo = selectedRows.reduce((sum, val) => {
-      return sum + parseFloat(val.callNo, 10);
-    }, 0);
-
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
     }
 
-    this.setState({ selectedRowKeys, totalCallNo });
+    this.setState({ selectedRowKeys });
   }
-
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
   }
@@ -39,28 +38,99 @@ class StandardTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
   }
-
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+  handleOk = () => {
+    setTimeout(() => {
+      this.setState({
+        visible: false,
+        confirmLoading: false,
+      });
+    }, 2000);
+  }
+  handleCancel = () => {
+    console.log('Clicked cancel button');
+    this.setState({
+      visible: false,
+    });
+  }
+  handleMenuClick = (record, e) => {
+    if (e.key === '1') {
+      this.showModal();
+      this.setState({
+        BussGoods: record,
+      });
+      // dispatch({
+      //   type: 'userController/isVisible',
+      //   isVisible: true,
+      //   isPassswordRequired: false,
+      //   user: record,
+      //   title: '修改',
+      // })
+    } else if (e.key === '2') {
+      message.info('暂无法修改');
+      // dispatch({
+      //   type: 'userController/isVisible',
+      //   isVisible: true,
+      //   isPassswordRequired: false,
+      //   user: record,
+      //   title: '修改',
+      // })
+    } else if (e.key === '3') {
+      const { dispatch } = this.props;
+      const clean = this.cleanSelectedKeys;
+      confirm({
+        title: '确认删除吗？',
+        onOk() {
+          dispatch({
+            type: 'rule/remove',
+            payload: {
+              no: record.no,
+            },
+            callback: clean,
+          });
+        },
+      });
+    }
+  }
   render() {
-    const { selectedRowKeys, totalCallNo } = this.state;
+    const { selectedRowKeys, visible, confirmLoading, BussGoods } = this.state;
     const { data: { list, pagination }, loading } = this.props;
 
-    const status = ['关闭', '运行中', '已上线', '异常'];
-
+    const status = ['履行中', '已完成', '新建', '终止'];
+    const bType = ['内贸', '外贸'];
     const columns = [
       {
-        title: '规则编号',
+        title: '业务编号',
         dataIndex: 'no',
       },
       {
-        title: '描述',
-        dataIndex: 'description',
+        title: '业务名称',
+        dataIndex: 'bName',
       },
       {
-        title: '服务调用次数',
-        dataIndex: 'callNo',
-        sorter: true,
-        align: 'right',
-        render: val => `${val} 万`,
+        title: '业务类型',
+        dataIndex: 'BType',
+        filters: [
+          {
+            text: bType[0],
+            value: 0,
+          },
+          {
+            text: bType[1],
+            value: 1,
+          },
+        ],
+        render(val) {
+          return <Badge status={statusMap[val]} text={bType[val]} />;
+        },
+      },
+      {
+        title: '货物名称',
+        dataIndex: 'IName',
       },
       {
         title: '状态',
@@ -88,19 +158,21 @@ class StandardTable extends PureComponent {
         },
       },
       {
-        title: '更新时间',
-        dataIndex: 'updatedAt',
+        title: '创建时间',
+        dataIndex: 'createdAt',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
-        render: () => (
-          <Fragment>
-            <a href="">配置</a>
-            <Divider type="vertical" />
-            <a href="">订阅警报</a>
-          </Fragment>
+        render: record => (
+          <Menu onClick={e => this.handleMenuClick(record, e)}>
+            <SubMenu key={record.key} title={<span>更多</span>}>
+              <Menu.Item key="1">详情</Menu.Item>
+              <Menu.Item key="2">修改</Menu.Item>
+              <Menu.Item key="3">删除</Menu.Item>
+            </SubMenu>
+          </Menu>
         ),
       },
     ];
@@ -114,9 +186,6 @@ class StandardTable extends PureComponent {
     const rowSelection = {
       selectedRowKeys,
       onChange: this.handleRowSelectChange,
-      getCheckboxProps: record => ({
-        disabled: record.disabled,
-      }),
     };
 
     return (
@@ -126,7 +195,6 @@ class StandardTable extends PureComponent {
             message={(
               <div>
                 已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                服务调用总计 <span style={{ fontWeight: 600 }}>{totalCallNo}</span> 万
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
               </div>
             )}
@@ -142,7 +210,24 @@ class StandardTable extends PureComponent {
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
+          scroll={{ x: 1366 }}
         />
+        <Modal
+          title="业务详情"
+          visible={visible}
+          onOk={this.handleOk}
+          confirmLoading={confirmLoading}
+          onCancel={this.handleCancel}
+        >
+          <Divider>业务信息</Divider>
+          <p>业务编号：{BussGoods.no}</p>
+          <p>业务名称：{BussGoods.bName}</p>
+          <p>业务创建人：张建国</p>
+          <p>业务创建时间{moment(BussGoods.createdAt).format('YYYY-MM-DD HH:mm:ss')}</p>
+          <Divider>货物信息</Divider>
+          <p>货物名称：{BussGoods.IName}</p>
+          <p>货物规格：{BussGoods.gSku}</p>
+        </Modal>
       </div>
     );
   }

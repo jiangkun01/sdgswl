@@ -100,26 +100,26 @@ export const getRouterData = (app) => {
     '/form/advanced-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
     },
-    '/list/table-list': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/TableList')),
+    '/business/list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/business/list')),
     },
-    '/list/basic-list': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/List/BasicList')),
+    '/business/basic-list': {
+      component: dynamicWrapper(app, ['list'], () => import('../routes/business/BasicList')),
     },
-    '/list/card-list': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/List/CardList')),
+    '/business/card-list': {
+      component: dynamicWrapper(app, ['list'], () => import('../routes/business/CardList')),
     },
     '/list/search': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/List/List')),
+      component: dynamicWrapper(app, ['list'], () => import('../routes/business/list')),
     },
     '/list/search/projects': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/List/Projects')),
+      component: dynamicWrapper(app, ['list'], () => import('../routes/business/Projects')),
     },
     '/list/search/applications': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/List/Applications')),
+      component: dynamicWrapper(app, ['list'], () => import('../routes/business/Applications')),
     },
     '/list/search/articles': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/List/Articles')),
+      component: dynamicWrapper(app, ['list'], () => import('../routes/business/Articles')),
     },
     '/profile/basic': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/BasicProfile')),

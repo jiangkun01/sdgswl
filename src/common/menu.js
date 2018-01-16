@@ -5,116 +5,92 @@ const menuData = [{
   children: [{
     name: '主数据展示',
     path: 'analysis',
-  }, /*{
-    name: '监控页',
-    path: 'monitor',
-  },*/ {
-    name: '工作台',
-    path: 'workplace',
-    // hideInMenu: true,
-  }],
-}, {
-  name: '表单页',
-  icon: 'form',
-  path: 'form',
-  children: [{
-    name: '基础表单',
-    path: 'basic-form',
-  }, {
-    name: '分步表单',
-    path: 'step-form',
-  }, {
-    name: '高级表单',
-    authority: 'admin',
-    path: 'advanced-form',
   }],
 }, {
   name: '业务管理',
   icon: 'table',
-  path: 'list',
+  path: 'business',
   children: [{
     name: '业务列表',
-    path: 'table-list',
-  }, {
-    name: '标准列表',
-    path: 'basic-list',
-  }, {
-    name: '卡片列表',
-    path: 'card-list',
-  }, {
-    name: '搜索列表',
-    path: 'search',
-    children: [{
-      name: '搜索列表（文章）',
-      path: 'articles',
-    }, {
-      name: '搜索列表（项目）',
-      path: 'projects',
-    }, {
-      name: '搜索列表（应用）',
-      path: 'applications',
-    }],
+    path: 'list',
   }],
 }, {
-  name: '详情页',
+  name: '合同管理',
+  icon: 'form',
+  path: 'form',
+  children: [{
+    name: '合同基本信息列表',
+    path: '1',
+  // /*  path: 'basic-form',*/
+  }, {
+    name: '合同类目列表',
+    path: '2',
+    // path: 'basic-form',
+  }, {
+    name: '合同模板列表',
+    // authority: 'admin',
+    // path: 'advanced-form',
+    path: '3',
+  }, {
+    name: '合同相关文档列表',
+    // authority: 'admin',
+    // path: 'advanced-form',
+    path: '4',
+  }],
+}, {
+  name: '履行计划管理',
   icon: 'profile',
   path: 'profile',
   children: [{
-    name: '基础详情页',
-    path: 'basic',
+    name: '履行计划模板列表',
+    path: '5',
   }, {
-    name: '高级详情页',
-    path: 'advanced',
-    authority: 'admin',
+    name: '履行计划类目列表',
+    path: '6',
+    // authority: 'admin',
+  }, {
+    name: '履行计划列表',
+    path: '7',
+    // authority: 'admin',
   }],
 }, {
-  name: '结果页',
-  icon: 'check-circle-o',
-  path: 'result',
-  children: [{
-    name: '成功',
-    path: 'success',
-  }, {
-    name: '失败',
-    path: 'fail',
-  }],
-}, {
-  name: '异常页',
+  name: '客户管理',
   icon: 'warning',
   path: 'exception',
   children: [{
-    name: '403',
-    path: '403',
-  }, {
-    name: '404',
-    path: '404',
-  }, {
-    name: '500',
-    path: '500',
-  }, {
-    name: '触发异常',
-    path: 'trigger',
+    name: '客户管理列表',
+    path: '11',
   }],
 }, {
-  name: '账户',
-  icon: 'user',
-  path: 'user',
-  authority: 'guest',
-  children: [{
-    name: '登录',
-    path: 'login',
-  }, {
-    name: '注册',
-    path: 'register',
-  }, {
-    name: '注册结果',
-    path: 'register-result',
-  }],
-}, {
-  name: '使用文档',
+  name: '台账管理',
   icon: 'book',
-  path: 'http://pro.ant.design/docs/getting-started',
-  target: '_blank',
+  path: 'standing_book ',
+  children: [{
+    name: '公共台账列表',
+    path: '10',
+  }, {
+    name: '本单位台账列表',
+    path: '11',
+  }],
+}, {
+  name: '周报管理',
+  icon: 'book',
+  path: 'message ',
+  children: [{
+    name: '公共周报列表',
+    path: '12',
+  }, {
+    name: '本单位周报列表',
+    path: '13',
+  }],
+}, {
+  name: '系统管理',
+  icon: 'book',
+  path: 'sys ',
+  children: [{
+    name: '系统参数列表',
+    path: '14',
+  }],
 }];
 
 function formatter(data, parentPath = '', parentAuthority) {

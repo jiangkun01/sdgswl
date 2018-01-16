@@ -2,16 +2,23 @@ import moment from 'moment';
 
 // mock data
 const visitData = [];
+const visitData1 = [];
 const beginDay = new Date().getTime();
 
-const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5];
+const fakeY = [700, 512, 40800, 237560, 55001, 55061, 105001, 85001, 105001, 201234, 100023, 55555];
+const fakeY1 = [7, 5, 4, 2, 4, 7, 20, 6, 5, 9, 6, 10];
 for (let i = 0; i < fakeY.length; i += 1) {
   visitData.push({
-    x: moment(new Date(beginDay + (1000 * 60 * 60 * 24 * i))).format('YYYY-MM-DD'),
+    x: `2017年${i + 1}月`,
     y: fakeY[i],
   });
 }
-
+for (let i = 0; i < fakeY1.length; i += 1) {
+  visitData1.push({
+    x: `2017年${i + 1}月`,
+    y: fakeY1[i],
+  });
+}
 const visitData2 = [];
 const fakeY2 = [1, 6, 4, 8, 3, 7, 2];
 for (let i = 0; i < fakeY2.length; i += 1) {
@@ -40,23 +47,23 @@ for (let i = 0; i < 50; i += 1) {
 }
 const salesTypeData = [
   {
-    x: '家用电器',
+    x: '氧化铝',
     y: 4544,
   },
   {
-    x: '食用酒水',
+    x: '焦炭',
     y: 3321,
   },
   {
-    x: '个护健康',
+    x: '胶粉',
     y: 3113,
   },
   {
-    x: '服饰箱包',
+    x: '乙二酸',
     y: 2341,
   },
   {
-    x: '母婴产品',
+    x: '铝锭',
     y: 1231,
   },
   {
@@ -64,26 +71,51 @@ const salesTypeData = [
     y: 1231,
   },
 ];
-
+const salesPieData1 = [
+  {
+    x: '氧化铝',
+    y: 12,
+  },
+  {
+    x: '焦炭',
+    y: 10,
+  },
+  {
+    x: '胶粉',
+    y: 8,
+  },
+  {
+    x: '乙二酸',
+    y: 9,
+  },
+  {
+    x: '铝锭',
+    y: 10,
+  },
+  {
+    x: '其他',
+    y: 10,
+  },
+];
 const salesTypeDataOnline = [
   {
-    x: '家用电器',
+    x: '氧化铝',
     y: 244,
   },
   {
-    x: '食用酒水',
+    x: '焦炭',
     y: 321,
   },
   {
-    x: '个护健康',
+    x: '胶粉',
     y: 311,
   },
   {
-    x: '服饰箱包',
+    x: '乙二酸',
     y: 41,
   },
   {
-    x: '母婴产品',
+    x: '铝锭',
     y: 121,
   },
   {
@@ -94,19 +126,19 @@ const salesTypeDataOnline = [
 
 const salesTypeDataOffline = [
   {
-    x: '家用电器',
+    x: '氧化铝',
     y: 99,
   },
   {
-    x: '个护健康',
+    x: '焦炭',
     y: 188,
   },
   {
-    x: '服饰箱包',
+    x: '胶粉',
     y: 344,
   },
   {
-    x: '母婴产品',
+    x: '乙二酸',
     y: 255,
   },
   {
@@ -181,6 +213,8 @@ radarOriginData.forEach((item) => {
 
 export const getFakeChartData = {
   visitData,
+  visitData1,
+  salesPieData1,
   visitData2,
   salesData,
   searchData,

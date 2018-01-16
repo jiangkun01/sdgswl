@@ -23,7 +23,7 @@ const proxy = {
       },
     },
     $body: {
-      name: 'admin',
+      name: '张建国',
       avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
       userid: '00000001',
       notifyCount: 12,
