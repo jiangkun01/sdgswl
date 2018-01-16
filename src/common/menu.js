@@ -17,15 +17,14 @@ const menuData = [{
 }, {
   name: '合同管理',
   icon: 'form',
-  path: 'form',
+  path: 'contract',
   children: [{
     name: '合同基本信息列表',
     path: '1',
   // /*  path: 'basic-form',*/
   }, {
     name: '合同类目列表',
-    path: '2',
-    // path: 'basic-form',
+    path: 'category',
   }, {
     name: '合同模板列表',
     // authority: 'admin',
