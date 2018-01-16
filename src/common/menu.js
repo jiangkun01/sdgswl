@@ -3,7 +3,7 @@ const menuData = [{
   icon: 'dashboard',
   path: 'dashboard',
   children: [{
-    name: '主数据展示',
+    name: '关键数据展示',
     path: 'analysis',
   }],
 }, {

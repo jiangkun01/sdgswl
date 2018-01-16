@@ -71,7 +71,7 @@ const salesTypeData = [
     y: 1231,
   },
 ];
-const salesPieData1 = [
+const salesTypeData1 = [
   {
     x: '氧化铝',
     y: 12,
@@ -123,7 +123,32 @@ const salesTypeDataOnline = [
     y: 111,
   },
 ];
-
+const salesTypeDataOnline1 = [
+  {
+    x: '氧化铝',
+    y: 5,
+  },
+  {
+    x: '焦炭',
+    y: 5,
+  },
+  {
+    x: '胶粉',
+    y: 5,
+  },
+  {
+    x: '乙二酸',
+    y: 4,
+  },
+  {
+    x: '铝锭',
+    y: 3,
+  },
+  {
+    x: '其他',
+    y: 9,
+  },
+];
 const salesTypeDataOffline = [
   {
     x: '氧化铝',
@@ -146,7 +171,28 @@ const salesTypeDataOffline = [
     y: 65,
   },
 ];
-
+const salesTypeDataOffline1 = [
+  {
+    x: '氧化铝',
+    y: 7,
+  },
+  {
+    x: '焦炭',
+    y: 5,
+  },
+  {
+    x: '胶粉',
+    y: 3,
+  },
+  {
+    x: '乙二酸',
+    y: 5,
+  },
+  {
+    x: '其他',
+    y: 18,
+  },
+];
 const offlineData = [];
 for (let i = 0; i < 10; i += 1) {
   offlineData.push({
@@ -214,7 +260,7 @@ radarOriginData.forEach((item) => {
 export const getFakeChartData = {
   visitData,
   visitData1,
-  salesPieData1,
+  salesTypeData1,
   visitData2,
   salesData,
   searchData,
@@ -223,6 +269,8 @@ export const getFakeChartData = {
   salesTypeData,
   salesTypeDataOnline,
   salesTypeDataOffline,
+  salesTypeDataOnline1,
+  salesTypeDataOffline1,
   radarData,
 };
 

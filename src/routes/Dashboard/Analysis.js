@@ -44,6 +44,7 @@ export default class Analysis extends Component {
   state = {
     salesType: 'all',
     rangePickerValue: getTimeDistance('year'),
+    salesType1: 'all',
   };
 
   componentDidMount() {
@@ -62,6 +63,11 @@ export default class Analysis extends Component {
   handleChangeSalesType = (e) => {
     this.setState({
       salesType: e.target.value,
+    });
+  };
+  handleChangeSalesType1 = (e) => {
+    this.setState({
+      salesType1: e.target.value,
     });
   };
   handleRangePickerChange = (rangePickerValue) => {
@@ -99,18 +105,23 @@ export default class Analysis extends Component {
   }
 
   render() {
-    const { rangePickerValue, salesType } = this.state;
+    const { rangePickerValue, salesType, salesType1 } = this.state;
     const { chart, loading } = this.props;
     const {
       visitData,
       visitData1,
       salesData,
       salesTypeData,
-      salesPieData1,
+      salesTypeData1,
       salesTypeDataOnline,
+      salesTypeDataOnline1,
       salesTypeDataOffline,
+      salesTypeDataOffline1,
     } = chart;
-
+    const salesPieData1 =
+      salesType1 === 'all'
+        ? salesTypeData1
+        : salesType1 === 'online' ? salesTypeDataOnline1 : salesTypeDataOffline1;
     const salesPieData =
       salesType === 'all'
         ? salesTypeData
@@ -159,12 +170,12 @@ export default class Analysis extends Component {
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
-              total="￥126560 千万"
-              footer={<Field label="月利润额：" value={`￥${numeral(12423).format('0,0')} 千万`} />}
+              total="￥126560 万"
+              footer={<Field label="月利润额：" value={`￥${numeral(12423).format('0,0')} 万`} />}
               contentHeight={46}
             >
               <Trend flag="up" style={{ marginRight: 16 }}>
-                月同比<span className={styles.trendText}>￥12 千万</span>
+                月同比<span className={styles.trendText}>￥12 万</span>
               </Trend>
             </ChartCard>
           </Col>
@@ -177,8 +188,8 @@ export default class Analysis extends Component {
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
-              total="￥1636000 千万"
-              footer={<Field label="最佳月份" value={`￥${numeral(23756).format('0,0')} 千万`} />}
+              total="￥1636000 万"
+              footer={<Field label="最佳月份" value={`￥${numeral(23756).format('0,0')} 万`} />}
               contentHeight={46}
             >
               <MiniArea color="#975FE4" data={visitData} />
@@ -187,14 +198,14 @@ export default class Analysis extends Component {
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title="2017年违约合同累计（份）"
+              title="2017年完成合同累计（份）"
               action={
-                <Tooltip title="2017年违约合同累计">
+                <Tooltip title="2017年完成合同累计">
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
               total={numeral(120).format('0,0')}
-              footer={<Field label="单月违约最大合同数" value="20" />}
+              footer={<Field label="单月完成最大合同数" value="20" />}
               contentHeight={46}
             >
               <MiniBar data={visitData1} />
@@ -209,7 +220,7 @@ export default class Analysis extends Component {
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
-              total={yuan(126)}
+              total={126}
               footer={<Field label="周履行合同：" value={`${numeral(13).format('0,0')}`} />}
               contentHeight={46}
             >
@@ -222,7 +233,7 @@ export default class Analysis extends Component {
         <Card loading={loading} bordered={false} bodyStyle={{ padding: 0 }}>
           <div className={styles.salesCard}>
             <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{ marginBottom: 24 }}>
-              <TabPane tab="2017年采购额(千万)" key="sales">
+              <TabPane tab="2017年采购额(万)" key="sales">
                 <Row>
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
@@ -245,7 +256,7 @@ export default class Analysis extends Component {
                   </Col>
                 </Row>
               </TabPane>
-              <TabPane tab="2017年销售额（千万）" key="views">
+              <TabPane tab="2017年销售额（万）" key="views">
                 <Row>
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
@@ -278,7 +289,7 @@ export default class Analysis extends Component {
               loading={loading}
               className={styles.salesCard}
               bordered={false}
-              title="当月销售额类别占比（千万）"
+              title="当月销售额类别占比（万）"
               bodyStyle={{ padding: 24 }}
               extra={
                 <div className={styles.salesCardExtra}>
@@ -297,7 +308,7 @@ export default class Analysis extends Component {
               <Pie
                 hasLegend
                 subTitle="销售额"
-                total={yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))}
+                total={`${yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))} 万元`}
                 data={salesPieData}
                 valueFormat={val => yuan(val)}
                 height={248}
@@ -310,17 +321,28 @@ export default class Analysis extends Component {
               loading={loading}
               className={styles.salesCard}
               bordered={false}
-              title="当月采购额货种占比（千万）"
+              title="当月采购额货种占比（万）"
               bodyStyle={{ padding: 24 }}
+              extra={
+                <div className={styles.salesCardExtra}>
+                  <div className={styles.salesTypeRadio}>
+                    <Radio.Group value={salesType1} onChange={this.handleChangeSalesType1}>
+                      <Radio.Button value="all">全部类型</Radio.Button>
+                      <Radio.Button value="online">内贸</Radio.Button>
+                      <Radio.Button value="offline">外贸</Radio.Button>
+                    </Radio.Group>
+                  </div>
+                </div>
+              }
               style={{ marginTop: 24, minHeight: 509 }}
             >
               <h4 style={{ marginTop: 8, marginBottom: 32 }}>采购额</h4>
               <Pie
                 hasLegend
                 subTitle="采购额"
-                total="￥69 千万"
+                total={`${yuan(salesPieData1.reduce((pre, now) => now.y + pre, 0))} 万元`}
                 data={salesPieData1}
-                valueFormat={val => val}
+                valueFormat={val1 => val1}
                 height={248}
                 lineWidth={4}
               />
