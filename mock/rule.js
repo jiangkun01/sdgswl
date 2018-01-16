@@ -8,7 +8,7 @@ for (let i = 0; i < 46; i += 1) {
     disabled: 0,
     href: 'https://ant.design',
     avatar: ['https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png', 'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png'][i % 2],
-    no: Math.random().toString(19),
+    no: new Date(),
     title: `一个任务名称 ${i}`,
     owner: '曲丽丽',
     bName: `氧化铝业务 ${i}`,
@@ -53,7 +53,16 @@ export function getRule(req, res, u) {
     });
     dataSource = filterDataSource;
   }
-
+  if (params.BType) {
+    const BType = params.BType.split(',');
+    let filterDataSource = [];
+    BType.forEach((s) => {
+      filterDataSource = filterDataSource.concat(
+        [...dataSource].filter(data => parseInt(data.BType, 10) === parseInt(s[0], 10))
+      );
+    });
+    dataSource = filterDataSource;
+  }
   if (params.no) {
     dataSource = dataSource.filter(data => data.no.indexOf(params.no) > -1);
   }
