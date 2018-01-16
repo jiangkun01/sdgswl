@@ -23,6 +23,7 @@ const getIcon = (icon) => {
 export default class SiderMenu extends PureComponent {
   constructor(props) {
     super(props);
+
     this.menus = props.menuData;
     this.state = {
       openKeys: this.getDefaultCollapsedSubMenus(props),
@@ -204,7 +205,7 @@ export default class SiderMenu extends PureComponent {
         <div className={styles.logo} key="logo">
           <Link to="/">
             <img src={logopng} alt="logo" />
-            <h1>山东高速物流集团</h1>
+            <h1>贸易类合同管理</h1>
           </Link>
         </div>
         <Menu

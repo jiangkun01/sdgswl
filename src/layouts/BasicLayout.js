@@ -92,9 +92,9 @@ class BasicLayout extends React.PureComponent {
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
-    let title = '山东高速物流集团';
+    let title = '贸易类合同管理';
     if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - 山东高速物流集团`;
+      title = `${routerData[pathname].name} - 贸易类合同管理`;
     }
     return title;
   }

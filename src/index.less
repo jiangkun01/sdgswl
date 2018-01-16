@@ -1,11 +1,14 @@
-html,
-body,
-:global(#root) {
-  height: 100%;
-}
+// ====================================================
+//
+// This file is part of the MicMD.
+//
+// Create by MicMD Support <support@gstdev.com>
+// Copyright (c) 2016-2017 micmd.gstdev.com
+//
+// ====================================================
 
-canvas {
-  display: block;
+html, body, :global(#root) {
+  height: 100%;
 }
 
 body {
@@ -19,9 +22,3 @@ body {
   margin: 40px 0 !important;
 }
 
-// temp fix for https://github.com/ant-design/ant-design/commit/a1fafb5b727b62cb0be29ce6e9eca8f579d4f8b7
-:global {
-  .ant-spin-container {
-    overflow: visible !important;
-  }
-}

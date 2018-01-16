@@ -6,7 +6,7 @@
   line-height: 64px;
   padding-left: (@menu-collapsed-width - 32px) / 2;
   transition: all .3s;
-  background: #002140;
+  background: white;
   overflow: hidden;
   img {
     display: inline-block;
@@ -14,7 +14,7 @@
     height: 32px;
   }
   h1 {
-    color: #fff;
+    color: #130202;
     display: inline-block;
     vertical-align: middle;
     font-size: 20px;
@@ -29,6 +29,7 @@
   box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
   position: relative;
   z-index: 10;
+  background: white;
 }
 
 .icon {
@@ -39,5 +40,22 @@
 :global {
   .drawer .drawer-content {
     background: #001529;
+  }
+  .ant-menu.ant-menu-dark .ant-menu-item-selected {
+    background: #3470ad !important;
+  }
+  .ant-menu-dark {
+    background: white  !important;
+    color: black !important;
+  }
+  .ant-menu-dark .ant-menu-item:hover, .ant-menu-dark .ant-menu-item-active, .ant-menu-dark .ant-menu-submenu-active, .ant-menu-dark .ant-menu-submenu-open, .ant-menu-dark .ant-menu-submenu-selected, .ant-menu-dark .ant-menu-submenu-title:hover {
+    color: blue !important;
+  }
+  .ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    background: white !important;
+    color: black !important;
+  }
+  .ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item-group-title, .ant-menu-dark .ant-menu-item > a {
+    color: black !important;
   }
 }
