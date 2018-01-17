@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, DatePicker, Modal, message, Select } from 'antd';
+import { Row, Col, Card, Form, Input, Icon, Button, Dropdown, Menu, DatePicker, Modal, message, Select, Divider } from 'antd';
 import StandardTable from '../../components/StandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './TableList.less';
@@ -16,15 +16,14 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 export default class TableList extends PureComponent {
   state = {
     addInputValue: '',
-    addIName: '',
-    addGSku: '',
     modalVisible: false,
     expandForm: false,
     selectedRows: [],
     formValues: {},
     bType: 0,
+    GJson: 1,
+    ItemArray: [],
   };
-
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -135,6 +134,8 @@ export default class TableList extends PureComponent {
   handleModalVisible = (flag) => {
     this.setState({
       modalVisible: !!flag,
+      ItemArray: [],
+      GJson: 1,
     });
   }
 
@@ -143,20 +144,45 @@ export default class TableList extends PureComponent {
       addInputValue: e.target.value,
     });
   }
-  addIName = (e) => {
+  addItemArray =() => {
+    const ItemArrayVo = [];
     this.setState({
-      addIName: e.target.value,
+      GJson: this.state.GJson + 1,
+      ItemArray: [],
     });
-  }
-  addGSku = (e) => {
+    for (let i = 1; i <= this.state.GJson; i += 1) {
+      ItemArrayVo.push(
+        <div>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label={`货物名称${i}`}
+          >
+            <Input placeholder="请输入" />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label={`货物规格${i}`}
+          >
+            <Input placeholder="请输入" />
+          </FormItem>
+          <Divider />
+        </div>
+      );
+    }
     this.setState({
-      addGSku: e.target.value,
+      ItemArray: ItemArrayVo,
     });
   }
   handleAdd = () => {
+    console.log(
+
+    );
     this.props.dispatch({
       type: 'rule/add',
       payload: {
+        ItemArray: this.state.AddItemArray,
         bName: this.state.addInputValue,
         IName: this.state.addIName,
         gSku: this.state.addGSku,
@@ -171,6 +197,8 @@ export default class TableList extends PureComponent {
       addIName: '',
       addInputValue: '',
       bType: 0,
+      ItemArray: [],
+      GJson: 1,
     });
   }
 
@@ -213,7 +241,6 @@ export default class TableList extends PureComponent {
       </Form>
     );
   }
-
   renderAdvancedForm() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -276,8 +303,7 @@ export default class TableList extends PureComponent {
 
   render() {
     const { rule: { data }, loading } = this.props;
-    const { selectedRows, modalVisible, addInputValue, addIName, addGSku } = this.state;
-
+    const { selectedRows, modalVisible, addInputValue, ItemArray } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">批量删除</Menu.Item>
@@ -342,20 +368,9 @@ export default class TableList extends PureComponent {
               <Option value="1">外贸</Option>
             </Select>
           </FormItem>
-          <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 15 }}
-            label="货物名称"
-          >
-            <Input placeholder="请输入" onChange={this.addIName} value={addIName} />
-          </FormItem>
-          <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 15 }}
-            label="货物规格"
-          >
-            <Input placeholder="请输入" onChange={this.addGSku} value={addGSku} />
-          </FormItem>
+          <Divider />
+          {ItemArray}
+          <Button onClick={this.addItemArray}>增加货物描述</Button>
         </Modal>
       </PageHeaderLayout>
     );

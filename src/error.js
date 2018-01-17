@@ -13,5 +13,4 @@ const error = (e, dispatch) => {
     dispatch(routerRedux.push('/exception/404'));
   }
 };
-
 export default error;

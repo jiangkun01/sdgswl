@@ -15,6 +15,7 @@ class StandardTable extends PureComponent {
     selectedRowKeys: [],
     visible: false,
     BussGoods: {},
+    ItemArrayVoShow: [],
     confirmLoading: false,
   };
   componentWillReceiveProps(nextProps) {
@@ -44,12 +45,10 @@ class StandardTable extends PureComponent {
     });
   }
   handleOk = () => {
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-    }, 2000);
+    this.setState({
+      visible: false,
+      confirmLoading: false,
+    });
   }
   handleCancel = () => {
     console.log('Clicked cancel button');
@@ -58,10 +57,23 @@ class StandardTable extends PureComponent {
     });
   }
   handleMenuClick = (record, e) => {
+    const ItemVoArray = [];
     if (e.key === '1') {
       this.showModal();
       this.setState({
         BussGoods: record,
+      });
+      for (let i = 0; i < record.ItemArray.length; i += 1) {
+        ItemVoArray.push(
+          <div>
+            <Divider>货物信息{i + 1}</Divider>
+            <p>货物名称：{record.ItemArray[i].IName}</p>
+            <p>货物规格：{record.ItemArray[i].gSku}</p>
+          </div>
+        );
+      }
+      this.setState({
+        ItemArrayVoShow: ItemVoArray,
       });
       // dispatch({
       //   type: 'userController/isVisible',
@@ -97,7 +109,7 @@ class StandardTable extends PureComponent {
     }
   }
   render() {
-    const { selectedRowKeys, visible, confirmLoading, BussGoods } = this.state;
+    const { selectedRowKeys, visible, confirmLoading, BussGoods, ItemArrayVoShow } = this.state;
     const { data: { list, pagination }, loading } = this.props;
 
     const status = ['履行中', '已完成', '新建', '终止'];
@@ -106,7 +118,6 @@ class StandardTable extends PureComponent {
       {
         title: '业务编号',
         dataIndex: 'no',
-        render: val => <span>{moment(val).format('YYYY-MM-DD-HH-mm-ss')}</span>,
       },
       {
         title: '业务名称',
@@ -128,10 +139,6 @@ class StandardTable extends PureComponent {
         render(val) {
           return <Badge status={statusMap[val]} text={bType[val]} />;
         },
-      },
-      {
-        title: '货物名称',
-        dataIndex: 'IName',
       },
       {
         title: '状态',
@@ -224,10 +231,8 @@ class StandardTable extends PureComponent {
           <p>业务编号：{BussGoods.no}</p>
           <p>业务名称：{BussGoods.bName}</p>
           <p>业务创建人：张建国</p>
-          <p>业务创建时间{moment(BussGoods.createdAt).format('YYYY-MM-DD HH:mm:ss')}</p>
-          <Divider>货物信息</Divider>
-          <p>货物名称：{BussGoods.IName}</p>
-          <p>货物规格：{BussGoods.gSku}</p>
+          <p>业务创建时间:{moment(BussGoods.createdAt).format('YYYY-MM-DD HH:mm:ss')}</p>
+          {ItemArrayVoShow}
         </Modal>
       </div>
     );
