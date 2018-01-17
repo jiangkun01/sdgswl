@@ -59,7 +59,7 @@ class StandardTable extends PureComponent {
   handleMenuClick = (record, e) => {
     const ItemVoArray = [];
     if (e.key === '1') {
-      this.showModal();
+      // this.showModal();
       this.setState({
         BussGoods: record,
       });
@@ -176,7 +176,7 @@ class StandardTable extends PureComponent {
         render: record => (
           <Menu onClick={e => this.handleMenuClick(record, e)}>
             <SubMenu key={record.key} title={<span>更多</span>}>
-              <Menu.Item key="1">详情</Menu.Item>
+              <Menu.Item key="1"><a href="/#/business/detail">详情</a></Menu.Item>
               <Menu.Item key="2">修改</Menu.Item>
               <Menu.Item key="3">删除</Menu.Item>
             </SubMenu>
