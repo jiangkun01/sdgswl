@@ -2,18 +2,24 @@ import { getUrlParams } from './utils';
 
 // mock tableListDataSource
 let tableListDataSource = [];
+const ItemVo = [];
+for (let i = 0; i < 2; i += 1) {
+  ItemVo.push({
+    IName: `氧化铝 ${i}`,
+    gSku: `纯度${i}`,
+  });
+}
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     key: i,
     disabled: 0,
     href: 'https://ant.design',
     avatar: ['https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png', 'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png'][i % 2],
-    no: new Date(),
+    no: Math.floor(Math.random() * 10000000),
     title: `一个任务名称 ${i}`,
     owner: '曲丽丽',
     bName: `氧化铝业务 ${i}`,
-    IName: `氧化铝 ${i}`,
-    gSku: `纯度${i}`,
+    ItemArray: ItemVo,
     BType: Math.floor(Math.random() * 2),
     callNo: Math.floor(Math.random() * 1000),
     status: Math.floor(Math.random() * 10) % 4,
@@ -99,7 +105,7 @@ export function postRule(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, no, bName, IName, gSku, BType } = body;
+  const { method, no, bName, IName, gSku, BType, ItemArray } = body;
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
@@ -111,11 +117,12 @@ export function postRule(req, res, u, b) {
         key: i,
         href: 'https://ant.design',
         avatar: ['https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png', 'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png'][i % 2],
-        no: Math.random().toString(19),
+        no: Math.floor(Math.random() * 10000000),
         bName,
         IName,
         gSku,
         BType,
+        ItemArray,
         title: `一个任务名称 ${i}`,
         owner: '曲丽丽',
         callNo: Math.floor(Math.random() * 1000),
