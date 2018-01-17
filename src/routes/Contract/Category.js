@@ -135,16 +135,16 @@ export default class Category extends PureComponent {
               <Button type="primary" onClick={this.showModal}>新建+</Button>&nbsp;&nbsp;&nbsp;&nbsp;
               {
                 selectedRowKeys.length > 0 && (
-                <Dropdown
-                  overlay={(
-                    <Menu onClick={this.handleMenuClick}>
-                      <Menu.Item key="2">批量删除</Menu.Item>
-                    </Menu>
-                  )}
-                  placement="bottomCenter"
-                >
-                  <Button>更多操作<Icon type="down" /></Button>
-                </Dropdown>
+                  <Dropdown
+                    overlay={(
+                      <Menu onClick={this.handleMenuClick}>
+                        <Menu.Item key="2">批量删除</Menu.Item>
+                      </Menu>
+                    )}
+                    placement="bottomCenter"
+                  >
+                    <Button>更多操作<Icon type="down" /></Button>
+                  </Dropdown>
                 )
               }
             </Col>
