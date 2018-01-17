@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Form, Input, Button, Table, Dropdown, Menu, Icon, notification } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
-const FormItem = Form.Item;
-
+const FormItem = Form.Item; // ssh
 @Form.create()
 export default class Category extends Component {
   operation = () => {
