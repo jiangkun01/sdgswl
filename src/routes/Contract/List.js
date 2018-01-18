@@ -60,6 +60,17 @@ export default class List extends PureComponent {
         },
       });
     }
+  };
+  handleModalVisible = (flag) => {
+    this.setState({
+      modalVisible: !!flag,
+    });
+  };
+  handleAdd = () => {
+    message.success('添加成功');
+    this.setState({
+      modalVisible: false,
+    });
   }
   render() {
     const { loading } = this.props;
@@ -336,7 +347,8 @@ export default class List extends PureComponent {
                     </Row>
                     <div style={{ overflow: 'hidden', marginTop: '2%' }}>
                       <span style={{ float: 'left', marginBottom: 24 }}>
-                        <Button style={{ marginRight: '4px' }} type="primary">+新建</Button> <Checkbox>只显示我发起的合同</Checkbox>
+                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} onClick={() => this.handleModalVisible(true)}>发起新合同</Button>
+                        <Checkbox>只显示我发起的合同</Checkbox>
                       </span>
                       <span style={{ float: 'right', marginBottom: 24 }}>
                         <Button type="primary" htmlType="submit">查询</Button>
