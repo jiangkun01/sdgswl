@@ -118,6 +118,7 @@ class StandardTable extends PureComponent {
       {
         title: '业务编号',
         dataIndex: 'no',
+        sorter: (a, b) => a.no - b.no,
       },
       {
         title: '业务名称',
@@ -139,6 +140,7 @@ class StandardTable extends PureComponent {
         render(val) {
           return <Badge status={statusMap[val]} text={bType[val]} />;
         },
+        sorter: (a, b) => a.BType - b.BType,
       },
       {
         title: '状态',
@@ -164,15 +166,18 @@ class StandardTable extends PureComponent {
         render(val) {
           return <Badge status={statusMap[val]} text={status[val]} />;
         },
+        sorter: (a, b) => a.status - b.status,
       },
       {
         title: '创建时间',
         dataIndex: 'createdAt',
-        sorter: true,
+        sorter: (a, b) => a.createdAt - b.createdAt,
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
+        width: 120,
+        fixed: 'right',
         render: record => (
           <Menu onClick={e => this.handleMenuClick(record, e)}>
             <SubMenu key={record.key} title={<span>更多</span>}>
@@ -212,7 +217,7 @@ class StandardTable extends PureComponent {
         </div>
         <Table
           loading={loading}
-          rowKey={record => record.key}
+          rowKey={record => record.no}
           rowSelection={rowSelection}
           dataSource={list}
           columns={columns}

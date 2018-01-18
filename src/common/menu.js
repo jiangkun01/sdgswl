@@ -20,7 +20,7 @@ const menuData = [{
   path: 'contract',
   children: [{
     name: '合同基本信息列表',
-    path: '1',
+    path: 'list',
   // /*  path: 'basic-form',*/
   }, {
     name: '合同类目列表',
