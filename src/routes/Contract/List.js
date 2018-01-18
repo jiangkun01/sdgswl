@@ -246,7 +246,6 @@ export default class List extends PureComponent {
             <Row gutter={16}>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="当月完成合同"
                   action={
                     <Tooltip title="当月完成合同">
@@ -256,11 +255,11 @@ export default class List extends PureComponent {
                   total="111（份）"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #1890FF' }}
                 />
               </Col>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="当月执行合同"
                   action={
                     <Tooltip title="当月执行合同">
@@ -270,11 +269,11 @@ export default class List extends PureComponent {
                   total="11（份）"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #13C2C2' }}
                 />
               </Col>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="当月违约合同"
                   action={
                     <Tooltip title="当月执行合同">
@@ -284,11 +283,11 @@ export default class List extends PureComponent {
                   total="5（份）"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #E9686B' }}
                 />
               </Col>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="当月终止合同"
                   action={
                     <Tooltip title="当月终止合同">
@@ -298,6 +297,7 @@ export default class List extends PureComponent {
                   total="6（份）"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #CB0A12' }}
                 />
               </Col>
             </Row>
