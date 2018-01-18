@@ -229,6 +229,11 @@ export default class TableList extends PureComponent {
             </FormItem>
           </Col>
           <div style={{ overflow: 'hidden' }}>
+            <span style={{ float: 'left', marginBottom: 24 }}>
+              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+                新建
+              </Button>
+            </span>
             <span style={{ float: 'right', marginBottom: 24 }}>
               <Button type="primary" htmlType="submit">查询</Button>
               <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
@@ -285,6 +290,11 @@ export default class TableList extends PureComponent {
           </Col>
         </Row>
         <div style={{ overflow: 'hidden' }}>
+          <span style={{ float: 'left', marginBottom: 24 }}>
+            <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              新建
+            </Button>
+          </span>
           <span style={{ float: 'right', marginBottom: 24 }}>
             <Button type="primary" htmlType="submit">查询</Button>
             <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
@@ -317,9 +327,6 @@ export default class TableList extends PureComponent {
               {this.renderForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
               {
                 selectedRows.length > 0 && (
                   <span>

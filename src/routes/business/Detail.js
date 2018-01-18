@@ -61,6 +61,8 @@ export default class BasicList extends PureComponent {
     const columns = [{
       title: '合同编号',
       dataIndex: 'agreementNo',
+      width: 200,
+      fixed: 'left',
       sorter: (a, b) => a.agreementNo - b.agreementNo,
     }, {
       title: '合同名称',
@@ -167,7 +169,7 @@ export default class BasicList extends PureComponent {
       <PageHeaderLayout>
         <div className={styles.standardList}>
           <div style={{ padding: '30px' }}>
-            <Row gutter={16}>
+            <Row gutter={16} style={{ marginTop: '-30px' }}>
               <Col {...topColResponsiveProps}>
                 <ChartCard
                   bordered={false}
@@ -233,7 +235,7 @@ export default class BasicList extends PureComponent {
                   bordered={false}
                   title="截止当前采购资金统计（万）"
                   bodyStyle={{ padding: 24 }}
-                  style={{ marginTop: 24, minHeight: 509 }}
+                  style={{ minHeight: 509 }}
                 >
                   <h4 style={{ marginTop: 8, marginBottom: 32 }}>采购额 ￥1000 （万）</h4>
                   <Pie
@@ -253,7 +255,7 @@ export default class BasicList extends PureComponent {
                   bordered={false}
                   title="截止当前回款资金统计（万）"
                   bodyStyle={{ padding: 24 }}
-                  style={{ marginTop: 24, minHeight: 509 }}
+                  style={{ minHeight: 509 }}
                 >
                   <h4 style={{ marginTop: 8, marginBottom: 32 }}>采购额</h4>
                   <Pie
@@ -301,7 +303,10 @@ export default class BasicList extends PureComponent {
                         </FormItem>
                       </Col>
                     </Row>
-                    <div style={{ overflow: 'hidden' }}>
+                    <div style={{ overflow: 'hidden', marginTop: '2%' }}>
+                      <span style={{ float: 'left', marginBottom: 24 }}>
+                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }}>发起新合同</Button>
+                      </span>
                       <span style={{ float: 'right', marginBottom: 24 }}>
                         <Button type="primary" htmlType="submit">查询</Button>
                         <Button style={{ marginLeft: 8 }} >重置</Button>

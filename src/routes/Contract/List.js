@@ -12,7 +12,7 @@ import {
   Input,
   Badge,
   Tabs,
-  Menu,
+  Divider,
   message,
   Modal,
   Checkbox,
@@ -28,7 +28,6 @@ import styles from '../Dashboard/Analysis.less';
 const FormItem = Form.Item;
 const { TabPane } = Tabs;
 const rankingListData = [];
-const { SubMenu } = Menu;
 const { confirm } = Modal;
 const { Option } = Select;
 for (let i = 0; i < 7; i += 1) {
@@ -42,25 +41,25 @@ export default class List extends PureComponent {
   state = {
     modalVisible: false,
   };
-  handleMenuClick = (record, e) => {
-    if (e.key === '2') {
-      message.info('暂无法修改');
-      // dispatch({
-      //   type: 'userController/isVisible',
-      //   isVisible: true,
-      //   isPassswordRequired: false,
-      //   user: record,
-      //   title: '修改',
-      // })
-    } else if (e.key === '3') {
-      confirm({
-        title: '确认终止吗？',
-        onOk() {
-          message.error('有正在执行的履行计划，终止失败，请先终止履行计划');
-        },
-      });
-    }
-  };
+  // handleMenuClick = (record, e) => {
+  //   if (e.key === '2') {
+  //     message.info('暂无法修改');
+  //     // dispatch({
+  //     //   type: 'userController/isVisible',
+  //     //   isVisible: true,
+  //     //   isPassswordRequired: false,
+  //     //   user: record,
+  //     //   title: '修改',
+  //     // })
+  //   } else if (e.key === '3') {
+  //     confirm({
+  //       title: '确认终止吗？',
+  //       onOk() {
+  //         message.error('有正在执行的履行计划，终止失败，请先终止履行计划');
+  //       },
+  //     });
+  //   }
+  // };
   handleModalVisible = (flag) => {
     this.setState({
       modalVisible: !!flag,
@@ -71,7 +70,18 @@ export default class List extends PureComponent {
     this.setState({
       modalVisible: false,
     });
-  }
+  };
+  deteteOne =() => {
+    confirm({
+      title: '确认终止吗？',
+      onOk() {
+        message.error('业务暂无法删除');
+      },
+    });
+  };
+  updateOne =() => {
+    message.error('业务暂无法修改');
+  };
   render() {
     const { loading } = this.props;
     const { modalVisible } = this.state;
@@ -97,6 +107,8 @@ export default class List extends PureComponent {
     const columns = [{
       title: '合同编号',
       dataIndex: 'agreementNo',
+      width: 200,
+      fixed: 'left',
       sorter: (a, b) => a.agreementNo - b.agreementNo,
     }, {
       title: '合同名称',
@@ -190,24 +202,20 @@ export default class List extends PureComponent {
       render: val => <span>{val}万元</span>,
       sorter: (a, b) => a.gSumPrice - b.gSumPrice,
     }, {
-      title: '客户名称',
-      dataIndex: 'bName',
-    }, {
-      title: '客户电话',
-      dataIndex: 'bPhone',
-    }, {
       title: '操作',
       key: 'operation',
+      width: 260,
       fixed: 'right',
-      width: 120,
-      render: record => (
-        <Menu onClick={e => this.handleMenuClick(record, e)}>
-          <SubMenu key={record.key} title={<span>更多</span>}>
-            <Menu.Item key="1"><a href="/#/business/detail">详情</a></Menu.Item>
-            <Menu.Item key="2">修改</Menu.Item>
-            <Menu.Item key="3">终止</Menu.Item>
-          </SubMenu>
-        </Menu>
+      render: () => (
+        <span>
+          <a>详情</a>
+          <Divider type="vertical" />
+          <a>创建履行计划</a>
+          <Divider type="vertical" />
+          <a onClick={this.updateOne}>修改</a>
+          <Divider type="vertical" />
+          <a onClick={this.deteteOne}>终止</a>
+        </span>
       ),
     }];
     const data = [];
@@ -234,7 +242,7 @@ export default class List extends PureComponent {
     return (
       <PageHeaderLayout>
         <div className={styles.standardList}>
-          <div style={{ padding: '30px' }}>
+          <div style={{ padding: '30px', marginTop: '-30px' }}>
             <Row gutter={16}>
               <Col {...topColResponsiveProps}>
                 <ChartCard
@@ -371,7 +379,7 @@ export default class List extends PureComponent {
           </div>
         </div>
         <Modal
-          title="新建业务"
+          title="发起新合同"
           visible={modalVisible}
           onOk={this.handleAdd}
           onCancel={() => this.handleModalVisible()}
