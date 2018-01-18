@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
-import { Table, Alert, Badge, Menu, Modal, Divider, message } from 'antd';
+import { Table, Alert, Badge, Modal, Divider, message } from 'antd';
 import styles from './index.less';
 
 const { confirm } = Modal;
-const { SubMenu } = Menu;
 const statusMap = ['default', 'processing', 'success', 'error'];
 @connect(({ rule }) => ({
   rule,
@@ -35,7 +34,17 @@ class StandardTable extends PureComponent {
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
   }
-
+  deteteOne =() => {
+    confirm({
+      title: '确认删除吗？',
+      onOk() {
+        message.error('业务暂无法删除');
+      },
+    });
+  };
+  updateOne =() => {
+    message.error('业务暂无法修改');
+  };
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
   }
@@ -56,58 +65,58 @@ class StandardTable extends PureComponent {
       visible: false,
     });
   }
-  handleMenuClick = (record, e) => {
-    const ItemVoArray = [];
-    if (e.key === '1') {
-      // this.showModal();
-      this.setState({
-        BussGoods: record,
-      });
-      for (let i = 0; i < record.ItemArray.length; i += 1) {
-        ItemVoArray.push(
-          <div>
-            <Divider>货物信息{i + 1}</Divider>
-            <p>货物名称：{record.ItemArray[i].IName}</p>
-            <p>货物规格：{record.ItemArray[i].gSku}</p>
-          </div>
-        );
-      }
-      this.setState({
-        ItemArrayVoShow: ItemVoArray,
-      });
-      // dispatch({
-      //   type: 'userController/isVisible',
-      //   isVisible: true,
-      //   isPassswordRequired: false,
-      //   user: record,
-      //   title: '修改',
-      // })
-    } else if (e.key === '2') {
-      message.info('暂无法修改');
-      // dispatch({
-      //   type: 'userController/isVisible',
-      //   isVisible: true,
-      //   isPassswordRequired: false,
-      //   user: record,
-      //   title: '修改',
-      // })
-    } else if (e.key === '3') {
-      const { dispatch } = this.props;
-      const clean = this.cleanSelectedKeys;
-      confirm({
-        title: '确认删除吗？',
-        onOk() {
-          dispatch({
-            type: 'rule/remove',
-            payload: {
-              no: record.no,
-            },
-            callback: clean,
-          });
-        },
-      });
-    }
-  }
+  // handleMenuClick = (record, e) => {
+  //   const ItemVoArray = [];
+  //   if (e.key === '1') {
+  //     // this.showModal();
+  //     this.setState({
+  //       BussGoods: record,
+  //     });
+  //     for (let i = 0; i < record.ItemArray.length; i += 1) {
+  //       ItemVoArray.push(
+  //         <div>
+  //           <Divider>货物信息{i + 1}</Divider>
+  //           <p>货物名称：{record.ItemArray[i].IName}</p>
+  //           <p>货物规格：{record.ItemArray[i].gSku}</p>
+  //         </div>
+  //       );
+  //     }
+  //     this.setState({
+  //       ItemArrayVoShow: ItemVoArray,
+  //     });
+  //     // dispatch({
+  //     //   type: 'userController/isVisible',
+  //     //   isVisible: true,
+  //     //   isPassswordRequired: false,
+  //     //   user: record,
+  //     //   title: '修改',
+  //     // })
+  //   } else if (e.key === '2') {
+  //     message.info('暂无法修改');
+  //     // dispatch({
+  //     //   type: 'userController/isVisible',
+  //     //   isVisible: true,
+  //     //   isPassswordRequired: false,
+  //     //   user: record,
+  //     //   title: '修改',
+  //     // })
+  //   } else if (e.key === '3') {
+  //     const { dispatch } = this.props;
+  //     const clean = this.cleanSelectedKeys;
+  //     confirm({
+  //       title: '确认删除吗？',
+  //       onOk() {
+  //         dispatch({
+  //           type: 'rule/remove',
+  //           payload: {
+  //             no: record.no,
+  //           },
+  //           callback: clean,
+  //         });
+  //       },
+  //     });
+  //   }
+  // };
   render() {
     const { selectedRowKeys, visible, confirmLoading, BussGoods, ItemArrayVoShow } = this.state;
     const { data: { list, pagination }, loading } = this.props;
@@ -118,6 +127,8 @@ class StandardTable extends PureComponent {
       {
         title: '业务编号',
         dataIndex: 'no',
+        width: 200,
+        fixed: 'left',
         sorter: (a, b) => a.no - b.no,
       },
       {
@@ -176,16 +187,16 @@ class StandardTable extends PureComponent {
       },
       {
         title: '操作',
-        width: 120,
+        width: 200,
         fixed: 'right',
-        render: record => (
-          <Menu onClick={e => this.handleMenuClick(record, e)}>
-            <SubMenu key={record.key} title={<span>更多</span>}>
-              <Menu.Item key="1"><a href="/#/business/detail">详情</a></Menu.Item>
-              <Menu.Item key="2">修改</Menu.Item>
-              <Menu.Item key="3">删除</Menu.Item>
-            </SubMenu>
-          </Menu>
+        render: () => (
+          <span>
+            <a href="/#/business/detail">详情</a>
+            <Divider type="vertical" />
+            <a onClick={this.updateOne}>修改</a>
+            <Divider type="vertical" />
+            <a onClick={this.deteteOne}>删除</a>
+          </span>
         ),
       },
     ];
@@ -223,10 +234,11 @@ class StandardTable extends PureComponent {
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
-          scroll={{ x: 1366 }}
+          scroll={{ x: 1500 }}
         />
         <Modal
           title="业务详情"
+
           visible={visible}
           onOk={this.handleOk}
           confirmLoading={confirmLoading}

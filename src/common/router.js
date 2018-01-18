@@ -110,10 +110,10 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
     },
     '/business/list': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/business/list')),
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/business/List')),
     },
     '/business/detail': {
-      component: dynamicWrapper(app, [], () => import('../routes/business/detail')),
+      component: dynamicWrapper(app, [], () => import('../routes/business/Detail')),
     },
     '/business/basic-list': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/business/BasicList')),
@@ -122,7 +122,7 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['list'], () => import('../routes/business/CardList')),
     },
     '/list/search': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/business/list')),
+      component: dynamicWrapper(app, ['list'], () => import('../routes/business/List')),
     },
     '/list/search/projects': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/business/Projects')),
