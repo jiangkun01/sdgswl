@@ -83,7 +83,10 @@ export const getRouterData = (app) => {
       // authority: 'admin',
     },
     '/contract/category': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/Contract/Category')),
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Category')),
+    },
+    '/contract/details': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Details')),
     },
     '/contract/list': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/List')),

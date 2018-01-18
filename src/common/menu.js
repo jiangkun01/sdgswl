@@ -34,7 +34,7 @@ const menuData = [{
     name: '合同相关文档列表',
     // authority: 'admin',
     // path: 'advanced-form',
-    path: '4',
+    path: 'details',
   }],
 }, {
   name: '履行计划管理',
