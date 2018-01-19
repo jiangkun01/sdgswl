@@ -23,6 +23,9 @@ const menuData = [{
     path: 'list',
   // /*  path: 'basic-form',*/
   }, {
+    name: '发起新合同',
+    path: 'create',
+  }, {
     name: '合同类目列表',
     path: 'category',
   }, {

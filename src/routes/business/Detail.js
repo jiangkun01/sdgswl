@@ -172,7 +172,6 @@ export default class BasicList extends PureComponent {
             <Row gutter={16} style={{ marginTop: '-30px' }}>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="已支出采购金额"
                   action={
                     <Tooltip title="已支出采购金额">
@@ -182,11 +181,11 @@ export default class BasicList extends PureComponent {
                   total="￥560 万"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #1890FF' }}
                 />
               </Col>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="截止当前已销售金额"
                   action={
                     <Tooltip title="截止当前已销售金额">
@@ -196,11 +195,11 @@ export default class BasicList extends PureComponent {
                   total="￥760 万"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #13C2C2' }}
                 />
               </Col>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="截止当前已回款金额"
                   action={
                     <Tooltip title="截止当前已回款金额">
@@ -210,11 +209,11 @@ export default class BasicList extends PureComponent {
                   total="￥660 万"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #1890FF' }}
                 />
               </Col>
               <Col {...topColResponsiveProps}>
                 <ChartCard
-                  bordered={false}
                   title="截止当前已实现利润"
                   action={
                     <Tooltip title="截止当前已实现利润">
@@ -224,6 +223,7 @@ export default class BasicList extends PureComponent {
                   total="￥100 万"
                   footer=""
                   contentHeight={46}
+                  style={{ borderTop: '4px solid #7EC1B2' }}
                 />
               </Col>
             </Row>
@@ -235,7 +235,7 @@ export default class BasicList extends PureComponent {
                   bordered={false}
                   title="截止当前采购资金统计（万）"
                   bodyStyle={{ padding: 24 }}
-                  style={{ minHeight: 509 }}
+                  style={{ minHeight: 300 }}
                 >
                   <h4 style={{ marginTop: 8, marginBottom: 32 }}>采购额 ￥1000 （万）</h4>
                   <Pie
@@ -255,7 +255,7 @@ export default class BasicList extends PureComponent {
                   bordered={false}
                   title="截止当前回款资金统计（万）"
                   bodyStyle={{ padding: 24 }}
-                  style={{ minHeight: 509 }}
+                  style={{ minHeight: 300 }}
                 >
                   <h4 style={{ marginTop: 8, marginBottom: 32 }}>采购额</h4>
                   <Pie

@@ -88,6 +88,9 @@ export const getRouterData = (app) => {
     '/contract/details': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Details')),
     },
+    '/contract/create': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Create')),
+    },
     '/contract/list': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/List')),
     },
