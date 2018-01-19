@@ -355,7 +355,7 @@ export default class List extends PureComponent {
                     </Row>
                     <div style={{ overflow: 'hidden', marginTop: '2%' }}>
                       <span style={{ float: 'left', marginBottom: 24 }}>
-                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} onClick={() => this.handleModalVisible(true)}>发起新合同</Button>
+                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} ><a href="/#/contract/create" style={{ color: 'white' }}> 发起新合同</a></Button>
                         <Checkbox>只显示我发起的合同</Checkbox>
                       </span>
                       <span style={{ float: 'right', marginBottom: 24 }}>
