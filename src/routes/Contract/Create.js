@@ -139,28 +139,39 @@ export default class create extends PureComponent {
       title: '货物单价',
       dataIndex: 'gPrice',
       key: 'gPrice',
-      render: text => <span>{text}/万元</span>,
+      render: text => (
+        <FormItem
+          {...formItemLayout}
+        >
+          {getFieldDecorator(text, {
+            rules: [{
+              required: true,
+              message: '请输入货物单价',
+            }],
+          })(
+            <InputNumber min={1} max={10000000} />
+          )}
+          <span className="ant-form-text">元/吨</span>
+        </FormItem>
+      ),
     }, {
       title: '货物数量',
       dataIndex: 'gAcount',
       key: 'gAcount',
       render: text => (
-        <span>
-          <FormItem
-            {...formItemLayout}
-            hasFeedback
-          >
-            {getFieldDecorator(`gAcount[${text}]`, {
-              rules: [{
-                required: true,
-                message: '请输入货物数量1',
-              }],
-            })(
-              <InputNumber min={1} max={10000000} />
-            )}
-            <span className="ant-form-text">/吨</span>
-          </FormItem>
-        </span>
+        <FormItem
+          {...formItemLayout}
+        >
+          {getFieldDecorator(text, {
+            rules: [{
+              required: true,
+              message: '请输入货物数量',
+            }],
+          })(
+            <InputNumber min={1} max={10000000} />
+          )}
+          <span className="ant-form-text">/吨</span>
+        </FormItem>
       ),
     }, {
       title: '选中',
