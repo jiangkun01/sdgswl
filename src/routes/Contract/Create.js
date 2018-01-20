@@ -328,7 +328,7 @@ export default class create extends PureComponent {
                   >
                     {getFieldDecorator('sPrice', {
                       rules: [
-                        { required: true, message: '请选择预计实现收入' },
+                        { required: false, message: '请选择预计实现收入' },
                       ],
                     })(
                       <InputNumber min={1} />
@@ -392,7 +392,7 @@ export default class create extends PureComponent {
                         { required: true, message: '请选择向对方' },
                       ],
                     })(
-                      <Select mode="combobox" placeholder="请选择向对方" onChange={this.changeMlink} >
+                      <Select showSearch placeholder="请选择向对方" onChange={this.changeMlink} >
                         <Option value="测试数据1">测试数据1</Option>
                         <Option value="测试数据2">测试数据2</Option>
                         <Option value="测试数据3">测试数据3</Option>
