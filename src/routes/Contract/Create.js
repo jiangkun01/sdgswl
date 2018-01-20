@@ -271,14 +271,18 @@ export default class create extends PureComponent {
       );
     });
     return (
-      <PageHeaderLayout title="发起新合同">
+      <PageHeaderLayout>
         <Row gutter={24}>
           <Col xl={24} lg={24} md={24} sm={24} xs={24}>
             <Card
               bordered={false}
               bodyStyle={{ padding: 24 }}
-              style={{ marginTop: 24, minHeight: 509 }}
+              style={{ marginTop: 24, minHeight: 509, paddingTop: 10 }}
             >
+              <Row>
+                <Col span={7} offset={1}><h2><Icon type="folder" style={{ color: '#3AA1FF', fontSize: 20 }} />&nbsp;<strong>发起新合同</strong></h2></Col>
+              </Row>
+              <Divider />
               <Row>
                 <Col span={7} offset={1}><h3>发起人：<strong>李雷</strong></h3></Col>
                 <Col span={7} offset={1}><h3>发起日期：<strong>2017-01-01</strong></h3></Col>
@@ -294,7 +298,7 @@ export default class create extends PureComponent {
                     hasFeedback
                   >
                     {getFieldDecorator('no', { initialValue: '2017SDHSLGGMZH0006' })(
-                      <Input disabled={isDisabled} />
+                      <Input readOnly={isDisabled} />
                     )}
                   </FormItem>
                   <FormItem
