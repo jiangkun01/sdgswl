@@ -8,13 +8,12 @@ import {
   Form,
   Button,
   Input,
-  Badge,
   DatePicker,
   Checkbox,
 } from 'antd';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 import styles from '../../Dashboard/Analysis.less';
-import listStyles from './List.less';
+import listStyles from '../List.less';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -23,91 +22,23 @@ export default class BasicList extends PureComponent {
   render() {
     const { loading } = this.props;
     // table
-    const bType = ['采购', '质检合同', '物流', '仓储', '销售合同'];
-    const bStatus = ['新建', '审批中', '审批通过', '完成', '履行中', '终止'];
-    const statusMap = ['default', 'processing', 'success', 'success', 'processing', 'error'];
     const columns = [{
-      title: '合同编号',
+      title: '类目编号',
       dataIndex: 'agreementNo',
       width: 200,
       fixed: 'left',
       sorter: (a, b) => a.agreementNo - b.agreementNo,
     }, {
-      title: '合同名称',
+      title: '类目名称',
       dataIndex: 'agreementName',
     }, {
-      title: '合同状态',
+      title: '创建人',
       dataIndex: 'status',
-      filters: [
-        {
-          text: bStatus[0],
-          value: 0,
-        },
-        {
-          text: bStatus[1],
-          value: 1,
-        },
-        {
-          text: bStatus[2],
-          value: 2,
-        },
-        {
-          text: bStatus[3],
-          value: 3,
-        },
-        {
-          text: bStatus[4],
-          value: 4,
-        },
-        {
-          text: bStatus[5],
-          value: 5,
-        },
-      ],
-      render(val) {
-        return <Badge status={statusMap[val]} text={bStatus[val]} />;
-      },
-      sorter: (a, b) => a.status - b.status,
     }, {
-      title: '合同类型',
-      dataIndex: 'type',
-      filters: [
-        {
-          text: bType[0],
-          value: 0,
-        },
-        {
-          text: bType[1],
-          value: 1,
-        },
-        {
-          text: bType[2],
-          value: 2,
-        },
-        {
-          text: bType[3],
-          value: 3,
-        },
-        {
-          text: bType[4],
-          value: 4,
-        },
-      ],
-      render(val) {
-        return <Badge status={statusMap[val]} text={bType[val]} />;
-      },
-      sorter: (a, b) => a.type - b.type,
-    }, {
-      title: '合同创建时间',
+      title: '创建时间',
       dataIndex: 'createDate',
       render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       sorter: (a, b) => a.createDate - b.createDate,
-    }, {
-      title: '客户名称',
-      dataIndex: 'bName',
-    }, {
-      title: '客户电话',
-      dataIndex: 'bPhone',
     }, {
       title: '操作',
       key: 'operation',
@@ -127,7 +58,7 @@ export default class BasicList extends PureComponent {
         bPhone: '测试数据 2133456',
         companyAddress: 'Lake Street 42',
         companyName: 'SoftLake Co',
-        status: (i + 3) % 6,
+        status: (i + 3) % 2,
         gender: 'M',
         createDate: new Date(),
       });
