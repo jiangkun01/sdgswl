@@ -9,7 +9,7 @@ const menuData = [{
 }, {
   name: '业务管理',
   icon: 'table',
-  path: 'business',
+  path: 'Business',
   children: [{
     name: '业务列表',
     path: 'list',
@@ -42,13 +42,13 @@ const menuData = [{
 }, {
   name: '履行计划管理',
   icon: 'profile',
-  path: 'profile',
+  path: 'implementplan',
   children: [{
     name: '履行计划模板列表',
     path: '5',
   }, {
     name: '履行计划类目列表',
-    path: '6',
+    path: 'category/list',
     // authority: 'admin',
   }, {
     name: '履行计划列表',
