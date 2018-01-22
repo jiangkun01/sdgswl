@@ -1,17 +1,24 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Card, Tabs } from 'antd';
+import { connect } from 'dva';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import Information from './Information';
 import Plan from './Plan';
 import RContract from './RContract';
 import RGoods from './RGoods';
 import Modify from './Modify';
+import Annex from './Annex';
 
+@connect(({ status, loading }) => ({
+  status,
+  loading: loading.models.rule,
+}))
 export default class Details extends PureComponent {
   state = {
     tabsKey: '1',
   }
   tabsCallback = (key) => {
+    console.log(this.state.status);
     this.setState({ tabsKey: key });
   }
   render() {
@@ -25,7 +32,11 @@ export default class Details extends PureComponent {
             <Col span={7}><h3>合同发起部门：<strong>山东高速物流公司管控部</strong></h3></Col>
             <Col span={5}><h3>合同状态：<strong>已执行</strong></h3></Col>
           </Row>
-          <br />
+          {
+            tabsKey === '1' && (
+              <br />
+            )
+          }
           {
             tabsKey === '1' && (
               <Row>
@@ -34,11 +45,6 @@ export default class Details extends PureComponent {
                 <Col span={5}><h3>已付款金额：<strong>22 万元</strong></h3></Col>
                 <Col span={5}><h3>预计实现收入：<strong>32 万元</strong></h3></Col>
               </Row>
-            )
-          }
-          {
-            tabsKey === '1' && (
-              <br />
             )
           }
         </Card>
@@ -61,6 +67,9 @@ export default class Details extends PureComponent {
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="合同变更信息" key="5">
                   <Modify />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="合同附件" key="6">
+                  <Annex />
                 </Tabs.TabPane>
               </Tabs>
             </Col>

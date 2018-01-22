@@ -82,7 +82,9 @@ export default class Plan extends PureComponent {
       <div>
         <Row>
           <Col span={24}>
-            <Table dataSource={dataSource} columns={columns} />
+            <Card>
+              <Table dataSource={dataSource} columns={columns} />
+            </Card>
           </Col>
         </Row>
         <br />

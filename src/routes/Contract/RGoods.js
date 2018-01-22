@@ -82,11 +82,13 @@ export default class RContract extends PureComponent {
     return (
       <div>
         <Row>
-          <Col span={6}><h3>货物编号：<strong>SDGSWLKH232</strong></h3></Col>
-          <Col span={6}><h3>货物名称：<strong>浓缩果汁500吨</strong></h3></Col>
-          <Col span={4}><h3>货物总重：<strong>500吨</strong></h3></Col>
-          <Col span={4}><h3>货物均价：<strong>6万/吨</strong></h3></Col>
-          <Col span={4}><h3>当前货物总库存：<strong>6万</strong></h3></Col>
+          <Card>
+            <Col span={6}><h3>货物编号：<strong>SDGSWLKH232</strong></h3></Col>
+            <Col span={6}><h3>货物名称：<strong>浓缩果汁500吨</strong></h3></Col>
+            <Col span={4}><h3>货物总重：<strong>500吨</strong></h3></Col>
+            <Col span={4}><h3>货物均价：<strong>6万/吨</strong></h3></Col>
+            <Col span={4}><h3>当前货物总库存：<strong>6万</strong></h3></Col>
+          </Card>
         </Row>
         <br />
         <Row>
