@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Button, Table, Modal, Form, Input, Icon, DatePicker } from 'antd';
+import { Row, Col, Card, Button, Table, Modal, Form, Input, Icon, DatePicker } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -71,14 +71,18 @@ export default class Modify extends PureComponent {
     return (
       <div>
         <Row>
-          <Col span={22} style={{ textAlign: 'right' }}>
-            <Button type="primary" onClick={this.showModal}>新增+</Button>
+          <Col span={22} offset={1} style={{ textAlign: 'right' }}>
+            <Card>
+              <Button type="primary" onClick={this.showModal}>新增+</Button>
+            </Card>
           </Col>
         </Row>
         <br />
         <Row>
           <Col span={22} offset={1}>
-            <Table dataSource={dataSource} columns={columns} />
+            <Card>
+              <Table dataSource={dataSource} columns={columns} />
+            </Card>
           </Col>
         </Row>
         <Modal title="合同相对方详情" visible={this.state.visible} onOk={this.modalHandleOk} onCancel={this.modalHandleOk}>

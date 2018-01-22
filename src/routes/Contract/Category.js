@@ -114,63 +114,67 @@ export default class Category extends PureComponent {
       <PageHeaderLayout title="合同类目列表">
         <Card border={false}>
           <Form onSubmit={this.handleSubmit}>
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={8} sm={24}>
-                <FormItem {...formItemLayout} label="类别名称">
-                  {getFieldDecorator('b_name')(
-                    <Input placeholder="请输入" />
-                  )}
-                </FormItem>
-              </Col>
-              <Col md={8} sm={24}>
-                <FormItem>
-                  <Button type="primary" htmlType="submit">查询</Button>
-                </FormItem>
-              </Col>
-            </Row>
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={8} sm={24}>
-                <Button type="primary" onClick={this.showModal}>新建+</Button>&nbsp;&nbsp;&nbsp;&nbsp;
-                {
-                  selectedRowKeys.length > 0 && (
-                    <Dropdown
-                      overlay={(
-                        <Menu onClick={this.handleMenuClick}>
-                          <Menu.Item key="2">批量删除</Menu.Item>
-                        </Menu>
-                      )}
-                      placement="bottomCenter"
-                    >
-                      <Button>更多操作<Icon type="down" /></Button>
-                    </Dropdown>
-                  )
-                }
-              </Col>
-            </Row>
+            <Card>
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                <Col md={8} sm={24}>
+                  <FormItem {...formItemLayout} label="类别名称">
+                    {getFieldDecorator('b_name')(
+                      <Input placeholder="请输入" />
+                    )}
+                  </FormItem>
+                </Col>
+                <Col md={8} sm={24}>
+                  <FormItem>
+                    <Button type="primary" htmlType="submit">查询</Button>
+                  </FormItem>
+                </Col>
+              </Row>
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                <Col md={8} sm={24}>
+                  <Button type="primary" onClick={this.showModal}>新建+</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  {
+                    selectedRowKeys.length > 0 && (
+                      <Dropdown
+                        overlay={(
+                          <Menu onClick={this.handleMenuClick}>
+                            <Menu.Item key="2">批量删除</Menu.Item>
+                          </Menu>
+                        )}
+                        placement="bottomCenter"
+                      >
+                        <Button>更多操作<Icon type="down" /></Button>
+                      </Dropdown>
+                    )
+                  }
+                </Col>
+              </Row>
+            </Card>
           </Form>
           <br />
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <Alert
-                message={(
-                  <div>
-                    已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                    <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
-                  </div>
-                )}
-                type="info"
-                showIcon
-              />
-              <br />
-              <Table
-                rowSelection={rowSelection}
-                dataSource={data}
-                columns={columns}
-                scroll={{ x: 1366 }}
-                loading={loading}
-              />
-            </Col>
-          </Row>
+          <Card>
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={24} sm={24}>
+                <Alert
+                  message={(
+                    <div>
+                      已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
+                      <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空</a>
+                    </div>
+                  )}
+                  type="info"
+                  showIcon
+                />
+                <br />
+                <Table
+                  rowSelection={rowSelection}
+                  dataSource={data}
+                  columns={columns}
+                  scroll={{ x: 1366 }}
+                  loading={loading}
+                />
+              </Col>
+            </Row>
+          </Card>
           <Modal
             visible={visible}
             title="Title"

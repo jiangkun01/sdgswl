@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Table } from 'antd';
+import { Card, Table } from 'antd';
 
 export default class RContract extends PureComponent {
   render() {
@@ -64,7 +64,9 @@ export default class RContract extends PureComponent {
       });
     }
     return (
-      <Table dataSource={dataSource} columns={columns} bordered />
+      <Card>
+        <Table dataSource={dataSource} columns={columns} bordered />
+      </Card>
     );
   }
 }
