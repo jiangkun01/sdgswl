@@ -10,15 +10,49 @@ import {
   Input,
   DatePicker,
   Checkbox,
+  Divider,
+  Modal,
+  message,
 } from 'antd';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 import styles from '../../Dashboard/Analysis.less';
 import listStyles from '../List.less';
 
 const FormItem = Form.Item;
+const { confirm } = Modal;
 const { RangePicker } = DatePicker;
 @Form.create()
 export default class BasicList extends PureComponent {
+  state = {
+    modalVisible: false,
+  };
+  handleAdd = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err) => {
+      if (!err) {
+        message.success('添加成功');
+        this.setState({
+          modalVisible: false,
+        });
+      }
+    });
+  }
+  handleModalVisible = (flag) => {
+    this.setState({
+      modalVisible: !!flag,
+    });
+  };
+  deteteOne =() => {
+    confirm({
+      title: '确认终止吗？',
+      onOk() {
+        message.error('合同暂无法删除');
+      },
+    });
+  };
+  updateOne =() => {
+    message.error('合同暂无法修改');
+  };
   render() {
     const { loading } = this.props;
     // table
@@ -43,22 +77,30 @@ export default class BasicList extends PureComponent {
       title: '操作',
       key: 'operation',
       fixed: 'right',
-      width: 100,
-      render: () => <a href="#">详情</a>,
+      width: 200,
+      render: () => (
+        <span>
+          <Divider type="vertical" />
+          <a onClick={this.updateOne}>修改</a>
+          <Divider type="vertical" />
+          <a onClick={this.deteteOne}>删除</a>
+        </span>
+      ),
     }];
     const data = [];
-    for (let i = 5; i < 20; i += 1) {
+    for (let i = 0; i < 20; i += 1) {
+      const no = Date.parse(new Date()).toString();
       data.push({
         key: i,
         no: i + 1,
-        agreementNo: `2017SDHSLGGMZH000${i + 1}`,
-        agreementName: `测试合同数据${i + 1}`,
+        agreementNo: `${no}${i + 1}`,
+        agreementName: `货权转入${i + 1}`,
         type: i % 5,
-        bName: `测试数据${i + 1}`,
+        bName: `货权转入${i + 1}`,
         bPhone: '测试数据 2133456',
         companyAddress: 'Lake Street 42',
         companyName: 'SoftLake Co',
-        status: (i + 3) % 2,
+        status: '李雷',
         gender: 'M',
         createDate: new Date(),
       });
@@ -104,7 +146,7 @@ export default class BasicList extends PureComponent {
                       </Row>
                       <div style={{ overflow: 'hidden', marginTop: '2%' }}>
                         <span style={{ float: 'left', marginBottom: 24 }}>
-                          <Button icon="plus" type="primary" style={{ marginRight: '4px' }} ><a href="/#/contract/create" style={{ color: 'white' }}> 发起新合同</a></Button>
+                          <Button icon="plus" type="primary" style={{ marginRight: '4px' }} onClick={this.handleModalVisible}>创建新的履行类目</Button>
                           <Checkbox>只显示我创建的类目</Checkbox>
                         </span>
                         <span style={{ float: 'right', marginBottom: 24 }}>
@@ -125,6 +167,27 @@ export default class BasicList extends PureComponent {
             </Row>
           </div>
         </div>
+        <Modal
+          title="新增履行计划类目"
+          visible={this.state.modalVisible}
+          onOk={this.handleAdd}
+          onCancel={() => this.handleModalVisible()}
+          style={{ width: 1200 }}
+        >
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="履行计划条目"
+          >
+            {getFieldDecorator('mess', {
+              rules: [
+                { required: true, message: '请输入履行计划类目' },
+              ],
+            })(
+              <Input placeholder="请输入" />
+            )}
+          </FormItem>
+        </Modal>
       </PageHeaderLayout>
     );
   }
