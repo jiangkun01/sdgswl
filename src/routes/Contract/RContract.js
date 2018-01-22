@@ -65,7 +65,7 @@ export default class RContract extends PureComponent {
     }
     return (
       <Card>
-        <Table dataSource={dataSource} columns={columns} bordered />
+        <Table dataSource={dataSource} columns={columns} rowKey="id" bordered />
       </Card>
     );
   }

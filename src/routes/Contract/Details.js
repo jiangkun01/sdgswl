@@ -17,15 +17,22 @@ export default class Details extends PureComponent {
   state = {
     tabsKey: '1',
   }
+  componentWillMount() {
+    const dDatas = this.props.location.search.substr(1).split('&');
+    let tK = '1';
+    for (let i = 0; i < dDatas.length; i += 1) {
+      tK = dDatas[i].indexOf('dStatus') >= 0 ? dDatas[i].substr(dDatas[i].indexOf('=') + 1) : '1';
+    }
+    this.tabsCallback(tK);
+  }
   tabsCallback = (key) => {
-    console.log(this.state.status);
     this.setState({ tabsKey: key });
   }
   render() {
     const { tabsKey } = this.state;
     return (
       <PageHeaderLayout title="合同详情">
-        <Card border={false}>
+        <Card border="false">
           <Row>
             <Col span={4} offset={1}><h3>发起人：<strong>李雷</strong></h3></Col>
             <Col span={5}><h3>发起日期：<strong>2017-01-01</strong></h3></Col>
@@ -49,10 +56,10 @@ export default class Details extends PureComponent {
           }
         </Card>
         <br />
-        <Card border={false}>
+        <Card border="false">
           <Row>
             <Col span={22} offset={1}>
-              <Tabs type="card" onChange={this.tabsCallback}>
+              <Tabs defaultActiveKey={tabsKey} type="card" onChange={this.tabsCallback}>
                 <Tabs.TabPane tab="合同基本信息" key="1">
                   <Information />
                 </Tabs.TabPane>

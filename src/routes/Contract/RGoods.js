@@ -112,7 +112,7 @@ export default class RContract extends PureComponent {
         <Row>
           <Col span={24}>
             <Card style={{ width: '100%' }} tabList={[{ key: '1', tab: '出库记录' }, { key: '2', tab: '入库记录' }]} onTabChange={(key) => { this.onTabChange(key); }}>
-              <Table dataSource={dataSource} columns={columns} />
+              <Table dataSource={dataSource} columns={columns} rowKey="id" />
             </Card>
           </Col>
         </Row>

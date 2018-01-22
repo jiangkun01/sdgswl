@@ -112,7 +112,7 @@ export default class Category extends PureComponent {
     }
     return (
       <PageHeaderLayout title="合同类目列表">
-        <Card border={false}>
+        <Card border="false">
           <Form onSubmit={this.handleSubmit}>
             <Card>
               <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
@@ -169,6 +169,7 @@ export default class Category extends PureComponent {
                   rowSelection={rowSelection}
                   dataSource={data}
                   columns={columns}
+                  rowKey="id"
                   scroll={{ x: 1366 }}
                   loading={loading}
                 />
