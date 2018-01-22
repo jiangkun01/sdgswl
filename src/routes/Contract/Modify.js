@@ -81,7 +81,7 @@ export default class Modify extends PureComponent {
         <Row>
           <Col span={22} offset={1}>
             <Card>
-              <Table dataSource={dataSource} columns={columns} />
+              <Table dataSource={dataSource} columns={columns} rowKey="time" />
             </Card>
           </Col>
         </Row>

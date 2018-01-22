@@ -83,7 +83,7 @@ export default class List extends PureComponent {
     this.props.form.validateFields((err) => {
       if (!err) {
         message.success('添加成功');
-        this.props.dispatch(routerRedux.push('/contract/details?status=2'));
+        this.props.dispatch(routerRedux.push('/contract/details?dStatus=2'));
         this.setState({
           modalVisible: false,
         });
@@ -245,7 +245,7 @@ export default class List extends PureComponent {
       fixed: 'right',
       render: () => (
         <span>
-          <a href="/#/contract/details?status=1">详情</a>
+          <a href="/#/contract/details?dStatus=1">详情</a>
           <Divider type="vertical" />
           <a><span onClick={this.handleModalVisible}>创建履行计划</span></a>
           <Divider type="vertical" />
