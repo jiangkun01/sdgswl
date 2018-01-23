@@ -1,10 +1,21 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Button, Table, Card, Form, Input, Icon, DatePicker } from 'antd';
+import { Row, Col, Button, Table, Card, Form, InputNumber, Icon, DatePicker } from 'antd';
 
 const FormItem = Form.Item;
 
+@Form.create()
 export default class Plan extends PureComponent {
+  handleFormSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        this.props.form.resetFields();
+      }
+    });
+  }
   render() {
+    const { getFieldDecorator } = this.props.form;
     const columns = [{
       title: '序号',
       dataIndex: 'id',
@@ -43,6 +54,9 @@ export default class Plan extends PureComponent {
       key: 'createtime',
     }, {
       title: '操作',
+      key: 'operation',
+      fixed: 'right',
+      width: 100,
       render: () => (
         <span>
           <a href="#">变更计划</a>
@@ -71,24 +85,22 @@ export default class Plan extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 6 },
+        sm: { span: 7 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 18 },
+        sm: { span: 15 },
       },
     };
     return (
       <div>
-        <Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24}>
-            <Card>
-              <Table dataSource={dataSource} columns={columns} rowKey="id" />
-            </Card>
+            <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
           </Col>
         </Row>
         <br />
-        <Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button><Icon type="left" />变更计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -98,11 +110,11 @@ export default class Plan extends PureComponent {
           </Col>
         </Row>
         <br />
-        <Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24}>
             <Card>
               <p>履行计划条目更新</p>
-              <Row>
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                 <Col span={10}>
                   <Card tabList={[{ key: 'article', tab: '合同约定' }]}>
                     <h3>采购数量：<strong>200吨</strong></h3>
@@ -111,14 +123,32 @@ export default class Plan extends PureComponent {
                   </Card>
                 </Col>
                 <Col span={12} offset={1}>
-                  <Card tabList={[{ key: 'article', tab: '货物入库' }]}>
-                    <FormItem {...formItemLayout} label="入库数量" >
-                      <Input placeholder="请输入" />
-                    </FormItem>
-                    <FormItem {...formItemLayout} label="入库日期" >
-                      <DatePicker />
-                    </FormItem>
-                  </Card>
+                  <Form onSubmit={this.handleFormSubmit}>
+                    <Card tabList={[{ key: 'article', tab: '货物入库' }]}>
+                      <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                        <FormItem {...formItemLayout} label="入库数量" >
+                          {getFieldDecorator('note', {
+                            initialValue: '0',
+                            rules: [{ required: true, message: '请填写入库数量!' }],
+                          })(
+                            <InputNumber min={1} max={1000000000} />
+                          )}
+                        </FormItem>
+                        <FormItem {...formItemLayout} label="入库日期" >
+                          {getFieldDecorator('time', {
+                            rules: [{ required: true, message: '请选择入库日期!' }],
+                          })(
+                            <DatePicker />
+                          )}
+                        </FormItem>
+                        <Col span={4} offset={18}>
+                          <FormItem {...formItemLayout}>
+                            <Button type="primary" htmlType="submit">入库</Button>
+                          </FormItem>
+                        </Col>
+                      </Row>
+                    </Card>
+                  </Form>
                 </Col>
               </Row>
             </Card>
