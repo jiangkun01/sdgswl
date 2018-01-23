@@ -549,7 +549,7 @@ export default class List extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <Divider>自定义规则</Divider>
+          <Divider>自定义规则（不必输入时间，默认必须有一个截止时间）</Divider>
           {formItems}
           <FormItem {...formItemLayoutWithOutLabel}>
             <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
