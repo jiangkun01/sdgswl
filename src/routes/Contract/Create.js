@@ -277,7 +277,7 @@ export default class create extends PureComponent {
             <Card
               bordered={false}
               bodyStyle={{ padding: 24 }}
-              style={{ marginTop: -3, minHeight: 509, paddingTop: 10 }}
+              style={{ marginTop: -24, minHeight: 509, paddingTop: 10 }}
             >
               <Row>
                 <Col span={7} offset={1}><h2><Icon type="folder" style={{ color: '#3AA1FF', fontSize: 20 }} />&nbsp;<strong>发起新合同</strong></h2></Col>

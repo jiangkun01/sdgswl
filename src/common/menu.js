@@ -44,11 +44,11 @@ const menuData = [{
   icon: 'profile',
   path: 'implementplan',
   children: [{
-    name: '履行计划模板列表',
-    path: 'templat/list',
-  }, {
     name: '履行计划类目列表',
     path: 'category/list',
+  }, {
+    name: '履行计划模板列表',
+    path: 'templat/list',
     // authority: 'admin',
   }, {
     name: '履行计划列表',
