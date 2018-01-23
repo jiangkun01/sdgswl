@@ -139,6 +139,9 @@ export const getRouterData = (app) => {
     '/implementplan/category/list': {
       component: dynamicWrapper(app, [], () => import('../routes/implementplan/category/List')),
     },
+    '/implementplan/templat/list': {
+      component: dynamicWrapper(app, [], () => import('../routes/implementplan/templat/List')),
+    },
     '/result/success': {
       component: dynamicWrapper(app, [], () => import('../routes/Result/Success')),
     },

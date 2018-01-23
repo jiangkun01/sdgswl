@@ -45,7 +45,7 @@ const menuData = [{
   path: 'implementplan',
   children: [{
     name: '履行计划模板列表',
-    path: '5',
+    path: 'templat/list',
   }, {
     name: '履行计划类目列表',
     path: 'category/list',
