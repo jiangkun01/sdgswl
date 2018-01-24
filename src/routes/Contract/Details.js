@@ -33,7 +33,7 @@ export default class Details extends PureComponent {
     return (
       <PageHeaderLayout title="合同详情">
         <Card border="false">
-          <Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col span={4} offset={1}><h3>发起人：<strong>李雷</strong></h3></Col>
             <Col span={5}><h3>发起日期：<strong>2017-01-01</strong></h3></Col>
             <Col span={7}><h3>合同发起部门：<strong>山东高速物流公司管控部</strong></h3></Col>
@@ -46,7 +46,7 @@ export default class Details extends PureComponent {
           }
           {
             tabsKey === '1' && (
-              <Row>
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                 <Col span={5} offset={1}><h3>合同销售总额：<strong>122.4 万元</strong></h3></Col>
                 <Col span={5}><h3>已回款金额：<strong>22 万元</strong></h3></Col>
                 <Col span={5}><h3>已付款金额：<strong>22 万元</strong></h3></Col>
@@ -57,7 +57,7 @@ export default class Details extends PureComponent {
         </Card>
         <br />
         <Card border="false">
-          <Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col span={22} offset={1}>
               <Tabs defaultActiveKey={tabsKey} type="card" onChange={this.tabsCallback}>
                 <Tabs.TabPane tab="合同基本信息" key="1">

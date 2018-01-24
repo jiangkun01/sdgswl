@@ -1,23 +1,53 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Card, Button, Table, Modal, Form, Input, Icon, DatePicker } from 'antd';
+import { Row, Col, Card, Button, Table, Modal, Form, Input, Select, Message, Upload, Icon, DatePicker } from 'antd';
 
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
+@Form.create()
 export default class Modify extends PureComponent {
   state = {
     visible: false,
   }
+  // 显示弹出框
   showModal = () => {
     this.setState({
       visible: true,
     });
   }
-  modalHandleOk = () => {
-    this.setState({
-      visible: false,
+  // 弹出框提交
+  handleModalOk = () => {
+    setTimeout(() => {
+      this.setState({ visible: false });
+      this.props.form.resetFields();
+      Message.success('提交成功！');
+    }, 100);
+  }
+  // 弹出框form方法
+  handleModalSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        this.handleModalOk();
+      }
     });
   }
+  // 文件上传
+  normModalFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
+  // 隐藏弹出框
+  handleModalCancel = () => {
+    this.setState({ visible: false });
+    this.props.form.resetFields();
+  }
   render() {
+    const { getFieldDecorator } = this.props.form;
     const columns = [{
       title: '变更日期',
       dataIndex: 'time',
@@ -38,6 +68,8 @@ export default class Modify extends PureComponent {
       title: '相关变更文件',
       dataIndex: 'filename',
       key: 'filename',
+      fixed: 'right',
+      width: 200,
       render: (text, render) => (
         <span>
           <Icon type="book" /><a href="#">{ render.filename }</a>
@@ -61,47 +93,82 @@ export default class Modify extends PureComponent {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 6 },
+        sm: { span: 7 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 18 },
+        sm: { span: 15 },
       },
     };
     return (
       <div>
-        <Row>
-          <Col span={22} offset={1} style={{ textAlign: 'right' }}>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          <Col span={24} style={{ textAlign: 'right' }}>
             <Card>
               <Button type="primary" onClick={this.showModal}>新增+</Button>
             </Card>
           </Col>
         </Row>
         <br />
-        <Row>
-          <Col span={22} offset={1}>
-            <Card>
-              <Table dataSource={dataSource} columns={columns} rowKey="time" />
-            </Card>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          <Col span={24}>
+            <Table dataSource={dataSource} columns={columns} rowKey="time" scroll={{ x: 1366 }} />
           </Col>
         </Row>
-        <Modal title="合同相对方详情" visible={this.state.visible} onOk={this.modalHandleOk} onCancel={this.modalHandleOk}>
-          <Row>
+        <Modal
+          visible={this.state.visible}
+          title="添加合同文档"
+          onCancel={this.handleModalCancel}
+          footer={[
+            <Button key="back" onClick={this.handleModalCancel}>关闭</Button>,
+            <Button key="submit" type="primary" onClick={this.handleModalSubmit}>提交</Button>,
+          ]}
+        >
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
               <FormItem {...formItemLayout} label="变更日期" >
-                <DatePicker />
+                {getFieldDecorator('time', {
+                  rules: [{ required: true, message: '请填写类别名称!' }],
+                })(
+                  <DatePicker />
+                )}
               </FormItem>
               <FormItem {...formItemLayout} label="变更类型" >
-                <Input placeholder="请输入" />
+                {getFieldDecorator('pName', {
+                  rules: [{ required: true, message: '请选择变更类型!' }],
+                })(
+                  <Select showSearch style={{ width: '100%' }} placeholder="请选择变更类型">
+                    <Select.Option value="1">采购</Select.Option>
+                    <Select.Option value="2">长期</Select.Option>
+                    <Select.Option value="3">单次</Select.Option>
+                    <Select.Option value="4">物流</Select.Option>
+                    <Select.Option value="5">仓储</Select.Option>
+                  </Select>
+                )}
               </FormItem>
               <FormItem {...formItemLayout} label="变更内容摘要" >
-                <Input placeholder="请输入" />
+                {getFieldDecorator('note', {
+                  rules: [{ required: true, message: '请填写变更内容摘要!' }],
+                })(
+                  <TextArea rows={2} />
+                )}
               </FormItem>
               <FormItem {...formItemLayout} label="变更原因" >
-                <Input placeholder="请输入" />
+                {getFieldDecorator('reason', {
+                  rules: [{ required: true, message: '请填写变更原因!' }],
+                })(
+                  <TextArea rows={2} />
+                )}
               </FormItem>
               <FormItem {...formItemLayout} label="相关变更文件" >
-                <Input placeholder="请输入" />
+                {getFieldDecorator('upload', { valuePropName: 'fileList',
+                  getValueFromEvent: this.normModalFile,
+                  rules: [{ required: true, message: '请选择文件!' }],
+                })(
+                  <Upload action="">
+                    <Button><Icon type="upload" />选择文件</Button>
+                  </Upload>
+                )}
               </FormItem>
             </Col>
           </Row>

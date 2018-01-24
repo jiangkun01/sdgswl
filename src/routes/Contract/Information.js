@@ -44,11 +44,11 @@ export default class Information extends PureComponent {
                 <Input value="201701012356" disabled style={{ color: 'black' }} />
               </FormItem>
               <FormItem {...formItemLayout} label="相对方">
-                <Row gutter={8}>
-                  <Col span={20}>
+                <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                  <Col span={16}>
                     <Input value="博涵运输" disabled style={{ color: 'black' }} />
                   </Col>
-                  <Col span={4}>
+                  <Col span={4} offset={1}>
                     <Button onClick={this.showModal}>详情</Button>
                   </Col>
                 </Row>
@@ -66,15 +66,15 @@ export default class Information extends PureComponent {
           </Col>
         </Row>
         <Modal title="合同相对方详情" visible={this.state.visible} onOk={this.modalHandleOk} onCancel={this.modalHandleOk}>
-          <Row>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col md={24} sm={24}>
-              <FormItem {...formItemLayout} label="相对方名称" >
+              <FormItem labelCol={{ span: 7 }} wrapperCol={{ span: 15 }} label="相对方名称" >
                 <Input value="博涵运输" disabled style={{ color: 'black' }} />
               </FormItem>
-              <FormItem {...formItemLayout} label="相对方合同编号" >
+              <FormItem labelCol={{ span: 7 }} wrapperCol={{ span: 15 }} label="相对方合同编号" >
                 <Input value="201701012357" disabled style={{ color: 'black' }} />
               </FormItem>
-              <FormItem {...formItemLayout} label="相对方创建时间" >
+              <FormItem labelCol={{ span: 7 }} wrapperCol={{ span: 15 }} label="相对方创建时间" >
                 <Input value="2008-01-01" disabled style={{ color: 'black' }} />
               </FormItem>
             </Col>

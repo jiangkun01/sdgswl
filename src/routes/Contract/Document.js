@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Button, Table, Divider, Menu, Dropdown, Alert, Modal, DatePicker, message, Icon } from 'antd';
+import { Row, Col, Card, Form, Input, Button, Table, Select, Menu, Dropdown, Alert, Modal, Upload, DatePicker, message, Icon } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 const FormItem = Form.Item;
@@ -11,7 +11,7 @@ const { confirm } = Modal;
   loading: loading.models.rule,
 }))
 @Form.create()
-export default class Category extends PureComponent {
+export default class Document extends PureComponent {
   state = {
     selectedRowKeys: [],
     loading: false,
@@ -52,7 +52,7 @@ export default class Category extends PureComponent {
       message.success('提交成功！');
     }, 100);
   }
-  // 弹出框form表单
+  // 弹出框form方法
   handleModalSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -61,6 +61,14 @@ export default class Category extends PureComponent {
         this.handleModalOk();
       }
     });
+  }
+  // 文件上传
+  normModalFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
   }
   // 隐藏弹出框
   handleModalCancel = () => {
@@ -91,20 +99,21 @@ export default class Category extends PureComponent {
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
     const { getFieldDecorator } = this.props.form;
+    // 表格多选框选中操作
     const rowSelection = {
       selectedRowKeys,
       onChange: this.handleRowSelectChange,
     };
+    // FormItem控件间隔
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
         sm: { span: 8 },
       },
       wrapperCol: {
-        xs: { span: 24 },
         sm: { span: 16 },
       },
     };
+    // 表格列头
     const columns = [
       {
         title: '编号',
@@ -114,7 +123,7 @@ export default class Category extends PureComponent {
         sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
       },
       {
-        title: '类目名称',
+        title: '文档名称',
         dataIndex: 'name',
         key: 'name',
         filters: [
@@ -128,6 +137,7 @@ export default class Category extends PureComponent {
         filteredValue: filteredInfo.name || null,
         onFilter: (value, record) => record.name.includes(value),
       },
+      { title: '所属合同', dataIndex: 'pname', key: 'pname' },
       { title: '添加时间', dataIndex: 'addtime', key: 'addtime' },
       { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime' },
       {
@@ -138,17 +148,17 @@ export default class Category extends PureComponent {
         render: (/* text, record */) => (
           <span>
             <a onClick={this.showModal} >修改</a>
-            <Divider type="vertical" />
-            <a onClick={this.handleMenuClick} >删除</a>
           </span>
         ),
       }];
+    // 表格数据
     const data = [];
     const dataName = ['采购合同', '物流合同', '仓储合同', '销售合同', '长期协议合同', '单次合同', '框架合同合同'];
     for (let i = 1; i < 8; i += 1) {
       data.push({
         id: `${i}`,
-        name: dataName[i - 1],
+        name: `${dataName[i - 1].substr(0, dataName[i - 1].indexOf('合同'))}计划`,
+        pname: dataName[i - 1],
         addtime: `2017-0${i}-0${i}`,
         updatetime: `2017-0${i}-0${i + 1}`,
       });
@@ -159,7 +169,12 @@ export default class Category extends PureComponent {
           <Form onSubmit={this.handleSubmit}>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <Col md={6}>
-                <FormItem {...formItemLayout} label="类目名称">
+                <FormItem {...formItemLayout} label="类别名称">
+                  <Input placeholder="请输入" />
+                </FormItem>
+              </Col>
+              <Col md={6}>
+                <FormItem {...formItemLayout} label="合同名称">
                   <Input placeholder="请输入" />
                 </FormItem>
               </Col>
@@ -219,20 +234,36 @@ export default class Category extends PureComponent {
           </Row>
           <Modal
             visible={visible}
-            title="添加合同类别"
+            title="添加合同文档"
             onCancel={this.handleModalCancel}
             footer={[
               <Button key="back" onClick={this.handleModalCancel}>关闭</Button>,
-              <Button key="submit" loading={loading} onClick={this.handleModalSubmit}>提交</Button>,
+              <Button key="submit" type="primary" onClick={this.handleModalSubmit}>提交</Button>,
             ]}
           >
             <Form>
-              <Row>
-                <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 18 }} label="类别名称">
-                  {getFieldDecorator('userName', {
-                    rules: [{ required: true, message: '请填写类别名称!' }],
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 18 }} label="所属合同">
+                  {getFieldDecorator('pName', {
+                    rules: [{ required: true, message: '请选择所属合同名称!' }],
                   })(
-                    <Input placeholder="请输入" />
+                    <Select showSearch style={{ width: '100%' }} placeholder="请选择所属合同名称">
+                      <Select.Option value="1">{dataName[1]}</Select.Option>
+                      <Select.Option value="2">{dataName[2]}</Select.Option>
+                      <Select.Option value="3">{dataName[3]}</Select.Option>
+                      <Select.Option value="4">{dataName[4]}</Select.Option>
+                      <Select.Option value="5">{dataName[5]}</Select.Option>
+                    </Select>
+                  )}
+                </FormItem>
+                <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 18 }} label="类别名称">
+                  {getFieldDecorator('upload', { valuePropName: 'fileList',
+                    getValueFromEvent: this.normModalFile,
+                    rules: [{ required: true, message: '请选择文件!' }],
+                  })(
+                    <Upload action="">
+                      <Button><Icon type="upload" />选择文件</Button>
+                    </Upload>
                   )}
                 </FormItem>
               </Row>
