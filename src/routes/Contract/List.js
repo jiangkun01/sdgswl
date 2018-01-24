@@ -458,7 +458,7 @@ export default class List extends PureComponent {
                 { required: true, message: '请输入预计完成时间' },
               ],
             })(
-              <Input />
+              <DatePicker />
             )}
           </FormItem>
           <FormItem

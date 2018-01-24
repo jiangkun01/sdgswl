@@ -187,9 +187,9 @@ export default class List extends PureComponent {
       //     <a href="#">Action 一 {record.type1}</a>
       //   </span>
       // ),
-      render: (text, record) => (
+      render: () => (
         <a>
-          <span onClick={() => this.handleModalVisible(record.type1)}>详情</span>
+          <span onClick={() => this.handleModalVisible(2)}>详情</span>
         </a>),
     }];
     const columnsVo = [{
