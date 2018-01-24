@@ -85,6 +85,8 @@ export default class Document extends PureComponent {
         message.success('提交成功！');
       },
     });
+    this.setState({ modalUpdate: false, modalMessage: false });
+    this.props.form.resetFields();
   }
   // 隐藏弹出框
   handleModalCancel = () => {
@@ -246,14 +248,23 @@ export default class Document extends PureComponent {
             </Col>
           </Row>
 
-          <Modal title="合同文档详情" visible={modalMessage} onOk={this.handleModalCancel} onCancel={this.handleModalCancel}>
+          <Modal
+            title="合同文档详情"
+            visible={modalMessage}
+            onOk={this.handleModalCancel}
+            onCancel={this.handleModalCancel}
+            footer={[
+              <Button key="back" onClick={this.handleModalCancel}>关闭</Button>,
+              <Button key="submit" type="primary" onClick={this.handleModalCancelClick}>提交至文档库</Button>,
+            ]}
+          >
             <List
               size="small"
               header={<h3><strong>合同文本</strong></h3>}
               bordered
               dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
               renderItem={item => (
-                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                <List.Item>
                   &nbsp;&nbsp;
                   <Icon type="file" />
                   <a style={{ color: 'black' }}>{item}</a>
@@ -266,7 +277,7 @@ export default class Document extends PureComponent {
               bordered
               dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
               renderItem={item => (
-                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                <List.Item>
                   &nbsp;&nbsp;
                   <Icon type="file" />
                   <a style={{ color: 'black' }}>{item}</a>
@@ -279,7 +290,7 @@ export default class Document extends PureComponent {
               bordered
               dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
               renderItem={item => (
-                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                <List.Item>
                   &nbsp;&nbsp;
                   <Icon type="file" />
                   <a style={{ color: 'black' }}>{item}</a>
@@ -292,7 +303,7 @@ export default class Document extends PureComponent {
               bordered
               dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
               renderItem={item => (
-                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                <List.Item>
                   &nbsp;&nbsp;
                   <Icon type="file" />
                   <a style={{ color: 'black' }}>{item}</a>
