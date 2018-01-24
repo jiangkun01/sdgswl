@@ -458,7 +458,7 @@ export default class List extends PureComponent {
                 { required: true, message: '请输入预计完成时间' },
               ],
             })(
-              <DatePicker />
+              <DatePicker style={{ width: '100%' }} />
             )}
           </FormItem>
           <FormItem
@@ -499,7 +499,7 @@ export default class List extends PureComponent {
                 { required: true, message: '请选择履行计划模板' },
               ],
             })(
-              <Select style={{ width: 200 }} showSearch placeholder="请选择履行计划模板" onChange={this.changeCTemplat}>
+              <Select style={{ width: 295 }} showSearch placeholder="请选择履行计划模板" onChange={this.changeCTemplat}>
                 <Option value="0">货物入库</Option>
                 <Option value="1">货物出库</Option>
               </Select>
@@ -518,7 +518,7 @@ export default class List extends PureComponent {
                   { required: isInputRequired, message: '请输入入库数量' },
                 ],
               })(
-                <InputNumber min={1} max={10000000} />
+                <InputNumber style={{ width: 295 }} min={1} max={10000000} />
               )}
               <span>/吨</span>
             </FormItem>
@@ -533,7 +533,7 @@ export default class List extends PureComponent {
                   { required: isInputRequired, message: '请输入入库时间' },
                 ],
               })(
-                <DatePicker />
+                <DatePicker style={{ width: 295 }} />
               )}
             </FormItem>
           </div>
@@ -549,7 +549,7 @@ export default class List extends PureComponent {
                   { required: isOutRequired, message: '请输入出库数量' },
                 ],
               })(
-                <InputNumber min={1} max={10000000} />
+                <InputNumber style={{ width: 295 }} min={1} max={10000000} />
               )}
               <span>/吨</span>
             </FormItem>
@@ -564,7 +564,7 @@ export default class List extends PureComponent {
                   { required: isOutRequired, message: '请输入出库时间' },
                 ],
               })(
-                <DatePicker />
+                <DatePicker style={{ width: 295 }} />
               )}
             </FormItem>
           </div>

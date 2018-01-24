@@ -25,6 +25,11 @@ import styles from '../Dashboard/Analysis.less';
 const FormItem = Form.Item;
 @Form.create()
 export default class BasicList extends PureComponent {
+  routeTitle = () => {
+    return (
+      <div><span style={{ fontSize: 15 }}><a href="/#/business/list">业务管理</a></span>/<span style={{ fontSize: 10 }}>业务详情</span></div>
+    );
+  }
   render() {
     const { loading } = this.props;
     const topColResponsiveProps = {
@@ -146,7 +151,7 @@ export default class BasicList extends PureComponent {
       key: 'operation',
       fixed: 'right',
       width: 100,
-      render: () => <a href="#">详情</a>,
+      render: () => <a href="/#/contract/details?dStatus=1">详情</a>,
     }];
     const data = [];
     for (let i = 5; i < 20; i += 1) {
@@ -167,7 +172,7 @@ export default class BasicList extends PureComponent {
     }
     const { getFieldDecorator } = this.props.form;
     return (
-      <PageHeaderLayout>
+      <PageHeaderLayout title={this.routeTitle()}>
         <div className={styles.standardList}>
           <BackTop />
           <div style={{ padding: '30px' }}>
@@ -259,7 +264,7 @@ export default class BasicList extends PureComponent {
                   bodyStyle={{ padding: 24 }}
                   style={{ minHeight: 300 }}
                 >
-                  <h4 style={{ marginTop: 8, marginBottom: 32 }}>采购额</h4>
+                  <h4 style={{ marginTop: 8, marginBottom: 32 }}>回款金额 ￥1200 （万）</h4>
                   <Pie
                     hasLegend
                     subTitle="回款金额"
@@ -307,7 +312,7 @@ export default class BasicList extends PureComponent {
                     </Row>
                     <div style={{ overflow: 'hidden', marginTop: '2%' }}>
                       <span style={{ float: 'left', marginBottom: 24 }}>
-                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }}>发起新合同</Button>
+                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} ><a href="/#/contract/create" style={{ color: 'white' }}> 发起新合同</a></Button>
                       </span>
                       <span style={{ float: 'right', marginBottom: 24 }}>
                         <Button type="primary" htmlType="submit">查询</Button>

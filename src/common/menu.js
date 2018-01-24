@@ -1,19 +1,19 @@
 const menuData = [{
   name: '首页',
   icon: 'dashboard',
-  path: 'dashboard',
-  children: [{
-    name: '关键数据展示',
-    path: 'analysis',
-  }],
+  path: 'dashboard/analysis',
+  // children: [{
+  //   name: '关键数据展示',
+  //   path: 'analysis',
+  // }],
 }, {
   name: '业务管理',
   icon: 'table',
-  path: 'Business',
-  children: [{
-    name: '业务列表',
-    path: 'list',
-  }],
+  path: 'business/list',
+  // children: [{
+  //   name: '业务列表',
+  //   path: 'list',
+  // }],
 }, {
   name: '合同管理',
   icon: 'form',
