@@ -20,6 +20,7 @@ export default class create extends PureComponent {
     value: 2,
     isRelevance: 'block',
     isNoRelevance: 'none',
+    isBu: 'none',
   };
   onChange = (e) => {
     if (e.target.value === 1) {
@@ -52,12 +53,18 @@ export default class create extends PureComponent {
       });
     }
   };
+  changeMlinkB = () => {
+    this.setState({
+      isBu: 'block',
+    });
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err) => {
-      if (!err) {
-        this.props.dispatch(routerRedux.push('/contract/list'));
-      }
+      // if (!err) {
+      console.log(err);
+      this.props.dispatch(routerRedux.push('/contract/details?dStatus=1'));
+      // }
     });
   }
   normFile = (e) => {
@@ -392,7 +399,7 @@ export default class create extends PureComponent {
                         { required: true, message: '请选择向对方' },
                       ],
                     })(
-                      <Select showSearch placeholder="请选择向对方" onChange={this.changeMlink} >
+                      <Select showSearch placeholder="请选择向对方" onChange={this.changeMlinkB} >
                         <Option value="测试数据1">测试数据1</Option>
                         <Option value="测试数据2">测试数据2</Option>
                         <Option value="测试数据3">测试数据3</Option>
@@ -476,7 +483,7 @@ export default class create extends PureComponent {
                           { required: true, message: '请选择关联业务' },
                         ],
                       })(
-                        <Select showSearch placeholder="选择关联已有业务" onChange={this.changeMlink} >
+                        <Select showSearch placeholder="选择关联已有业务" onChange={this.changeMlinkB} >
                           <Option value="测试数据1">测试数据1</Option>
                           <Option value="测试数据2">测试数据2</Option>
                           <Option value="测试数据3">测试数据3</Option>
@@ -488,6 +495,7 @@ export default class create extends PureComponent {
                       {...formItemLayout}
                       label="选择业务中的货物"
                       hasFeedback
+                      style={{ display: this.state.isBu }}
                     >
                       <Table {...formItemLayout} columns={columns} dataSource={data} />
                     </FormItem>

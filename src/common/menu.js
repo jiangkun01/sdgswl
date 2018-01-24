@@ -29,11 +29,6 @@ const menuData = [{
     name: '合同类目列表',
     path: 'category',
   }, {
-    name: '合同模板列表',
-    // authority: 'admin',
-    // path: 'advanced-form',
-    path: '3',
-  }, {
     name: '合同相关文档列表',
     // authority: 'admin',
     // path: 'advanced-form',
@@ -49,10 +44,6 @@ const menuData = [{
   }, {
     name: '履行计划模板列表',
     path: 'templat/list',
-    // authority: 'admin',
-  }, {
-    name: '履行计划列表',
-    path: '7',
     // authority: 'admin',
   }],
 }, {
