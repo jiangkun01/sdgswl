@@ -35,21 +35,28 @@ let uuid = 1;
 export default class List extends PureComponent {
   state = {
     modalVisible: false,
+    payModalVisible: false,
+    qualityModalVisible: false,
     modelCreateVisible: false,
     formLable: '',
     formLable1: '',
-    // value: 1,
+    isInputNumber: 'none',
   };
-  // radio 的变化
-  // onChange = (e) => {
-  //   this.setState({
-  //     value: e.target.value,
-  //   });
-  // }
+  onChange = (e) => {
+    console.log('radio checked', e.target.value);
+  };
   handleModalVisible = (flag) => {
-    if (flag === 0) {
+    if (flag === 7) {
       this.setState({
-        modalVisible: true,
+        payModalVisible: !!flag,
+      });
+    } else if (flag === 8) {
+      this.setState({
+        qualityModalVisible: !!flag,
+      });
+    } else if ((flag % 2) === 0) {
+      this.setState({
+        modalVisible: !!flag,
         formLable: '入库数量',
         formLable1: '入库时间',
       });
@@ -74,7 +81,7 @@ export default class List extends PureComponent {
         });
       }
     });
-  }
+  };
   updateOne =(value) => {
     message.error('暂无法修改');
     console.log(value);
@@ -130,11 +137,14 @@ export default class List extends PureComponent {
   hiddenModalVisible = () => {
     this.setState({
       modalVisible: false,
+      payModalVisible: false,
+      qualityModalVisible: false,
     });
   };
   render() {
     const { loading } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { isInputNumber } = this.state;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -146,8 +156,8 @@ export default class List extends PureComponent {
       },
     };
     // table
-    const bType = ['货物入库', '货物出库', '物流', '仓储', '质检'];
-    const bTypeVo = ['货权转入', '货权转出', '物流', '仓储', '质检'];
+    const bType = ['货物入库', '货物出库', '物流', '仓储', '质检', '其他'];
+    const bTypeVo = ['货权转入', '货权转出', '物流', '支付', '质检', '其他'];
     const statusMap = ['default', 'processing', 'success', 'success', 'processing', 'error'];
     const columns = [{
       title: '模板编号',
@@ -177,9 +187,9 @@ export default class List extends PureComponent {
       //     <a href="#">Action 一 {record.type1}</a>
       //   </span>
       // ),
-      render: (text, record) => (
+      render: () => (
         <a>
-          <span onClick={() => this.handleModalVisible(record.type1)}>详情</span>
+          <span onClick={() => this.handleModalVisible(2)}>详情</span>
         </a>),
     }];
     const columnsVo = [{
@@ -195,6 +205,32 @@ export default class List extends PureComponent {
     }, {
       title: '模板类目',
       dataIndex: 'type1',
+      filters: [
+        {
+          text: bTypeVo[0],
+          value: 0,
+        },
+        {
+          text: bTypeVo[1],
+          value: 1,
+        },
+        {
+          text: bTypeVo[2],
+          value: 2,
+        },
+        {
+          text: bTypeVo[3],
+          value: 3,
+        },
+        {
+          text: bTypeVo[4],
+          value: 4,
+        },
+        {
+          text: bTypeVo[5],
+          value: 5,
+        },
+      ],
       render(val) {
         return <Badge status={statusMap[val]} text={bTypeVo[val]} />;
       },
@@ -220,7 +256,7 @@ export default class List extends PureComponent {
       // ),
       render: (text, record) => (
         <a>
-          <span onClick={() => this.handleModalVisible(record.type1)}>详情</span>
+          <span onClick={() => this.handleModalVisible(record.key)}>详情</span>
           <Divider type="vertical" />
           <span onClick={() => this.updateOne(record.agreementNo)}>修改</span>
           <Divider type="vertical" />
@@ -249,21 +285,55 @@ export default class List extends PureComponent {
     const dataVo = [];
     for (let i = 5; i < 25; i += 1) {
       const no = Date.parse(new Date()).toString();
-      dataVo.push({
-        key: i,
-        no: i + 1,
-        agreementNo: `${no}${i + 1}`,
-        agreementName: `货权转入${i + 1}`,
-        type: '自定义模板测试数据',
-        type1: i % 2,
-        bName: `货权转入${i + 1}`,
-        bPhone: '测试数据 2133456',
-        companyAddress: 'Lake Street 42',
-        companyName: 'SoftLake Co',
-        status: '李雷',
-        gender: 'M',
-        createDate: new Date(),
-      });
+      if (i === 7) {
+        dataVo.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `${no}${i + 1}`,
+          agreementName: `货权转入${i + 1}`,
+          type: '自定义模板测试数据',
+          type1: 3,
+          bName: `货权转入${i + 1}`,
+          bPhone: '测试数据 2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: '李雷',
+          gender: 'M',
+          createDate: new Date(),
+        });
+      } else if (i === 8) {
+        dataVo.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `${no}${i + 1}`,
+          agreementName: `货权转入${i + 1}`,
+          type: '自定义模板测试数据',
+          type1: 4,
+          bName: `货权转入${i + 1}`,
+          bPhone: '测试数据 2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: '李雷',
+          gender: 'M',
+          createDate: new Date(),
+        });
+      } else {
+        dataVo.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `${no}${i + 1}`,
+          agreementName: `货权转入${i + 1}`,
+          type: '自定义模板测试数据',
+          type1: i % 2,
+          bName: `货权转入${i + 1}`,
+          bPhone: '测试数据 2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: '李雷',
+          gender: 'M',
+          createDate: new Date(),
+        });
+      }
     }
     getFieldDecorator('keys', { initialValue: [] });
     const keys = getFieldValue('keys');
@@ -296,10 +366,11 @@ export default class List extends PureComponent {
             hasFeedback
           >
             {getFieldDecorator(`inputType[${k}]`, { initialValue: 1 })(
-              <RadioGroup>
+              <RadioGroup OnChange={this.onChange}>
                 <Radio value={1}>文字输入框</Radio>
                 <Radio value={2}>数字输入框</Radio>
                 <Radio value={3}>文本输入框</Radio>
+                <Radio value={4}>完成按钮</Radio>
               </RadioGroup>
             )}
           </FormItem>
@@ -309,16 +380,23 @@ export default class List extends PureComponent {
             required={false}
             key={`unit[${k}]`}
             hasFeedback
+            type={{ display: isInputNumber }}
           >
-            {getFieldDecorator(`unit[${k}]`, {
-              validateTrigger: ['onChange', 'onBlur'],
-              rules: [{
-                required: true,
-                whitespace: true,
-                message: '请输入规则描述单位',
-              }],
-            })(
-              <Input placeholder="请输入规则描述单位" />
+            {getFieldDecorator(`unit[${k}]`)(
+              <div>
+                <Input placeholder="请输入规则描述单位" /><Checkbox />
+              </div>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label={`时间节点${index + 1}`}
+            required={false}
+            key={`r[${k}]`}
+            hasFeedback
+          >
+            {getFieldDecorator(`r[${k}]`)(
+              <Checkbox >条目选择</Checkbox>
             )}
           </FormItem>
           <Divider>
@@ -352,39 +430,21 @@ export default class List extends PureComponent {
                     >
                       <Form className={listStyles.tableListForm} layout="inline">
                         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                          <Col md={6} sm={24}>
+                          <Col md={8} sm={24}>
                             <FormItem label="模板编号">
                               {getFieldDecorator('no')(
                                 <Input placeholder="请输入" />
                               )}
                             </FormItem>
                           </Col>
-                          <Col md={6} sm={24}>
+                          <Col md={8} sm={24}>
                             <FormItem label="模板名称">
                               {getFieldDecorator('name')(
                                 <Input placeholder="请输入" />
                               )}
                             </FormItem>
                           </Col>
-                          <Col md={6} sm={24}>
-                            <FormItem label="履行计划类目">
-                              {getFieldDecorator('type')(
-                                <Select
-                                  showSearch
-                                  style={{ width: 200 }}
-                                  placeholder="选择履行计划类目"
-                                  optionFilterProp="children"
-                                >
-                                  <Option value="input">货权转入</Option>
-                                  <Option value="output">货权转出</Option>
-                                  <Option value="pay">支付</Option>
-                                  <Option value="收款">收款</Option>
-                                  <Option value="其他">其他</Option>
-                                </Select>
-                              )}
-                            </FormItem>
-                          </Col>
-                          <Col md={6} sm={24}>
+                          <Col md={8} sm={24}>
                             <FormItem label="创建时间">
                               <RangePicker />
                             </FormItem>
@@ -423,39 +483,21 @@ export default class List extends PureComponent {
                     >
                       <Form className={listStyles.tableListForm} layout="inline">
                         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                          <Col md={6} sm={24}>
+                          <Col md={8} sm={24}>
                             <FormItem label="模板编号">
                               {getFieldDecorator('no')(
                                 <Input placeholder="请输入" />
                               )}
                             </FormItem>
                           </Col>
-                          <Col md={6} sm={24}>
+                          <Col md={8} sm={24}>
                             <FormItem label="模板名称">
                               {getFieldDecorator('name')(
                                 <Input placeholder="请输入" />
                               )}
                             </FormItem>
                           </Col>
-                          <Col md={6} sm={24}>
-                            <FormItem label="履行计划类目">
-                              {getFieldDecorator('type')(
-                                <Select
-                                  showSearch
-                                  style={{ width: 200 }}
-                                  placeholder="选择履行计划类目"
-                                  optionFilterProp="children"
-                                >
-                                  <Option value="input">货权转入</Option>
-                                  <Option value="output">货权转出</Option>
-                                  <Option value="pay">支付</Option>
-                                  <Option value="收款">收款</Option>
-                                  <Option value="其他">其他</Option>
-                                </Select>
-                              )}
-                            </FormItem>
-                          </Col>
-                          <Col md={6} sm={24}>
+                          <Col md={8} sm={24}>
                             <div style={{ overflow: 'hidden', marginTop: '2%' }}>
                               <span style={{ float: 'right', marginBottom: 24 }}>
                                 <Button type="primary" htmlType="submit">查询</Button>
@@ -497,7 +539,150 @@ export default class List extends PureComponent {
           <FormItem
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 15 }}
+            label="单价"
+            hasFeedback
+          >
+            <InputNumber disabled min={1} max={10000000} />
+            <span>元/吨</span>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="总金额"
+            hasFeedback
+          >
+            <InputNumber disabled min={1} max={10000000} />
+            <span>万元</span>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
             label={this.state.formLable1}
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+        </Modal>
+        <Modal
+          title="履行计划模板详情"
+          visible={this.state.payModalVisible}
+          onOk={this.hiddenModalVisible}
+          onCancel={() => this.hiddenModalVisible()}
+          style={{ width: 1200 }}
+        >
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="首款金额"
+            hasFeedback
+          >
+            <InputNumber disabled /><span>万元</span>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="首款时间"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="尾款金额"
+            hasFeedback
+          >
+            <InputNumber disabled /><span>万元</span>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="尾款时间"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="支付笔数"
+            hasFeedback
+          >
+            <InputNumber disabled />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="第一笔金额"
+            hasFeedback
+          >
+            <InputNumber disabled /><span>万元</span>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="第一笔时间"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+          <FormItem {...formItemLayoutWithOutLabel}>
+            <Button type="dashed" style={{ width: '60%' }}>
+              <Icon type="plus" /> 增加分次明细
+            </Button>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="发票开出时间"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="到达时间"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+        </Modal>
+        <Modal
+          title="履行计划模板详情"
+          visible={this.state.qualityModalVisible}
+          onOk={this.hiddenModalVisible}
+          onCancel={() => this.hiddenModalVisible()}
+          style={{ width: 1200 }}
+        >
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="货物取样时间"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="到达第三方"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="质检时间"
+            hasFeedback
+          >
+            <DatePicker disabled />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="质检报告时间"
             hasFeedback
           >
             <DatePicker disabled />

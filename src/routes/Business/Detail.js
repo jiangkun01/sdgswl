@@ -11,6 +11,7 @@ import {
   Button,
   Input,
   Badge,
+  BackTop,
 } from 'antd';
 import {
   ChartCard,
@@ -168,6 +169,7 @@ export default class BasicList extends PureComponent {
     return (
       <PageHeaderLayout>
         <div className={styles.standardList}>
+          <BackTop />
           <div style={{ padding: '30px' }}>
             <Row gutter={16} style={{ marginTop: '-30px' }}>
               <Col {...topColResponsiveProps}>
