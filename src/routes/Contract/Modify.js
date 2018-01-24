@@ -72,7 +72,7 @@ export default class Modify extends PureComponent {
       width: 200,
       render: (text, render) => (
         <span>
-          <Icon type="book" /><a href="#">{ render.filename }</a>
+          <Icon type="file" /><a href="#">{ render.filename }</a>
         </span>
       ),
     }];

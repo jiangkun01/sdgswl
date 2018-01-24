@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Button, Table, Select, Menu, Dropdown, Alert, Modal, Upload, DatePicker, message, Icon } from 'antd';
+import { Row, Col, Card, Form, Input, Button, Table, Divider, Select, Menu, Dropdown, List, Alert, Modal, Upload, DatePicker, message, Icon } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 const FormItem = Form.Item;
@@ -15,7 +15,8 @@ export default class Document extends PureComponent {
   state = {
     selectedRowKeys: [],
     loading: false,
-    visible: false,
+    modalUpdate: false,
+    modalMessage: false,
     filteredInfo: null,
     sortedInfo: null,
   };
@@ -23,7 +24,7 @@ export default class Document extends PureComponent {
   componentWillMount() {
     this.setState({ loading: true });
     setTimeout(() => {
-      this.setState({ loading: false, visible: false });
+      this.setState({ loading: false });
     }, 1000);
   }
   // 表格多选框
@@ -37,17 +38,23 @@ export default class Document extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
   }
-  // 显示弹出框
-  showModal = () => {
+  // 显示详情弹出框
+  showModalMessage = () => {
     this.setState({
-      visible: true,
+      modalMessage: true,
+    });
+  }
+  // 显示修改弹出框
+  showModalUpdate = () => {
+    this.setState({
+      modalUpdate: true,
     });
   }
   // 弹出框提交
   handleModalOk = () => {
     this.setState({ loading: true });
     setTimeout(() => {
-      this.setState({ loading: false, visible: false });
+      this.setState({ loading: false, modalUpdate: false, modalMessage: false });
       this.props.form.resetFields();
       message.success('提交成功！');
     }, 100);
@@ -70,9 +77,18 @@ export default class Document extends PureComponent {
     }
     return e && e.fileList;
   }
+  // 提交到文档库
+  handleModalCancelClick = () => {
+    confirm({
+      title: '确认提交到文档库？',
+      onOk() {
+        message.success('提交成功！');
+      },
+    });
+  }
   // 隐藏弹出框
   handleModalCancel = () => {
-    this.setState({ visible: false });
+    this.setState({ modalUpdate: false, modalMessage: false });
     this.props.form.resetFields();
   }
   // 删除
@@ -94,7 +110,7 @@ export default class Document extends PureComponent {
     });
   }
   render() {
-    const { selectedRowKeys, visible, loading } = this.state;
+    const { selectedRowKeys, modalUpdate, modalMessage, loading } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -123,7 +139,7 @@ export default class Document extends PureComponent {
         sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
       },
       {
-        title: '文档名称',
+        title: '合同名称',
         dataIndex: 'name',
         key: 'name',
         filters: [
@@ -137,7 +153,7 @@ export default class Document extends PureComponent {
         filteredValue: filteredInfo.name || null,
         onFilter: (value, record) => record.name.includes(value),
       },
-      { title: '所属合同', dataIndex: 'pname', key: 'pname' },
+      { title: '合同文档数量', dataIndex: 'number', key: 'number' },
       { title: '添加时间', dataIndex: 'addtime', key: 'addtime' },
       { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime' },
       {
@@ -147,7 +163,9 @@ export default class Document extends PureComponent {
         width: 120,
         render: (/* text, record */) => (
           <span>
-            <a onClick={this.showModal} >修改</a>
+            <a onClick={this.showModalMessage} >详情</a>
+            <Divider type="vertical" />
+            <a onClick={this.showModalUpdate} >修改</a>
           </span>
         ),
       }];
@@ -156,9 +174,9 @@ export default class Document extends PureComponent {
     const dataName = ['采购合同', '物流合同', '仓储合同', '销售合同', '长期协议合同', '单次合同', '框架合同合同'];
     for (let i = 1; i < 8; i += 1) {
       data.push({
-        id: `${i}`,
-        name: `${dataName[i - 1].substr(0, dataName[i - 1].indexOf('合同'))}计划`,
-        pname: dataName[i - 1],
+        id: i,
+        name: dataName[i - 1],
+        number: i * 2,
         addtime: `2017-0${i}-0${i}`,
         updatetime: `2017-0${i}-0${i + 1}`,
       });
@@ -168,11 +186,6 @@ export default class Document extends PureComponent {
         <Card border="false">
           <Form onSubmit={this.handleSubmit}>
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={6}>
-                <FormItem {...formItemLayout} label="类别名称">
-                  <Input placeholder="请输入" />
-                </FormItem>
-              </Col>
               <Col md={6}>
                 <FormItem {...formItemLayout} label="合同名称">
                   <Input placeholder="请输入" />
@@ -232,8 +245,63 @@ export default class Document extends PureComponent {
               />
             </Col>
           </Row>
+
+          <Modal title="合同文档详情" visible={modalMessage} onOk={this.handleModalCancel} onCancel={this.handleModalCancel}>
+            <List
+              size="small"
+              header={<h3><strong>合同文本</strong></h3>}
+              bordered
+              dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
+              renderItem={item => (
+                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                  &nbsp;&nbsp;
+                  <Icon type="file" />
+                  <a style={{ color: 'black' }}>{item}</a>
+                </List.Item>)}
+            />
+            <br />
+            <List
+              size="small"
+              header={<h3><strong>补充协议</strong></h3>}
+              bordered
+              dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
+              renderItem={item => (
+                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                  &nbsp;&nbsp;
+                  <Icon type="file" />
+                  <a style={{ color: 'black' }}>{item}</a>
+                </List.Item>)}
+            />
+            <br />
+            <List
+              size="small"
+              header={<h3><strong>变更确认函</strong></h3>}
+              bordered
+              dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
+              renderItem={item => (
+                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                  &nbsp;&nbsp;
+                  <Icon type="file" />
+                  <a style={{ color: 'black' }}>{item}</a>
+                </List.Item>)}
+            />
+            <br />
+            <List
+              size="small"
+              header={<h3><strong>审批单</strong></h3>}
+              bordered
+              dataSource={['长期运输一期合同', '长期运输二期合同', '长期运输三期合同', '长期运输四期合同', '长期运输五期合同']}
+              renderItem={item => (
+                <List.Item actions={[<a onClick={this.handleModalCancelClick}>添加到文档库</a>]}>
+                  &nbsp;&nbsp;
+                  <Icon type="file" />
+                  <a style={{ color: 'black' }}>{item}</a>
+                </List.Item>)}
+            />
+          </Modal>
+
           <Modal
-            visible={visible}
+            visible={modalUpdate}
             title="添加合同文档"
             onCancel={this.handleModalCancel}
             footer={[
