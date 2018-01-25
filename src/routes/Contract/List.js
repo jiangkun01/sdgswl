@@ -53,6 +53,7 @@ export default class List extends PureComponent {
     isOutput: 'none',
     isInputRequired: false,
     isOutRequired: false,
+    destroyOnClose: true,
   };
   // handleMenuClick = (record, e) => {
   //   if (e.key === '2') {
@@ -234,11 +235,6 @@ export default class List extends PureComponent {
       render: val => <span>{val}吨</span>,
       sorter: (a, b) => a.gAmount - b.gAmount,
     }, {
-      title: '货物总价',
-      dataIndex: 'gSumPrice',
-      render: val => <span>{val}万元</span>,
-      sorter: (a, b) => a.gSumPrice - b.gSumPrice,
-    }, {
       title: '操作',
       key: 'operation',
       width: 260,
@@ -257,23 +253,43 @@ export default class List extends PureComponent {
     }];
     const data = [];
     for (let i = 5; i < 20; i += 1) {
-      data.push({
-        key: i,
-        no: i + 1,
-        agreementNo: `2017SDHSLGGMZH000${i + 1}`,
-        agreementName: `测试合同数据${i + 1}`,
-        type: i % 5,
-        bName: `测试数据${i + 1}`,
-        bPhone: '2133456',
-        companyAddress: 'Lake Street 42',
-        companyName: 'SoftLake Co',
-        status: (i + 3) % 4,
-        money: Math.ceil(Math.random() * 1000),
-        createDate: new Date(),
-        gAmount: Math.ceil(Math.random() * 100),
-        gUnitPrice: Math.ceil(Math.random() * 1000),
-        gSumPrice: Math.ceil(Math.random() * 1000),
-      });
+      if (i === 5) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGM000${i + 1}`,
+          agreementName: '铝锭采购合同',
+          type: i % 5,
+          bName: `测试数据${i + 1}`,
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 4,
+          money: 320.66,
+          createDate: new Date(),
+          gAmount: 222,
+          gUnitPrice: 14450,
+          gSumPrice: 320.66,
+        });
+      } else {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGM000${i + 1}`,
+          agreementName: `测试合同数据${i + 1}`,
+          type: i % 5,
+          bName: `测试数据${i + 1}`,
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 4,
+          money: Math.ceil(Math.random() * 1000),
+          createDate: new Date(),
+          gAmount: Math.ceil(Math.random() * 100),
+          gUnitPrice: Math.ceil(Math.random() * 1000),
+          gSumPrice: Math.ceil(Math.random() * 1000),
+        });
+      }
     }
     const { getFieldDecorator } = this.props.form;
     return (
@@ -419,6 +435,7 @@ export default class List extends PureComponent {
           title="新增履行计划条目"
           visible={modalVisible}
           onOk={this.handleAdd}
+          destroyOnClose={this.state.destroyOnClose}
           onCancel={() => this.handleModalVisible()}
           style={{ width: 1200 }}
         >

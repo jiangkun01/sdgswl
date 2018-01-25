@@ -238,7 +238,6 @@ class StandardTable extends PureComponent {
         />
         <Modal
           title="业务详情"
-
           visible={visible}
           onOk={this.handleOk}
           confirmLoading={confirmLoading}

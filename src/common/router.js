@@ -91,8 +91,8 @@ export const getRouterData = (app) => {
     '/contract/document': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Document')),
     },
-    '/contract/create': {
-      component: dynamicWrapper(app, [], () => import('../routes/Contract/Create')),
+    '/contract/step-form': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/StepForm')),
     },
     '/contract/list': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/List')),
@@ -103,17 +103,20 @@ export const getRouterData = (app) => {
     '/form/step-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
     },
-    '/form/step-form/info': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step1')),
+    '/contract/step-form/info': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/StepForm/Step1')),
     },
-    '/form/step-form/confirm': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
+    '/contract/step-form/confirm': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/StepForm/Step2')),
     },
-    '/form/step-form/result': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
+    '/contract/step-form/result': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/StepForm/Step3')),
     },
     '/form/advanced-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
+    },
+    '/business': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/Business/Index')),
     },
     '/business/list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/Business/List')),

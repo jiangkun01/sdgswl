@@ -121,9 +121,10 @@ export default class List extends PureComponent {
     });
   };
   handleModalCreateVisible = (flag) => {
-    this.props.form.setFieldsValue({
-      keys: [], b_name: '', b_type: '',
-    });
+    // this.props.form.setFieldsValue({
+    //   keys: [], b_name: '', b_type: '',
+    // });
+    this.props.form.resetFields();
     this.setState({
       modelCreateVisible: !!flag,
     });

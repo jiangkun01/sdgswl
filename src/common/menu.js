@@ -9,7 +9,7 @@ const menuData = [{
 }, {
   name: '业务管理',
   icon: 'table',
-  path: 'business/list',
+  path: 'business',
   // children: [{
   //   name: '业务列表',
   //   path: 'list',
@@ -24,7 +24,7 @@ const menuData = [{
   // /*  path: 'basic-form',*/
   }, {
     name: '发起新合同',
-    path: 'create',
+    path: 'step-form',
   }, {
     name: '合同类目列表',
     path: 'category',
