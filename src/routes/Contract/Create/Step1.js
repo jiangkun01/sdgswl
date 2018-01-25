@@ -46,7 +46,7 @@ class Step1 extends React.PureComponent {
     const onValidateForm = () => {
       validateFields(() => {
         // if (!err) {
-        dispatch(routerRedux.push('/contract/step-form/confirm'));
+        dispatch(routerRedux.push('/contract/create/confirm'));
         // }
       });
     };
@@ -92,7 +92,7 @@ class Step1 extends React.PureComponent {
                 { required: false, message: '请选择预计实现收入' },
               ],
             })(
-              <InputNumber min={1} />
+              <InputNumber style={{ width: '100%' }} min={1} />
             )}
             <span className="ant-form-text"> 万元</span>
           </FormItem>
@@ -180,7 +180,7 @@ class Step1 extends React.PureComponent {
                 { required: true, message: '请选择合同总金额' },
               ],
             })(
-              <InputNumber min={1} max={10000000} />
+              <InputNumber style={{ width: '100%' }} min={1} max={10000000} />
             )}
             <span className="ant-form-text"> 万元</span>
           </FormItem>
@@ -194,7 +194,7 @@ class Step1 extends React.PureComponent {
                 { required: true, message: '请选择核定签订日期' },
               ],
             })(
-              <DatePicker />
+              <DatePicker style={{ width: '100%' }} />
             )}
           </FormItem>
           <FormItem

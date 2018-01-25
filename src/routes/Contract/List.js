@@ -84,7 +84,7 @@ export default class List extends PureComponent {
     this.props.form.validateFields((err) => {
       if (!err) {
         message.success('添加成功');
-        this.props.dispatch(routerRedux.push('/contract/details?dStatus=2'));
+        this.props.dispatch(routerRedux.push('/contract/index/details?dStatus=2'));
         this.setState({
           modalVisible: false,
         });
@@ -498,10 +498,10 @@ export default class List extends PureComponent {
           >
             <Checkbox.Group style={{ width: '100%' }}>
               <Row>
-                <Col span={12}><Checkbox value="A">货物入库</Checkbox></Col>
-                <Col span={12}><Checkbox value="B"> 支付80%货款</Checkbox></Col>
-                <Col span={12}><Checkbox value="C">收到上游发票</Checkbox></Col>
-                <Col span={12}><Checkbox value="D">支付20%货款</Checkbox></Col>
+                <Col span={24}><Checkbox value="A">货物入库</Checkbox></Col>
+                <Col span={24}><Checkbox value="B"> 支付80%货款</Checkbox></Col>
+                <Col span={24}><Checkbox value="C">收到上游发票</Checkbox></Col>
+                <Col span={24}><Checkbox value="D">支付20%货款</Checkbox></Col>
               </Row>
             </Checkbox.Group>,
           </FormItem>

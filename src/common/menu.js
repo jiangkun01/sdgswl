@@ -1,7 +1,7 @@
 const menuData = [{
   name: '首页',
   icon: 'dashboard',
-  path: 'dashboard/analysis',
+  path: 'dashboard/index',
   // children: [{
   //   name: '关键数据展示',
   //   path: 'analysis',
@@ -24,7 +24,7 @@ const menuData = [{
   // /*  path: 'basic-form',*/
   }, {
     name: '发起新合同',
-    path: 'step-form',
+    path: 'create',
   }, {
     name: '合同类目列表',
     path: 'category',

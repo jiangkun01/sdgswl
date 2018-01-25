@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Form, Input, Button, Radio, Divider, Select,
-  Table, InputNumber, Checkbox, Icon } from 'antd';
+  Table, InputNumber, Icon } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './style.less';
 
@@ -86,6 +86,14 @@ class Step2 extends React.PureComponent {
         sm: { span: 20, offset: 4 },
       },
     };
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      },
+      getCheckboxProps: record => ({
+        disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      }),
+    };
     const data1 = [{
       key: '1',
       name: '货物1',
@@ -151,12 +159,6 @@ class Step2 extends React.PureComponent {
           <span className="ant-form-text">/吨</span>
         </FormItem>
       ),
-    }, {
-      title: '选中',
-      key: 'action',
-      render: () => (
-        <Checkbox />
-      ),
     }];
     getFieldDecorator('keys', { initialValue: [] });
     const keys = getFieldValue('keys');
@@ -212,7 +214,7 @@ class Step2 extends React.PureComponent {
                 message: '请输入货物单价',
               }],
             })(
-              <InputNumber min={1} max={10000000} />
+              <InputNumber style={{ width: '100%' }} min={1} max={10000000} />
             )}
             <span className="ant-form-text"> 元/吨</span>
           </FormItem>
@@ -230,7 +232,7 @@ class Step2 extends React.PureComponent {
                 message: '请输入货物数量',
               }],
             })(
-              <InputNumber min={1} max={10000000} />
+              <InputNumber style={{ width: '100%' }} min={1} max={10000000} />
             )}
             <span className="ant-form-text">吨</span>
           </FormItem>
@@ -249,12 +251,12 @@ class Step2 extends React.PureComponent {
       );
     });
     const onPrev = () => {
-      dispatch(routerRedux.push('/contract/step-form'));
+      dispatch(routerRedux.push('/contract/create'));
     };
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields(() => {
-        dispatch(routerRedux.push('/contract/step-form/result'));
+        dispatch(routerRedux.push('/contract/create/result'));
       });
     };
     return (
@@ -292,7 +294,13 @@ class Step2 extends React.PureComponent {
             label="选择货物"
             hasFeedback
             style={{ display: this.state.isBu }}
-          ><Table scroll={{ x: 700 }} style={{ width: 700 }} columns={columns} dataSource={data1} />
+          ><Table
+            rowSelection={rowSelection}
+            scroll={{ x: 700 }}
+            style={{ width: 700 }}
+            columns={columns}
+            dataSource={data1}
+          />
           </FormItem>
         </div>
         <div style={{ display: this.state.isNoRelevance }} >
@@ -316,7 +324,7 @@ class Step2 extends React.PureComponent {
           >
             <Select
               defaultValue="0"
-              style={{ width: 200 }}
+              style={{ width: '100%' }}
               onChange={this.handleChange}
             >
               <Option value="0">内贸</Option>
