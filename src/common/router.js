@@ -70,7 +70,7 @@ export const getRouterData = (app) => {
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
-    '/dashboard/analysis': {
+    '/dashboard/index': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
     },
     '/dashboard/monitor': {
@@ -88,8 +88,8 @@ export const getRouterData = (app) => {
     '/contract/document': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Document')),
     },
-    '/contract/step-form': {
-      component: dynamicWrapper(app, [], () => import('../routes/Contract/StepForm')),
+    '/contract/create': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Create/index')),
     },
     '/contract/index': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Index')),
@@ -103,17 +103,14 @@ export const getRouterData = (app) => {
     '/form/basic-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
     },
-    '/form/step-form': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
+    '/contract/create/info': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step1')),
     },
-    '/contract/step-form/info': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/StepForm/Step1')),
+    '/contract/create/confirm': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step2')),
     },
-    '/contract/step-form/confirm': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/StepForm/Step2')),
-    },
-    '/contract/step-form/result': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/StepForm/Step3')),
+    '/contract/create/result': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step3')),
     },
     '/form/advanced-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),

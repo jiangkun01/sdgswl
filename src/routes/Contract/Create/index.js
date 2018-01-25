@@ -8,7 +8,7 @@ import styles from '../../Forms/style.less';
 
 const { Step } = Steps;
 
-export default class StepForm extends PureComponent {
+export default class Index extends PureComponent {
   getCurrentStep() {
     const { location } = this.props;
     const { pathname } = location;
@@ -53,7 +53,7 @@ export default class StepForm extends PureComponent {
                   />
                 ))
               }
-              <Redirect exact from="/contract/step-form" to="/contract/step-form/info" />
+              <Redirect exact from="/contract/create" to="/contract/create/info" />
               <Route render={NotFound} />
             </Switch>
           </div>

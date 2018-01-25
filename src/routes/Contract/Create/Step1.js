@@ -46,7 +46,7 @@ class Step1 extends React.PureComponent {
     const onValidateForm = () => {
       validateFields(() => {
         // if (!err) {
-        dispatch(routerRedux.push('/contract/step-form/confirm'));
+        dispatch(routerRedux.push('/contract/create/confirm'));
         // }
       });
     };

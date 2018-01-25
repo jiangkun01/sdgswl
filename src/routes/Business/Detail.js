@@ -24,7 +24,7 @@ import styles from '../Dashboard/Analysis.less';
 
 const FormItem = Form.Item;
 @Form.create()
-export default class BasicList extends PureComponent {
+export default class Detail extends PureComponent {
   routeTitle = () => {
     return (
       <div><span style={{ fontSize: 15 }}><a href="/#/business/list">业务管理</a></span>/<span style={{ fontSize: 10 }}>业务详情</span></div>

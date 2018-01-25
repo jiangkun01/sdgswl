@@ -84,7 +84,7 @@ export default class List extends PureComponent {
     this.props.form.validateFields((err) => {
       if (!err) {
         message.success('添加成功');
-        this.props.dispatch(routerRedux.push('/contract/details?dStatus=2'));
+        this.props.dispatch(routerRedux.push('/contract/index/details?dStatus=2'));
         this.setState({
           modalVisible: false,
         });
