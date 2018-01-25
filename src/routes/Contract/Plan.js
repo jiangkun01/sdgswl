@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
-import { Row, Col, Button, Table, Form, Modal, Message, Input, Select, DatePicker } from 'antd';
+import { Row, Col, Button, Table, Form, Modal, Message, Input, Select, Checkbox, Upload, Icon, DatePicker } from 'antd';
 
 const FormItem = Form.Item;
-const FormItem1 = Form.Item;
 const { TextArea } = Input;
 
 @Form.create()
@@ -20,6 +19,18 @@ export default class Plan extends PureComponent {
     this.setState({
       ModalMessage: true,
     });
+  }
+  // 执行计划
+  carryPlan = () => {
+    const { selectedRows } = this.state;
+    if (selectedRows.length <= 0) {
+      Message.error('请选择履行计划');
+    } else if (selectedRows.length > 1) {
+      Message.warning('无法操作多条履行计划');
+    } else {
+      this.rowSelectionOnChange([], []);
+      Message.success('履行计划已开始执行');
+    }
   }
   // 显示变更计划
   showModalUpdate = () => {
@@ -96,6 +107,14 @@ export default class Plan extends PureComponent {
     this.setState({ selectedRows });
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   }
+  // 文件上传
+  normModalFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
   render() {
     const { ModalMessage, ModalUpdate, ModalTerminate, selectedRowKeys } = this.state;
     const { getFieldDecorator } = this.props.form;
@@ -164,9 +183,11 @@ export default class Plan extends PureComponent {
         <br />
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24} style={{ textAlign: 'right' }}>
+            <Button onClick={this.carryPlan}>执行计划</Button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <Button onClick={this.showModalUpdate}>变更计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button onClick={this.showModalTerminate}>终止履行计划</Button>
+            <Button onClick={this.showModalTerminate}>终止计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <Button onClick={this.finishPlan}> 完成计划</Button>
           </Col>
@@ -209,33 +230,24 @@ export default class Plan extends PureComponent {
                 )}
               </FormItem>
               <FormItem {...formItemLayout} label="前置条件" >
-                {getFieldDecorator('note', {
-                  initialValue: '暂无',
-                  rules: [{ required: true, message: '请填写前置条件!' }],
-                })(
-                  <TextArea rows={2} placeholder="请输入" />
-                )}
+                <Row>
+                  <Col span={12}><Checkbox value="A" defaultChecked disabled>货物入库</Checkbox></Col>
+                  <Col span={12}><Checkbox value="B"> 支付80%货款</Checkbox></Col>
+                  <Col span={12}><Checkbox value="C" defaultChecked disabled>收到上游发票</Checkbox></Col>
+                  <Col span={12}><Checkbox value="D">支付20%货款</Checkbox></Col>
+                </Row>
               </FormItem>
               <FormItem {...formItemLayout} label="履行计划名称" >
                 {getFieldDecorator('name', {
-                  initialValue: '焦炭入库20吨',
-                  rules: [{ required: true, message: '请填写履行计划名称!' }],
+                  initialValue: '入库焦炭20吨',
                 })(
-                  <Input placeholder="请输入" />
+                  <Input disabled style={{ color: 'black' }} />
                 )}
               </FormItem>
               <FormItem {...formItemLayout} label="预计完成时间" >
                 {getFieldDecorator('expectedtime', {
                   initialValue: moment('2017-05-05'),
                   rules: [{ required: true, message: '请选择预计完成时间!' }],
-                })(
-                  <DatePicker />
-                )}
-              </FormItem>
-              <FormItem {...formItemLayout} label="实际完成时间" >
-                {getFieldDecorator('actualtime', {
-                  initialValue: moment('2017-05-05'),
-                  rules: [{ required: true, message: '请选择实际完成时间!' }],
                 })(
                   <DatePicker />
                 )}
@@ -262,13 +274,23 @@ export default class Plan extends PureComponent {
             ]}
           >
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <FormItem1 {...formItemLayout} label="终止理由" >
+              <FormItem {...formItemLayout} label="终止理由" >
                 {getFieldDecorator('reason', {
                   rules: [{ required: true, message: '请填写终止理由!' }],
                 })(
                   <TextArea rows={2} placeholder="请输入" />
                 )}
-              </FormItem1>
+              </FormItem>
+              <FormItem {...formItemLayout} label="选择上传文件">
+                {getFieldDecorator('upload', {
+                  valuePropName: 'fileList',
+                  getValueFromEvent: this.normModalFile,
+                })(
+                  <Upload action="">
+                    <Button><Icon type="upload" />选择文件</Button>
+                  </Upload>
+                )}
+              </FormItem>
             </Row>
           </Modal>
         </Form>
