@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Card, Form, Select, Upload, Message, Button, Icon } from 'antd';
+import { Row, Col, Card, Form, Upload, Message, Button, Icon } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -16,6 +16,7 @@ export default class Annex extends PureComponent {
         console.log('Received values of form: ', values);
         this.props.form.resetFields();
         Message.success('提交成功！');
+        location.href = '/#/contract/document';
       }
     });
   }
@@ -45,19 +46,6 @@ export default class Annex extends PureComponent {
           <Card>
             <Form onSubmit={this.handleFormSubmit}>
               <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                <FormItem {...formItemLayout} label="合同附件类型">
-                  {getFieldDecorator('pName', {
-                    rules: [{ required: true, message: '请选择合同附件类型!' }],
-                  })(
-                    <Select showSearch style={{ width: '100%' }} placeholder="请选择合同附件类型">
-                      <Select.Option value="1">采购</Select.Option>
-                      <Select.Option value="2">长期</Select.Option>
-                      <Select.Option value="3">单次</Select.Option>
-                      <Select.Option value="4">物流</Select.Option>
-                      <Select.Option value="5">仓储</Select.Option>
-                    </Select>
-                  )}
-                </FormItem>
                 <FormItem {...formItemLayout} label="选择上传文件">
                   {getFieldDecorator('upload', { valuePropName: 'fileList',
                     getValueFromEvent: this.normModalFile,

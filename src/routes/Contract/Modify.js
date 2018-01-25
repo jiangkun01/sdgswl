@@ -49,6 +49,10 @@ export default class Modify extends PureComponent {
   render() {
     const { getFieldDecorator } = this.props.form;
     const columns = [{
+      title: '编号',
+      dataIndex: 'id',
+      key: 'id',
+    }, {
       title: '变更日期',
       dataIndex: 'time',
       key: 'time',
@@ -72,7 +76,7 @@ export default class Modify extends PureComponent {
       width: 200,
       render: (text, render) => (
         <span>
-          <Icon type="file" /><a href="#">{ render.filename }</a>
+          <Icon type="file" /><a>{ render.filename }</a>
         </span>
       ),
     }];
@@ -83,6 +87,7 @@ export default class Modify extends PureComponent {
     const dataSource = [];
     for (let i = 1; i < 7; i += 1) {
       dataSource.push({
+        id: i,
         time: i < 10 ? `2017-0${i}-0${i}` : `2017-${i}-${i}`,
         type: type[i - 1],
         note: note[i - 1],
@@ -112,7 +117,7 @@ export default class Modify extends PureComponent {
         <br />
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24}>
-            <Table dataSource={dataSource} columns={columns} rowKey="time" scroll={{ x: 1366 }} />
+            <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
           </Col>
         </Row>
         <Modal
