@@ -212,7 +212,7 @@ class Step2 extends React.PureComponent {
                 message: '请输入货物单价',
               }],
             })(
-              <InputNumber min={1} max={10000000} />
+              <InputNumber style={{ width: '100%' }} min={1} max={10000000} />
             )}
             <span className="ant-form-text"> 元/吨</span>
           </FormItem>
@@ -230,7 +230,7 @@ class Step2 extends React.PureComponent {
                 message: '请输入货物数量',
               }],
             })(
-              <InputNumber min={1} max={10000000} />
+              <InputNumber style={{ width: '100%' }} min={1} max={10000000} />
             )}
             <span className="ant-form-text">吨</span>
           </FormItem>
@@ -316,7 +316,7 @@ class Step2 extends React.PureComponent {
           >
             <Select
               defaultValue="0"
-              style={{ width: 200 }}
+              style={{ width: '100%' }}
               onChange={this.handleChange}
             >
               <Option value="0">内贸</Option>

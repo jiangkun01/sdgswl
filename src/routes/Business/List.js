@@ -131,14 +131,21 @@ export default class TableList extends PureComponent {
     });
   }
 
-  handleModalVisible = (flag) => {
+  handleModalVisible = () => {
     this.setState({
-      modalVisible: !!flag,
+      modalVisible: false,
       ItemArray: [],
       GJson: 1,
     });
   }
-
+  showModalVisible =() => {
+    this.setState({
+      modalVisible: true,
+      ItemArray: [],
+      GJson: 1,
+    });
+    this.addItemArray();
+  };
   handleAddInput = (e) => {
     this.setState({
       addInputValue: e.target.value,
@@ -230,7 +237,7 @@ export default class TableList extends PureComponent {
           </Col>
           <div style={{ overflow: 'hidden' }}>
             <span style={{ float: 'left', marginBottom: 24 }}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Button icon="plus" type="primary" onClick={() => this.showModalVisible(true)}>
                 新建
               </Button>
             </span>
@@ -291,7 +298,7 @@ export default class TableList extends PureComponent {
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'left', marginBottom: 24 }}>
-            <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+            <Button icon="plus" type="primary" onClick={() => this.showModalVisible(true)}>
               新建
             </Button>
           </span>
@@ -368,7 +375,7 @@ export default class TableList extends PureComponent {
           >
             <Select
               defaultValue="0"
-              style={{ width: 200 }}
+              style={{ width: '100%' }}
               onChange={this.handleChange}
             >
               <Option value="0">内贸</Option>
