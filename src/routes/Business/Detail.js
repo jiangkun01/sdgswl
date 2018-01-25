@@ -151,7 +151,7 @@ export default class BasicList extends PureComponent {
       key: 'operation',
       fixed: 'right',
       width: 100,
-      render: () => <a href="/#/contract/details?dStatus=1">详情</a>,
+      render: () => <a href="/#/contract/index/details?dStatus=1">详情</a>,
     }];
     const data = [];
     for (let i = 5; i < 20; i += 1) {
@@ -312,7 +312,7 @@ export default class BasicList extends PureComponent {
                     </Row>
                     <div style={{ overflow: 'hidden', marginTop: '2%' }}>
                       <span style={{ float: 'left', marginBottom: 24 }}>
-                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} ><a href="/#/contract/create" style={{ color: 'white' }}>发起新合同</a></Button>
+                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} ><a href="/#/contract/step-form/info" style={{ color: 'white' }}>发起新合同</a></Button>
                       </span>
                       <span style={{ float: 'right', marginBottom: 24 }}>
                         <Button type="primary" htmlType="submit">查询</Button>
