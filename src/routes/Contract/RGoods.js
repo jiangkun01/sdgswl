@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Card, Table } from 'antd';
+import { Row, Col, Card, Table, Select } from 'antd';
 import { Bar } from '../../components/Charts';
 
 export default class RContract extends PureComponent {
@@ -39,15 +39,11 @@ export default class RContract extends PureComponent {
       { x: '11月', y: 1603 },
       { x: '12月', y: 1990 },
     ];
-    const piechart = [
-      { x: '煤炭', y: 1766 },
-      { x: '焦炭', y: 1836 },
-      { x: '铁矿', y: 1510 },
-      { x: '铜矿', y: 1488 },
-      { x: '铝框', y: 1075 },
-      { x: '其他', y: 1161 },
-    ];
     const columns = [{
+      title: '编号',
+      dataIndex: 'id',
+      key: 'id',
+    }, {
       title: `${tabsKey === '1' ? '出库' : '入库'}日期`,
       dataIndex: 'time',
       key: 'time',
@@ -59,24 +55,14 @@ export default class RContract extends PureComponent {
       title: `${tabsKey === '1' ? '出库' : '入库'}单价`,
       dataIndex: 'price',
       key: 'price',
-    }, {
-      title: '销售合同编号',
-      dataIndex: 'id',
-      key: 'id',
-    }, {
-      title: '销售合同名称',
-      dataIndex: 'name',
-      key: 'name',
     }];
-    const name = ['长期煤炭运输合同', '短期运输合同', '长期焦炭运输合同', '长期运输合同', '短期杂货运输合同', '长期内贸运输合同', '短期内贸运输合同', '长期外贸运输合同', '短期外贸运输合同', '中小型运输合同', '大型运输合同'];
     const dataSource = [];
     for (let i = 1; i < 12; i += 1) {
       dataSource.push({
+        id: i,
         time: i < 10 ? `2017-0${i}-0${i}` : `2017-${i}-${i}`,
         number: `${Math.round((Math.random() * 30) + 30)}吨`,
         price: `${Math.round((Math.random() * 15) + 15)}万元`,
-        id: i < 10 ? `20170${i}0${i}${Math.round((Math.random() * 8999) + 1000)}` : `2017${i}${i}${Math.round((Math.random() * 8999) + 1000)}`,
-        name: name[Math.round((Math.random() * 10) + 0)],
       });
     }
     return (
@@ -84,7 +70,19 @@ export default class RContract extends PureComponent {
         <Row>
           <Card>
             <Col span={6}><h3>货物编号：<strong>SDGSWLKH232</strong></h3></Col>
-            <Col span={6}><h3>货物名称：<strong>浓缩果汁500吨</strong></h3></Col>
+            <Col span={6}>
+              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                <h3>
+                  货物名称：
+                  <Select defaultValue="1" style={{ width: '60%' }}>
+                    <Select.Option value="1">果汁</Select.Option>
+                    <Select.Option value="2">焦炭</Select.Option>
+                    <Select.Option value="3">玉米</Select.Option>
+                    <Select.Option value="4">大豆</Select.Option>
+                  </Select>
+                </h3>
+              </Row>
+            </Col>
             <Col span={4}><h3>货物总重：<strong>500吨</strong></h3></Col>
             <Col span={4}><h3>货物均价：<strong>6万/吨</strong></h3></Col>
             <Col span={4}><h3>当前货物总库存：<strong>6万</strong></h3></Col>
@@ -92,19 +90,14 @@ export default class RContract extends PureComponent {
         </Row>
         <br />
         <Row>
-          <Col span={8}>
+          <Col span={11}>
             <Card>
               <Bar height={250} title="出库情况" data={exchart} />
             </Card>
           </Col>
-          <Col span={8} offset={1}>
+          <Col span={11} offset={1}>
             <Card>
               <Bar height={250} title="入库情况" data={imchart} />
-            </Card>
-          </Col>
-          <Col span={6} offset={1}>
-            <Card>
-              <Bar height={250} title="库存情况" data={piechart} />
             </Card>
           </Col>
         </Row>

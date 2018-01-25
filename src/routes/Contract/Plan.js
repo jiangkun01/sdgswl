@@ -1,11 +1,18 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Button, Table, Form, Modal, Message } from 'antd';
+import moment from 'moment';
+import { Row, Col, Button, Table, Form, Modal, Message, Input, Select, DatePicker } from 'antd';
+
+const FormItem = Form.Item;
+const FormItem1 = Form.Item;
+const { TextArea } = Input;
 
 @Form.create()
 export default class Plan extends PureComponent {
   state = {
     ModalMessage: false,
     ModalUpdate: false,
+    ModalTerminate: false,
+    selectedRowKeys: [],
     selectedRows: [],
   }
   // 显示详情
@@ -22,13 +29,50 @@ export default class Plan extends PureComponent {
     } else if (selectedRows.length > 1) {
       Message.warning('无法操作多条履行计划');
     } else {
+      this.rowSelectionOnChange([], []);
       this.setState({
         ModalUpdate: true,
       });
     }
   }
-  // 弹出框form方法
-  handleModalSubmit = (e) => {
+  // 显示终止计划
+  showModalTerminate = () => {
+    const { selectedRows } = this.state;
+    if (selectedRows.length <= 0) {
+      Message.error('请选择履行计划');
+    } else if (selectedRows.length > 1) {
+      Message.warning('无法操作多条履行计划');
+    } else {
+      this.rowSelectionOnChange([], []);
+      this.setState({
+        ModalTerminate: true,
+      });
+    }
+  }
+  // 完成计划
+  finishPlan = () => {
+    const { selectedRows } = this.state;
+    if (selectedRows.length <= 0) {
+      Message.error('请选择履行计划');
+    } else if (selectedRows.length > 1) {
+      Message.warning('无法操作多条履行计划');
+    } else {
+      this.rowSelectionOnChange([], []);
+      Message.success('履行计划完成');
+    }
+  }
+  // 变更计划form方法
+  modalUpdateSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        this.modalHandleOk();
+      }
+    });
+  }
+  // 终止计划form方法
+  modalTerminateSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -42,18 +86,21 @@ export default class Plan extends PureComponent {
     this.setState({
       ModalMessage: false,
       ModalUpdate: false,
+      ModalTerminate: false,
     });
     this.props.form.resetFields();
   }
   // 表格多选框选择事件
   rowSelectionOnChange = (selectedRowKeys, selectedRows) => {
+    this.setState({ selectedRowKeys });
     this.setState({ selectedRows });
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   }
   render() {
-    const { ModalMessage, ModalUpdate } = this.state;
+    const { ModalMessage, ModalUpdate, ModalTerminate, selectedRowKeys } = this.state;
+    const { getFieldDecorator } = this.props.form;
     const columns = [
-      { title: '序号', dataIndex: 'id', key: 'id' },
+      { title: '编号', dataIndex: 'id', key: 'id' },
       { title: '状态', dataIndex: 'status', key: 'status' },
       { title: '前置条件', dataIndex: 'note', key: 'note' },
       { title: '履行计划名称', dataIndex: 'name', key: 'name' },
@@ -94,7 +141,18 @@ export default class Plan extends PureComponent {
       createtime: '2017-05-25',
     }];
     const rowSelection = {
+      selectedRowKeys,
       onChange: this.rowSelectionOnChange,
+    };
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 15 },
+      },
     };
     return (
       <div>
@@ -108,9 +166,9 @@ export default class Plan extends PureComponent {
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button onClick={this.showModalUpdate}>变更计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button>终止合同</Button>
+            <Button onClick={this.showModalTerminate}>终止履行计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button> 完成计划</Button>
+            <Button onClick={this.finishPlan}> 完成计划</Button>
           </Col>
         </Row>
         <Modal title="履行计划详情" visible={ModalMessage} onOk={this.modalHandleOk} onCancel={this.modalHandleOk}>
@@ -120,64 +178,100 @@ export default class Plan extends PureComponent {
             rowKey="id"
           />
         </Modal>
-        <Modal
-          visible={ModalUpdate}
-          title="变更履行计划"
-          onCancel={this.modalHandleOk}
-          footer={[
-            <Button key="back" onClick={this.modalHandleOk}>关闭</Button>,
-            <Button key="submit" type="primary" onClick={this.handleModalSubmit}>提交</Button>,
-          ]}
-        >
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              {/* <FormItem {...formItemLayout} label="变更日期" >
-                {getFieldDecorator('time', {
-                  rules: [{ required: true, message: '请填写类别名称!' }],
+        <Form>
+          <Modal
+            visible={ModalUpdate}
+            title="变更履行计划"
+            onCancel={this.modalHandleOk}
+            footer={[
+              <Button key="back" onClick={this.modalHandleOk}>关闭</Button>,
+              <Button key="submit" type="primary" onClick={this.modalUpdateSubmit}>提交</Button>,
+            ]}
+          >
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <FormItem {...formItemLayout} label="编号" >
+                {getFieldDecorator('id', {
+                  initialValue: '1',
+                })(
+                  <Input disabled style={{ color: 'black' }} />
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="状态" >
+                {getFieldDecorator('status', {
+                  initialValue: '2',
+                })(
+                  <Select showSearch style={{ width: '100%' }} placeholder="请选择变更类型">
+                    <Select.Option value="1">未执行</Select.Option>
+                    <Select.Option value="2">执行中</Select.Option>
+                    <Select.Option value="3">已终止</Select.Option>
+                    <Select.Option value="4">已完成</Select.Option>
+                  </Select>
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="前置条件" >
+                {getFieldDecorator('note', {
+                  initialValue: '暂无',
+                  rules: [{ required: true, message: '请填写前置条件!' }],
+                })(
+                  <TextArea rows={2} placeholder="请输入" />
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="履行计划名称" >
+                {getFieldDecorator('name', {
+                  initialValue: '焦炭入库20吨',
+                  rules: [{ required: true, message: '请填写履行计划名称!' }],
+                })(
+                  <Input placeholder="请输入" />
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="预计完成时间" >
+                {getFieldDecorator('expectedtime', {
+                  initialValue: moment('2017-05-05'),
+                  rules: [{ required: true, message: '请选择预计完成时间!' }],
                 })(
                   <DatePicker />
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="变更类型" >
-                {getFieldDecorator('pName', {
-                  rules: [{ required: true, message: '请选择变更类型!' }],
+              <FormItem {...formItemLayout} label="实际完成时间" >
+                {getFieldDecorator('actualtime', {
+                  initialValue: moment('2017-05-05'),
+                  rules: [{ required: true, message: '请选择实际完成时间!' }],
                 })(
-                  <Select showSearch style={{ width: '100%' }} placeholder="请选择变更类型">
-                    <Select.Option value="1">采购</Select.Option>
-                    <Select.Option value="2">长期</Select.Option>
-                    <Select.Option value="3">单次</Select.Option>
-                    <Select.Option value="4">物流</Select.Option>
-                    <Select.Option value="5">仓储</Select.Option>
-                  </Select>
+                  <DatePicker />
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="变更内容摘要" >
-                {getFieldDecorator('note', {
-                  rules: [{ required: true, message: '请填写变更内容摘要!' }],
+              <FormItem {...formItemLayout} label="执行人" >
+                {getFieldDecorator('username', {
+                  initialValue: '李雷',
+                  rules: [{ required: true, message: '请填写执行人!' }],
                 })(
-                  <TextArea rows={2} />
+                  <Input placeholder="请输入" />
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="变更原因" >
+            </Row>
+          </Modal>
+        </Form>
+        <Form>
+          <Modal
+            visible={ModalTerminate}
+            title="终止合同"
+            onCancel={this.modalHandleOk}
+            footer={[
+              <Button key="back" onClick={this.modalHandleOk}>关闭</Button>,
+              <Button key="submit" type="primary" onClick={this.modalTerminateSubmit}>终止履行计划</Button>,
+            ]}
+          >
+            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <FormItem1 {...formItemLayout} label="终止理由" >
                 {getFieldDecorator('reason', {
-                  rules: [{ required: true, message: '请填写变更原因!' }],
+                  rules: [{ required: true, message: '请填写终止理由!' }],
                 })(
-                  <TextArea rows={2} />
+                  <TextArea rows={2} placeholder="请输入" />
                 )}
-              </FormItem>
-              <FormItem {...formItemLayout} label="相关变更文件" >
-                {getFieldDecorator('upload', { valuePropName: 'fileList',
-                  getValueFromEvent: this.normModalFile,
-                  rules: [{ required: true, message: '请选择文件!' }],
-                })(
-                  <Upload action="">
-                    <Button><Icon type="upload" />选择文件</Button>
-                  </Upload>
-                )}
-              </FormItem> */}
-            </Col>
-          </Row>
-        </Modal>
+              </FormItem1>
+            </Row>
+          </Modal>
+        </Form>
       </div>
     );
   }
