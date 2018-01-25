@@ -92,7 +92,7 @@ export default class RContract extends PureComponent {
         <Row>
           <Col span={11}>
             <Card>
-              <Bar height={250} title="出库情况" data={exchart} />
+              <Bar height={250} color="#0F6CBF" title="出库情况" data={exchart} />
             </Card>
           </Col>
           <Col span={11} offset={1}>
