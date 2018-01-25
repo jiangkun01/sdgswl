@@ -78,6 +78,7 @@ export default class List extends PureComponent {
     this.setState({
       modalVisible: !!flag,
     });
+    this.props.form.resetFields();
   };
   handleAdd = (e) => {
     e.preventDefault();
@@ -243,7 +244,7 @@ export default class List extends PureComponent {
         <span>
           <a href="/#/contract/index/details?dStatus=1">详情</a>
           <Divider type="vertical" />
-          <a><span onClick={this.handleModalVisible}>创建履行计划</span></a>
+          <a href="/#/contract/index/details?dStatus=2">查看履行计划</a>
           <Divider type="vertical" />
           <a onClick={this.updateOne}>修改</a>
           <Divider type="vertical" />
@@ -293,7 +294,7 @@ export default class List extends PureComponent {
     }
     const { getFieldDecorator } = this.props.form;
     return (
-      <PageHeaderLayout title="列表页">
+      <PageHeaderLayout title="合同列表">
         <div className={styles.standardList}>
           <div style={{ padding: '30px', marginTop: '-30px' }}>
             <Row gutter={16}>

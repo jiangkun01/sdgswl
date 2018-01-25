@@ -327,7 +327,7 @@ export default class TableList extends PureComponent {
       </Menu>
     );
     return (
-      <PageHeaderLayout title="列表页">
+      <PageHeaderLayout title="业务列表">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>

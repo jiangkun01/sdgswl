@@ -172,7 +172,7 @@ export default class Detail extends PureComponent {
     }
     const { getFieldDecorator } = this.props.form;
     return (
-      <PageHeaderLayout title="详情页">
+      <PageHeaderLayout title="氧化铝业务0详情">
         <div className={styles.standardList}>
           <BackTop />
           <div style={{ padding: '30px' }}>
