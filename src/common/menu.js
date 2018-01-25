@@ -9,7 +9,7 @@ const menuData = [{
 }, {
   name: '业务管理',
   icon: 'table',
-  path: 'business/list',
+  path: 'business',
   // children: [{
   //   name: '业务列表',
   //   path: 'list',
