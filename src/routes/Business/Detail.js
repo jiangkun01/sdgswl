@@ -312,7 +312,7 @@ export default class Detail extends PureComponent {
                     </Row>
                     <div style={{ overflow: 'hidden', marginTop: '2%' }}>
                       <span style={{ float: 'left', marginBottom: 24 }}>
-                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} ><a href="/#/contract/step-form/info" style={{ color: 'white' }}>发起新合同</a></Button>
+                        <Button icon="plus" type="primary" style={{ marginRight: '4px' }} ><a href="/#/contract/create/info" style={{ color: 'white' }}>发起新合同</a></Button>
                       </span>
                       <span style={{ float: 'right', marginBottom: 24 }}>
                         <Button type="primary" htmlType="submit">查询</Button>
