@@ -209,7 +209,6 @@ class BasicLayout extends React.PureComponent {
         </Layout>
       </Layout>
     );
-
     return (
       <DocumentTitle title={this.getPageTitle()}>
         <ContainerQuery query={query}>

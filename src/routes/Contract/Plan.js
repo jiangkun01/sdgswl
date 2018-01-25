@@ -1,19 +1,67 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
-import { Row, Col, Button, Table, Form, Modal, Message, Input, Select, Checkbox, Upload, Icon, DatePicker } from 'antd';
+import { Row, Col, Button, Table, Form, Modal, Message, Input, Select, Checkbox,
+  Upload, Icon, DatePicker,
+  InputNumber, Divider } from 'antd';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-
+const { Option } = Select;
 @Form.create()
 export default class Plan extends PureComponent {
   state = {
+    modalVisible: false,
     ModalMessage: false,
     ModalUpdate: false,
     ModalTerminate: false,
     selectedRowKeys: [],
     selectedRows: [],
+    isInput: 'none',
+    isOutput: 'none',
   }
+  handleModalVisible = (flag) => {
+    this.setState({
+      modalVisible: !!flag,
+    });
+    this.props.form.resetFields();
+  };
+  handleAdd = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err) => {
+      if (!err) {
+        Message.success('添加成功');
+        this.setState({
+          modalVisible: false,
+        });
+      } else {
+        console.log(err);
+      }
+    });
+  }
+  deteteOne =() => {
+    confirm({
+      title: '确认终止吗？',
+      onOk() {
+        Message.error('合同暂无法删除');
+      },
+    });
+  };
+  updateOne =() => {
+    Message.error('合同暂无法修改');
+  };
+  changeCTemplat = (value) => {
+    if (value === '0') {
+      this.setState({
+        isInput: 'block',
+        isOutput: 'none',
+      });
+    } else {
+      this.setState({
+        isInput: 'none',
+        isOutput: 'block',
+      });
+    }
+  };
   // 显示详情
   showModalMessage = () => {
     this.setState({
@@ -116,7 +164,8 @@ export default class Plan extends PureComponent {
     return e && e.fileList;
   }
   render() {
-    const { ModalMessage, ModalUpdate, ModalTerminate, selectedRowKeys } = this.state;
+    const { ModalMessage, ModalUpdate, ModalTerminate, selectedRowKeys,
+      modalVisible, isInput, isOutput } = this.state;
     const { getFieldDecorator } = this.props.form;
     const columns = [
       { title: '编号', dataIndex: 'id', key: 'id' },
@@ -183,6 +232,8 @@ export default class Plan extends PureComponent {
         <br />
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24} style={{ textAlign: 'right' }}>
+            <Button type="primary" onClick={this.handleModalVisible}>创建履行计划</Button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <Button onClick={this.carryPlan}>执行计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <Button onClick={this.showModalUpdate}>变更计划</Button>
@@ -292,6 +343,161 @@ export default class Plan extends PureComponent {
                 )}
               </FormItem>
             </Row>
+          </Modal>
+          <Modal
+            title="新增履行计划条目"
+            visible={modalVisible}
+            onOk={this.handleAdd}
+            destroyOnClose={this.state.destroyOnClose}
+            onCancel={() => this.handleModalVisible()}
+            style={{ width: 1200 }}
+          >
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="履行计划条目"
+            >
+              {getFieldDecorator('mess', {
+                rules: [
+                  { required: true, message: '请输入履行计划内容' },
+                ],
+              })(
+                <Input placeholder="请输入" />
+              )}
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="履行计划内容"
+            >
+              {getFieldDecorator('textA', {
+                rules: [
+                  { required: true, message: '请输入履行计划内容' },
+                ],
+              })(
+                <TextArea placeholder="请输入" />
+              )}
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="预计完成时间"
+            >
+              {getFieldDecorator('wilDate', {
+                rules: [
+                  { required: true, message: '请输入预计完成时间' },
+                ],
+              })(
+                <DatePicker style={{ width: '100%' }} />
+              )}
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="执行者"
+            >
+              {getFieldDecorator('flowO', {
+                rules: [
+                  { required: true, message: '请输入执行者' },
+                ],
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="前置条件"
+            >
+              <Checkbox.Group style={{ width: '100%' }}>
+                <Row>
+                  <Col span={24}><Checkbox value="A">货物入库</Checkbox></Col>
+                  <Col span={24}><Checkbox value="B"> 支付80%货款</Checkbox></Col>
+                  <Col span={24}><Checkbox value="C">收到上游发票</Checkbox></Col>
+                  <Col span={24}><Checkbox value="D">支付20%货款</Checkbox></Col>
+                </Row>
+              </Checkbox.Group>,
+            </FormItem>
+            <Divider />
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="履行计划模板"
+            >
+              {getFieldDecorator('cTemplat', {
+                rules: [
+                  { required: true, message: '请选择履行计划模板' },
+                ],
+              })(
+                <Select style={{ width: 295 }} showSearch placeholder="请选择履行计划模板" onChange={this.changeCTemplat}>
+                  <Option value="0">货物入库</Option>
+                  <Option value="1">货物出库</Option>
+                </Select>
+              )}
+            </FormItem>
+            <strong>履行计划模板预览</strong>
+            <div style={{ display: isInput }}>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="入库数量"
+                hasFeedback
+              >
+                {getFieldDecorator('inputSum', {
+                  rules: [
+                    { required: false, message: '请输入入库数量' },
+                  ],
+                })(
+                  <InputNumber style={{ width: 295 }} min={1} max={10000000} />
+                )}
+                <span>/吨</span>
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="入库时间"
+                hasFeedback
+              >
+                {getFieldDecorator('inputDate', {
+                  rules: [
+                    { required: false, message: '请输入入库时间' },
+                  ],
+                })(
+                  <DatePicker style={{ width: 295 }} />
+                )}
+              </FormItem>
+            </div>
+            <div style={{ display: isOutput }}>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="出库数量"
+                hasFeedback
+              >
+                {getFieldDecorator('outSum', {
+                  rules: [
+                    { required: false, message: '请输入出库数量' },
+                  ],
+                })(
+                  <InputNumber style={{ width: 295 }} min={1} max={10000000} />
+                )}
+                <span>/吨</span>
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="出库时间"
+                hasFeedback
+              >
+                {getFieldDecorator('outDate', {
+                  rules: [
+                    { required: false, message: '请输入出库时间' },
+                  ],
+                })(
+                  <DatePicker style={{ width: 295 }} />
+                )}
+              </FormItem>
+            </div>
           </Modal>
         </Form>
       </div>
