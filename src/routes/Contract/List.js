@@ -241,7 +241,7 @@ export default class List extends PureComponent {
       fixed: 'right',
       render: () => (
         <span>
-          <a href="/#/contract/details?dStatus=1">详情</a>
+          <a href="/#/contract/index/details?dStatus=1">详情</a>
           <Divider type="vertical" />
           <a><span onClick={this.handleModalVisible}>创建履行计划</span></a>
           <Divider type="vertical" />
@@ -293,7 +293,7 @@ export default class List extends PureComponent {
     }
     const { getFieldDecorator } = this.props.form;
     return (
-      <PageHeaderLayout>
+      <PageHeaderLayout title="列表页">
         <div className={styles.standardList}>
           <div style={{ padding: '30px', marginTop: '-30px' }}>
             <Row gutter={16}>

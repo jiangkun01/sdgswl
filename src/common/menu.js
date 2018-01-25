@@ -19,8 +19,8 @@ const menuData = [{
   icon: 'form',
   path: 'contract',
   children: [{
-    name: '合同基本信息列表',
-    path: 'list',
+    name: '合同基本信息管理',
+    path: 'index',
   // /*  path: 'basic-form',*/
   }, {
     name: '发起新合同',

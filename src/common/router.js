@@ -85,17 +85,20 @@ export const getRouterData = (app) => {
     '/contract/category': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Category')),
     },
-    '/contract/details': {
-      component: dynamicWrapper(app, [], () => import('../routes/Contract/Details')),
-    },
     '/contract/document': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Document')),
     },
     '/contract/step-form': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/StepForm')),
     },
-    '/contract/list': {
+    '/contract/index': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Index')),
+    },
+    '/contract/index/list': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/List')),
+    },
+    '/contract/index/details': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Details')),
     },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),

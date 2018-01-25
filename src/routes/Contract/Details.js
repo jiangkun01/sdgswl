@@ -28,15 +28,10 @@ export default class Details extends PureComponent {
   tabsCallback = (key) => {
     this.setState({ tabsKey: key });
   }
-  routeTitle = () => {
-    return (
-      <div><span style={{ fontSize: 15 }}><a href="/#/contract/list">合同管理</a></span>/<span style={{ fontSize: 10 }}>合同详情</span></div>
-    );
-  }
   render() {
     const { tabsKey } = this.state;
     return (
-      <PageHeaderLayout title={this.routeTitle()}>
+      <PageHeaderLayout title="详情页">
         <Card border="false">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col span={4} offset={1}><h3>发起人：<strong>李雷</strong></h3></Col>
