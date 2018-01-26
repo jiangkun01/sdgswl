@@ -71,7 +71,7 @@ export default class RContract extends PureComponent {
     }
     return (
       <div>
-        <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} bordered />
+        <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
       </div>
     );
   }
