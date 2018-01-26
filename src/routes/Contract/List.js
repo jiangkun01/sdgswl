@@ -51,6 +51,8 @@ export default class List extends PureComponent {
     modalVisible: false,
     isInput: 'none',
     isOutput: 'none',
+    isQuality: 'none',
+    isPay: 'none',
     isInputRequired: false,
     isOutRequired: false,
     destroyOnClose: true,
@@ -108,13 +110,35 @@ export default class List extends PureComponent {
       this.setState({
         isInput: 'block',
         isOutput: 'none',
+        isQuality: 'none',
+        isPay: 'none',
         isInputRequired: true,
         isOutRequired: false,
       });
-    } else {
+    } else if (value === '1') {
       this.setState({
         isInput: 'none',
         isOutput: 'block',
+        isQuality: 'none',
+        isPay: 'none',
+        isInputRequired: false,
+        isOutRequired: true,
+      });
+    } else if (value === '2') {
+      this.setState({
+        isInput: 'none',
+        isOutput: 'none',
+        isQuality: 'none',
+        isPay: 'block',
+        isInputRequired: false,
+        isOutRequired: true,
+      });
+    } else if (value === '3') {
+      this.setState({
+        isInput: 'none',
+        isOutput: 'none',
+        isQuality: 'block',
+        isPay: 'none',
         isInputRequired: false,
         isOutRequired: true,
       });
@@ -122,8 +146,15 @@ export default class List extends PureComponent {
   };
   render() {
     const { loading } = this.props;
-    const { modalVisible, isInput, isOutput, isInputRequired, isOutRequired } = this.state;
+    const { modalVisible, isInput, isOutput, isInputRequired,
+      isOutRequired, isQuality, isPay } = this.state;
     const salesData = [];
+    const formItemLayoutWithOutLabel = {
+      wrapperCol: {
+        xs: { span: 24, offset: 0 },
+        sm: { span: 20, offset: 4 },
+      },
+    };
     for (let i = 0; i < 12; i += 1) {
       salesData.push({
         x: `${i + 1}月`,
@@ -566,6 +597,8 @@ export default class List extends PureComponent {
               <Select style={{ width: 295 }} showSearch placeholder="请选择履行计划模板" onChange={this.changeCTemplat}>
                 <Option value="0">货物入库</Option>
                 <Option value="1">货物出库</Option>
+                <Option value="2">支付模板</Option>
+                <Option value="3">质检模板</Option>
               </Select>
             )}
           </FormItem>
@@ -601,6 +634,40 @@ export default class List extends PureComponent {
               )}
             </FormItem>
           </div>
+          <div style={{ display: isQuality }}>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="货物取样时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="到达第三方"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="质检时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="质检报告时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+          </div>
           <div style={{ display: isOutput }}>
             <FormItem
               labelCol={{ span: 5 }}
@@ -630,6 +697,85 @@ export default class List extends PureComponent {
               })(
                 <DatePicker style={{ width: 295 }} />
               )}
+            </FormItem>
+          </div>
+          <div style={{ display: isPay }}>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="首款金额"
+              hasFeedback
+            >
+              <InputNumber style={{ width: '100%' }} /><span>万元</span>
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="首款时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="尾款金额"
+              hasFeedback
+            >
+              <InputNumber style={{ width: '100%' }} /><span>万元</span>
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="尾款时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="支付笔数"
+              hasFeedback
+            >
+              <InputNumber style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="第一笔金额"
+              hasFeedback
+            >
+              <InputNumber style={{ width: '100%' }} /><span>万元</span>
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="第一笔时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem {...formItemLayoutWithOutLabel}>
+              <Button type="dashed" style={{ width: '75%', marginLeft: '5%' }}>
+                <Icon type="plus" /> 增加分次明细
+              </Button>
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="发票开出时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </FormItem>
+            <FormItem
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 15 }}
+              label="到达时间"
+              hasFeedback
+            >
+              <DatePicker style={{ width: '100%' }} />
             </FormItem>
           </div>
         </Modal>
