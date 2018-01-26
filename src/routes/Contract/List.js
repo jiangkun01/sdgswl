@@ -173,14 +173,6 @@ export default class List extends PureComponent {
           text: bStatus[3],
           value: 3,
         },
-        {
-          text: bStatus[4],
-          value: 4,
-        },
-        {
-          text: bStatus[5],
-          value: 5,
-        },
       ],
       render(val) {
         return <Badge status={bStatusMap[val]} text={bStatus[val]} />;
@@ -253,14 +245,14 @@ export default class List extends PureComponent {
       ),
     }];
     const data = [];
-    for (let i = 5; i < 20; i += 1) {
+    for (let i = 5; i < 10; i += 1) {
       if (i === 5) {
         data.push({
           key: i,
           no: i + 1,
           agreementNo: `2017SDHSLGGM000${i + 1}`,
           agreementName: '铝锭采购合同',
-          type: i % 5,
+          type: 0,
           bName: `测试数据${i + 1}`,
           bPhone: '2133456',
           companyAddress: 'Lake Street 42',
@@ -272,23 +264,77 @@ export default class List extends PureComponent {
           gUnitPrice: 14450,
           gSumPrice: 320.66,
         });
-      } else {
+      } else if (i === 6) {
         data.push({
           key: i,
           no: i + 1,
           agreementNo: `2017SDHSLGGM000${i + 1}`,
-          agreementName: `测试合同数据${i + 1}`,
+          agreementName: '铝锭质检合同',
+          type: 1,
+          bName: `测试数据${i + 1}`,
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 4,
+          money: 0.66,
+          createDate: new Date(),
+          gAmount: 0.01,
+          gUnitPrice: 0.66,
+          gSumPrice: 0.66,
+        });
+      } else if (i === 7) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGM000${i + 1}`,
+          agreementName: '铝锭物流合同',
           type: i % 5,
           bName: `测试数据${i + 1}`,
           bPhone: '2133456',
           companyAddress: 'Lake Street 42',
           companyName: 'SoftLake Co',
           status: (i + 3) % 4,
-          money: Math.ceil(Math.random() * 1000),
+          money: 1.11,
           createDate: new Date(),
-          gAmount: Math.ceil(Math.random() * 100),
-          gUnitPrice: Math.ceil(Math.random() * 1000),
-          gSumPrice: Math.ceil(Math.random() * 1000),
+          gAmount: 222,
+          gUnitPrice: 50,
+          gSumPrice: 11100,
+        });
+      } else if (i === 8) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGM000${i + 1}`,
+          agreementName: '铝锭仓储合同',
+          type: i % 5,
+          bName: `测试数据${i + 1}`,
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 4,
+          money: 0.111,
+          createDate: new Date(),
+          gAmount: 222,
+          gUnitPrice: 50,
+          gSumPrice: 11100,
+        });
+      } else if (i === 9) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGM000${i + 1}`,
+          agreementName: '铝锭销售合同',
+          type: i % 5,
+          bName: `测试数据${i + 1}`,
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 4,
+          money: 341.00,
+          createDate: new Date(),
+          gAmount: 222,
+          gUnitPrice: 14550,
+          gSumPrice: 11100,
         });
       }
     }

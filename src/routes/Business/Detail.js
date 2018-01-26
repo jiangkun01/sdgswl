@@ -62,8 +62,8 @@ export default class Detail extends PureComponent {
     ];
     // table
     const bType = ['采购', '质检合同', '物流', '仓储', '销售合同'];
-    const bStatus = ['新建', '审批中', '审批通过', '完成', '履行中', '终止'];
-    const statusMap = ['default', 'processing', 'success', 'success', 'processing', 'error'];
+    const bStatus = ['新建', '完成', '履行中', '终止'];
+    const statusMap = ['default', 'success', 'processing', 'error', 'processing', 'processing'];
     const columns = [{
       title: '合同编号',
       dataIndex: 'agreementNo',
@@ -92,14 +92,6 @@ export default class Detail extends PureComponent {
         {
           text: bStatus[3],
           value: 3,
-        },
-        {
-          text: bStatus[4],
-          value: 4,
-        },
-        {
-          text: bStatus[5],
-          value: 5,
         },
       ],
       render(val) {
@@ -154,25 +146,87 @@ export default class Detail extends PureComponent {
       render: () => <a href="/#/contract/index/details?dStatus=1">详情</a>,
     }];
     const data = [];
-    for (let i = 5; i < 20; i += 1) {
-      data.push({
-        key: i,
-        no: i + 1,
-        agreementNo: `2017SDHSLGGMZH000${i + 1}`,
-        agreementName: `测试合同数据${i + 1}`,
-        type: i % 5,
-        bName: `测试数据${i + 1}`,
-        bPhone: '测试数据 2133456',
-        companyAddress: 'Lake Street 42',
-        companyName: 'SoftLake Co',
-        status: (i + 3) % 6,
-        gender: 'M',
-        createDate: new Date(),
-      });
+    for (let i = 5; i < 10; i += 1) {
+      if (i === 5) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGMZH000${i + 1}`,
+          agreementName: '铝锭采购合同',
+          type: i % 5,
+          bName: '上海六易贸易有限公司',
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 6,
+          gender: 'M',
+          createDate: new Date(),
+        });
+      } else if (i === 6) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGMZH000${i + 1}`,
+          agreementName: '铝锭质检合同',
+          type: i % 5,
+          bName: 'XX检测公司',
+          bPhone: '400-12-123',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 6,
+          gender: 'M',
+          createDate: new Date(),
+        });
+      } else if (i === 7) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGMZH000${i + 1}`,
+          agreementName: '铝锭物流合同',
+          type: i % 5,
+          bName: '山东高速物流标准箱分公司',
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: 1,
+          gender: 'M',
+          createDate: new Date(),
+        });
+      } else if (i === 8) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGMZH000${i + 1}`,
+          agreementName: '铝锭仓储合同',
+          type: i % 5,
+          bName: '山东高速青岛物流发展有限公司',
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: 3,
+          gender: 'M',
+          createDate: new Date(),
+        });
+      } else if (i === 9) {
+        data.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `2017SDHSLGGMZH000${i + 1}`,
+          agreementName: '铝锭销售合同',
+          type: i % 5,
+          bName: '新疆大陆桥集团有限公司',
+          bPhone: '2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: (i + 3) % 6,
+          gender: 'M',
+          createDate: new Date(),
+        });
+      }
     }
     const { getFieldDecorator } = this.props.form;
     return (
-      <PageHeaderLayout title="氧化铝业务0详情">
+      <PageHeaderLayout title="铝锭业务0详情">
         <div className={styles.standardList}>
           <BackTop />
           <div style={{ padding: '30px' }}>

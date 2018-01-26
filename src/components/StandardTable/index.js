@@ -121,7 +121,7 @@ class StandardTable extends PureComponent {
     const { selectedRowKeys, visible, confirmLoading, BussGoods, ItemArrayVoShow } = this.state;
     const { data: { list, pagination }, loading } = this.props;
 
-    const status = ['履行中', '已完成', '新建', '终止'];
+    const status = ['新建', '已完成', '履行中', '终止'];
     const bType = ['内贸', '外贸'];
     const columns = [
       {

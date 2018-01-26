@@ -19,7 +19,7 @@ for (let i = 0; i < 46; i += 1) {
     no: Math.floor(Math.random() * 10000000),
     title: `一个任务名称 ${i}`,
     owner: '曲丽丽',
-    bName: `氧化铝业务 ${i}`,
+    bName: `铝锭业务 ${i}`,
     ItemArray: ItemVo,
     BType: Math.floor(Math.random() * 2),
     callNo: Math.floor(Math.random() * 1000),
