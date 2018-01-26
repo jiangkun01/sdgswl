@@ -144,7 +144,7 @@ export default class Category extends PureComponent {
         ),
       }];
     const data = [];
-    const dataName = ['采购合同', '物流合同', '仓储合同', '销售合同', '长期协议合同', '单次合同', '框架合同合同'];
+    const dataName = ['采购合同', '物流合同', '仓储合同', '销售合同', '长期协议合同', '单次合同', '框架合同'];
     for (let i = 1; i < 8; i += 1) {
       data.push({
         id: `${i}`,

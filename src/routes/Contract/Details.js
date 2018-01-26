@@ -46,7 +46,7 @@ export default class Details extends PureComponent {
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
-              total="122.4（万元）"
+              total="321.66（万元）"
               footer=""
               contentHeight={46}
               style={{ borderTop: '4px solid #1890FF' }}
@@ -60,7 +60,7 @@ export default class Details extends PureComponent {
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
-              total="22（万元）"
+              total="0（万元）"
               footer=""
               contentHeight={46}
               style={{ borderTop: '4px solid #13C2C2' }}
@@ -74,7 +74,7 @@ export default class Details extends PureComponent {
                   <Icon type="info-circle-o" />
                 </Tooltip>
               }
-              total="22（万元）"
+              total="0（万元）"
               footer=""
               contentHeight={46}
               style={{ borderTop: '4px solid #E9686B' }}
@@ -98,9 +98,9 @@ export default class Details extends PureComponent {
         <Card border="false">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col span={4} offset={1}><h3>发起人：<strong>李雷</strong></h3></Col>
-            <Col span={5}><h3>发起日期：<strong>2017-01-01</strong></h3></Col>
+            <Col span={5}><h3>发起日期：<strong>2017-08-21</strong></h3></Col>
             <Col span={7}><h3>合同发起部门：<strong>山东高速物流公司管控部</strong></h3></Col>
-            <Col span={5}><h3>合同状态：<strong>已执行</strong></h3></Col>
+            <Col span={5}><h3>合同状态：<strong>履约中</strong></h3></Col>
           </Row>
         </Card>
         <br />

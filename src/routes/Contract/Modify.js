@@ -53,6 +53,10 @@ export default class Modify extends PureComponent {
       dataIndex: 'id',
       key: 'id',
     }, {
+      title: '合同名称',
+      dataIndex: 'name',
+      key: 'name',
+    }, {
       title: '变更日期',
       dataIndex: 'time',
       key: 'time',
@@ -80,21 +84,15 @@ export default class Modify extends PureComponent {
         </span>
       ),
     }];
-    const type = ['长期合同', '短期合同', '单货物合同', '内贸合同', '外贸合同', '单次合同'];
-    const content = ['合同期限延长为长期', '合同期限缩短为短期', '合同运输货物改为仅仅是煤炭', '合同贸易类型改为内贸', '合同贸易类型改为外贸', '合同执行次数改为单词'];
-    const reason = ['合同双方同意长期合作', '合同双方同意放弃长期合作', '合同一方被限制运输货物类型', '合同一方转为国内发展', '合同一方转为国外发展', '合同双方同意本次运输执行完成后，取消合同'];
-    const filename = ['长期煤炭运输合同', '短期运输合同', '长期焦炭运输合同', '长期运输合同', '短期杂货运输合同', '长期内贸运输合同'];
-    const dataSource = [];
-    for (let i = 1; i < 7; i += 1) {
-      dataSource.push({
-        id: i,
-        time: i < 10 ? `2017-0${i}-0${i}` : `2017-${i}-${i}`,
-        type: type[i - 1],
-        content: content[i - 1],
-        reason: reason[i - 1],
-        filename: filename[i - 1],
-      });
-    }
+    const dataSource = [{
+      id: '1',
+      name: '铝锭销售合同',
+      time: '2017-08-31',
+      type: '数量变更',
+      content: '将原计划销售20吨改为30吨',
+      reason: '相对方需求增加',
+      filename: '铝锭销售合同',
+    }];
     /* const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
