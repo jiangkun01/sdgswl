@@ -1,21 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Table, Modal, Row, Col, Form, Input } from 'antd';
-
-const FormItem = Form.Item;
+import { Table } from 'antd';
 
 export default class RContract extends PureComponent {
-  state = {
-    visible: false,
-  }
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  }
-  modalHandleOk = () => {
-    this.setState({
-      visible: false,
-    });
+  reset = () => {
+    location.reload();
   }
   render() {
     const columns = [{
@@ -61,7 +49,7 @@ export default class RContract extends PureComponent {
       width: 65,
       render: () => (
         <span>
-          <a onClick={this.showModal}>详情</a>
+          <a onClick={this.reset}>详情</a>
         </span>
       ),
     }];
@@ -81,52 +69,9 @@ export default class RContract extends PureComponent {
         goodsprice: `${i * 6}万元`,
       });
     }
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 18 },
-      },
-    };
     return (
       <div>
         <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} bordered />
-        <Modal title="关联合同详情" visible={this.state.visible} onOk={this.modalHandleOk} onCancel={this.modalHandleOk}>
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={24} sm={24}>
-              <FormItem {...formItemLayout} label="合同编号" >
-                <Input value="201705057878" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="合同名称" >
-                <Input value="短期杂货运输合同" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="合同类型" >
-                <Input value="短期合同" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="合同执行状态" >
-                <Input value="执行中" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="签订时间" >
-                <Input value="2017-05-05" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="合同金额" >
-                <Input value="166万元" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="货物类型" >
-                <Input value="散货" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="货物总价" >
-                <Input value="100万元" disabled style={{ color: 'black' }} />
-              </FormItem>
-              <FormItem {...formItemLayout} label="货物单价" >
-                <Input value="36万元" disabled style={{ color: 'black' }} />
-              </FormItem>
-            </Col>
-          </Row>
-        </Modal>
       </div>
     );
   }

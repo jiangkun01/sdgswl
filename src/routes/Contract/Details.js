@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Card, Tabs } from 'antd';
-import { connect } from 'dva';
+import { Row, Col, Card, Tooltip, Tabs, Icon } from 'antd';
+import { ChartCard } from '../../components/Charts';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import Information from './Information';
 import Plan from './Plan';
@@ -9,10 +9,6 @@ import RGoods from './RGoods';
 import Modify from './Modify';
 import Annex from './Annex';
 
-@connect(({ status, loading }) => ({
-  status,
-  loading: loading.models.rule,
-}))
 export default class Details extends PureComponent {
   state = {
     tabsKey: '1',
@@ -30,8 +26,75 @@ export default class Details extends PureComponent {
   }
   render() {
     const { tabsKey } = this.state;
+    const topColResponsiveProps = {
+      xs: 24,
+      sm: 12,
+      md: 12,
+      lg: 12,
+      xl: 6,
+      style: { marginBottom: 24 },
+    };
     return (
       <PageHeaderLayout title="详情页">
+
+        <Row gutter={16}>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              title="合同销售总额"
+              action={
+                <Tooltip title="合同销售总额">
+                  <Icon type="info-circle-o" />
+                </Tooltip>
+              }
+              total="122.4（万元）"
+              footer=""
+              contentHeight={46}
+              style={{ borderTop: '4px solid #1890FF' }}
+            />
+          </Col>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              title="已回款金额"
+              action={
+                <Tooltip title="已回款金额">
+                  <Icon type="info-circle-o" />
+                </Tooltip>
+              }
+              total="22（万元）"
+              footer=""
+              contentHeight={46}
+              style={{ borderTop: '4px solid #13C2C2' }}
+            />
+          </Col>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              title="已付款金额"
+              action={
+                <Tooltip title="已付款金额">
+                  <Icon type="info-circle-o" />
+                </Tooltip>
+              }
+              total="22（万元）"
+              footer=""
+              contentHeight={46}
+              style={{ borderTop: '4px solid #E9686B' }}
+            />
+          </Col>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              title="预计实现收入"
+              action={
+                <Tooltip title="预计实现收入">
+                  <Icon type="info-circle-o" />
+                </Tooltip>
+              }
+              total="32（万元）"
+              footer=""
+              contentHeight={46}
+              style={{ borderTop: '4px solid #CB0A12' }}
+            />
+          </Col>
+        </Row>
         <Card border="false">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col span={4} offset={1}><h3>发起人：<strong>李雷</strong></h3></Col>
@@ -39,21 +102,6 @@ export default class Details extends PureComponent {
             <Col span={7}><h3>合同发起部门：<strong>山东高速物流公司管控部</strong></h3></Col>
             <Col span={5}><h3>合同状态：<strong>已执行</strong></h3></Col>
           </Row>
-          {
-            tabsKey === '1' && (
-              <br />
-            )
-          }
-          {
-            tabsKey === '1' && (
-              <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                <Col span={5} offset={1}><h3>合同销售总额：<strong>122.4 万元</strong></h3></Col>
-                <Col span={5}><h3>已回款金额：<strong>22 万元</strong></h3></Col>
-                <Col span={5}><h3>已付款金额：<strong>22 万元</strong></h3></Col>
-                <Col span={5}><h3>预计实现收入：<strong>32 万元</strong></h3></Col>
-              </Row>
-            )
-          }
         </Card>
         <br />
         <Card border="false">
