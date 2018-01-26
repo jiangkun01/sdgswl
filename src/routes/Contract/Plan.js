@@ -131,9 +131,8 @@ export default class Plan extends PureComponent {
     } else if (selectedRows.length > 1) {
       Message.warning('无法操作多条履行计划');
     } else {
-      this.setState({
-        modalStatus: '完成计划',
-      });
+      this.planComplete();
+      this.modalHandleOk();
       Message.success('履行计划完成');
     }
   }
@@ -147,6 +146,8 @@ export default class Plan extends PureComponent {
           this.planAdd(values);
         } else if (modalStatus.indexOf('执行') >= 0) {
           this.planPerform();
+        } else if (modalStatus.indexOf('终止') >= 0) {
+          this.planTerminate();
         }
         this.modalHandleOk();
       }
@@ -173,6 +174,26 @@ export default class Plan extends PureComponent {
     for (let i = 0; i < dataSource.length; i += 1) {
       if (dataSource[i].id === selectedRowKeys[0]) {
         dataSource[i].status = '执行中';
+        dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
+      }
+    }
+  }
+  // 终止计划
+  planTerminate = () => {
+    const { selectedRowKeys, dataSource } = this.state;
+    for (let i = 0; i < dataSource.length; i += 1) {
+      if (dataSource[i].id === selectedRowKeys[0]) {
+        dataSource[i].status = '已终止';
+        dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
+      }
+    }
+  }
+  // 完成计划
+  planComplete = () => {
+    const { selectedRowKeys, dataSource } = this.state;
+    for (let i = 0; i < dataSource.length; i += 1) {
+      if (dataSource[i].id === selectedRowKeys[0]) {
+        dataSource[i].status = '已完成';
         dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
       }
     }
