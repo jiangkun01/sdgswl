@@ -96,27 +96,75 @@ export default class List extends PureComponent {
       title: '类目名称',
       dataIndex: 'agreementName',
     }];
-    const data = [];
-    for (let i = 0; i < 20; i += 1) {
-      const no = Date.parse(new Date()).toString();
-      data.push({
-        key: i,
-        no: i + 1,
-        agreementNo: `${no}${i + 1}`,
-        agreementName: `货权转入${i + 1}`,
-        type: i % 5,
-        bName: `货权转入${i + 1}`,
-        bPhone: '测试数据 2133456',
-        companyAddress: 'Lake Street 42',
-        companyName: 'SoftLake Co',
+
+    const no = Date.parse(new Date()).toString();
+    const data1 = [
+      {
+        key: 1,
+        no: 1,
+        agreementNo: `${no}${1}`,
+        agreementName: '货权转入',
+      },
+      {
+        key: 2,
+        no: 2,
+        agreementNo: `${no}${1}`,
+        agreementName: '货权转出',
+      },
+    ];
+    const data = [
+      {
+        key: 1,
+        agreementNo: `${no}${1}`,
+        agreementName: '支付',
         status: '李雷',
         gender: 'M',
         createDate: new Date(),
-      });
-    }
+      },
+      {
+        key: 2,
+        agreementNo: `${no}${2}`,
+        agreementName: '收款',
+        status: '李雷',
+        gender: 'M',
+        createDate: new Date(),
+      },
+      {
+        key: 3,
+        agreementNo: `${no}${3}`,
+        agreementName: '物流',
+        status: '李雷',
+        gender: 'M',
+        createDate: new Date(),
+      },
+      {
+        key: 4,
+        agreementNo: `${no}${4}`,
+        agreementName: '仓储',
+        status: '李雷',
+        gender: 'M',
+        createDate: new Date(),
+      },
+      {
+        key: 5,
+        agreementNo: `${no}${5}`,
+        agreementName: '质检',
+        status: '李雷',
+        gender: 'M',
+        createDate: new Date(),
+      },
+      {
+        key: 5,
+        agreementNo: `${no}${5}`,
+        agreementName: '其他',
+        status: '李雷',
+        gender: 'M',
+        createDate: new Date(),
+      },
+    ];
     const { getFieldDecorator } = this.props.form;
     return (
-      <PageHeaderLayout>
+      <PageHeaderLayout title="类目列表">
         <div className={styles.standardList}>
           <div style={{ padding: '30px', marginTop: -30 }}>
             <Row gutter={24}>
@@ -194,13 +242,6 @@ export default class List extends PureComponent {
                               </FormItem >
                             </Col>
                             <Col md={8} sm={24}>
-                              <FormItem label="添加者">
-                                {getFieldDecorator('u_name')(
-                                  <Input placeholder="请输入" />
-                                )}
-                              </FormItem>
-                            </Col>
-                            <Col md={8} sm={24}>
                               <span style={{ float: 'right', marginBottom: 24 }}>
                                 <Button type="primary" htmlType="submit">查询</Button>
                                 <Button style={{ marginLeft: 8 }} >重置</Button>
@@ -210,7 +251,7 @@ export default class List extends PureComponent {
                         </Form>
                       </div>
                       <Table
-                        dataSource={data}
+                        dataSource={data1}
                         columns={columnsVo}
                         rowKey={record => record.key}
                         scroll={{ x: 1366 }}

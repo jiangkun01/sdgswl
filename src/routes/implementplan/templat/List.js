@@ -38,6 +38,7 @@ export default class List extends PureComponent {
     payModalVisible: false,
     qualityModalVisible: false,
     modelCreateVisible: false,
+    other: false,
     formLable: '',
     formLable1: '',
     isInputNumber: 'none',
@@ -53,6 +54,10 @@ export default class List extends PureComponent {
     } else if (flag === 8) {
       this.setState({
         qualityModalVisible: !!flag,
+      });
+    } else if (flag === 6) {
+      this.setState({
+        other: !!flag,
       });
     } else if ((flag % 2) === 0) {
       this.setState({
@@ -140,6 +145,7 @@ export default class List extends PureComponent {
       modalVisible: false,
       payModalVisible: false,
       qualityModalVisible: false,
+      other: false,
     });
   };
   render() {
@@ -157,7 +163,7 @@ export default class List extends PureComponent {
       },
     };
     // table
-    const bType = ['货物入库', '货物出库', '物流', '仓储', '质检', '其他'];
+    const bType = ['入库计划', '货物出库', '物流', '仓储', '质检', '其他'];
     const bTypeVo = ['货权转入', '货权转出', '物流', '支付', '质检', '其他'];
     const statusMap = ['default', 'processing', 'success', 'success', 'processing', 'error'];
     const columns = [{
@@ -207,10 +213,6 @@ export default class List extends PureComponent {
       title: '模板类目',
       dataIndex: 'type1',
       filters: [
-        {
-          text: bTypeVo[0],
-          value: 0,
-        },
         {
           text: bTypeVo[1],
           value: 1,
@@ -265,7 +267,7 @@ export default class List extends PureComponent {
         </a>),
     }];
     const data = [];
-    for (let i = 0; i < 20; i += 1) {
+    for (let i = 0; i < 1; i += 1) {
       const no = Date.parse(new Date()).toString();
       data.push({
         key: i,
@@ -284,7 +286,7 @@ export default class List extends PureComponent {
       });
     }
     const dataVo = [];
-    for (let i = 5; i < 25; i += 1) {
+    for (let i = 5; i < 9; i += 1) {
       const no = Date.parse(new Date()).toString();
       if (i === 7) {
         dataVo.push({
@@ -292,7 +294,7 @@ export default class List extends PureComponent {
           no: i + 1,
           agreementNo: `${no}${i + 1}`,
           agreementName: `货权转入${i + 1}`,
-          type: '自定义模板测试数据',
+          type: '支付计划',
           type1: 3,
           bName: `货权转入${i + 1}`,
           bPhone: '测试数据 2133456',
@@ -308,7 +310,7 @@ export default class List extends PureComponent {
           no: i + 1,
           agreementNo: `${no}${i + 1}`,
           agreementName: `货权转入${i + 1}`,
-          type: '自定义模板测试数据',
+          type: '质检计划',
           type1: 4,
           bName: `货权转入${i + 1}`,
           bPhone: '测试数据 2133456',
@@ -318,14 +320,30 @@ export default class List extends PureComponent {
           gender: 'M',
           createDate: new Date(),
         });
-      } else {
+      } else if (i === 5) {
         dataVo.push({
           key: i,
           no: i + 1,
           agreementNo: `${no}${i + 1}`,
           agreementName: `货权转入${i + 1}`,
-          type: '自定义模板测试数据',
-          type1: i % 2,
+          type: '出库计划',
+          type1: 1,
+          bName: `货权转入${i + 1}`,
+          bPhone: '测试数据 2133456',
+          companyAddress: 'Lake Street 42',
+          companyName: 'SoftLake Co',
+          status: '李雷',
+          gender: 'M',
+          createDate: new Date(),
+        });
+      } else if (i === 6) {
+        dataVo.push({
+          key: i,
+          no: i + 1,
+          agreementNo: `${no}${i + 1}`,
+          agreementName: `货权转入${i + 1}`,
+          type: '无截止时间完成',
+          type1: 5,
           bName: `货权转入${i + 1}`,
           bPhone: '测试数据 2133456',
           companyAddress: 'Lake Street 42',
@@ -343,7 +361,7 @@ export default class List extends PureComponent {
         <div key={`d[${k}]`}>
           <FormItem
             {...formItemLayout}
-            label={`规则描述${index + 1}`}
+            label={`条目描述${index + 1}`}
             required={false}
             key={`rule[${k}]`}
             hasFeedback
@@ -353,10 +371,10 @@ export default class List extends PureComponent {
               rules: [{
                 required: true,
                 whitespace: true,
-                message: '请输入规则描述',
+                message: '请输入描述',
               }],
             })(
-              <Input placeholder="请输入规则描述" />
+              <Input placeholder="请输入" />
             )}
           </FormItem>
           <FormItem
@@ -377,7 +395,7 @@ export default class List extends PureComponent {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={`规则单位${index + 1}`}
+            label={`数字框单位${index + 1}`}
             required={false}
             key={`unit[${k}]`}
             hasFeedback
@@ -385,19 +403,19 @@ export default class List extends PureComponent {
           >
             {getFieldDecorator(`unit[${k}]`)(
               <div>
-                <Input placeholder="请输入规则描述单位" /><Checkbox />
+                <Input placeholder="数子框单位" /><Checkbox />
               </div>
             )}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={`时间节点${index + 1}`}
+            label={`截止时间条目${index + 1}`}
             required={false}
             key={`r[${k}]`}
             hasFeedback
           >
             {getFieldDecorator(`r[${k}]`)(
-              <Checkbox >条目选择</Checkbox>
+              <Checkbox >选择</Checkbox>
             )}
           </FormItem>
           <Divider>
@@ -415,7 +433,7 @@ export default class List extends PureComponent {
       );
     });
     return (
-      <PageHeaderLayout>
+      <PageHeaderLayout title="模板列表">
         <div className={styles.standardList}>
           <div style={{ padding: '30px', marginTop: -30 }}>
             <Row gutter={24}>
@@ -534,7 +552,7 @@ export default class List extends PureComponent {
             label={this.state.formLable}
             hasFeedback
           >
-            <InputNumber disabled min={1} max={10000000} />
+            <InputNumber style={{ width: '100%' }} disabled min={1} max={10000000} />
             <span>/吨</span>
           </FormItem>
           <FormItem
@@ -543,7 +561,7 @@ export default class List extends PureComponent {
             label="单价"
             hasFeedback
           >
-            <InputNumber disabled min={1} max={10000000} />
+            <InputNumber style={{ width: '100%' }} disabled min={1} max={10000000} />
             <span>元/吨</span>
           </FormItem>
           <FormItem
@@ -552,7 +570,7 @@ export default class List extends PureComponent {
             label="总金额"
             hasFeedback
           >
-            <InputNumber disabled min={1} max={10000000} />
+            <InputNumber style={{ width: '100%' }} disabled min={1} max={10000000} />
             <span>万元</span>
           </FormItem>
           <FormItem
@@ -561,7 +579,7 @@ export default class List extends PureComponent {
             label={this.state.formLable1}
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
         </Modal>
         <Modal
@@ -577,7 +595,7 @@ export default class List extends PureComponent {
             label="首款金额"
             hasFeedback
           >
-            <InputNumber disabled /><span>万元</span>
+            <InputNumber style={{ width: '100%' }} disabled /><span>万元</span>
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -585,7 +603,7 @@ export default class List extends PureComponent {
             label="首款时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -593,7 +611,7 @@ export default class List extends PureComponent {
             label="尾款金额"
             hasFeedback
           >
-            <InputNumber disabled /><span>万元</span>
+            <InputNumber style={{ width: '100%' }} disabled /><span>万元</span>
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -601,7 +619,7 @@ export default class List extends PureComponent {
             label="尾款时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -609,7 +627,7 @@ export default class List extends PureComponent {
             label="支付笔数"
             hasFeedback
           >
-            <InputNumber disabled />
+            <InputNumber style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -617,7 +635,7 @@ export default class List extends PureComponent {
             label="第一笔金额"
             hasFeedback
           >
-            <InputNumber disabled /><span>万元</span>
+            <InputNumber style={{ width: '100%' }} disabled /><span>万元</span>
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -625,10 +643,10 @@ export default class List extends PureComponent {
             label="第一笔时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem {...formItemLayoutWithOutLabel}>
-            <Button type="dashed" style={{ width: '60%' }}>
+            <Button disabled type="dashed" style={{ width: '75%', marginLeft: '5%' }}>
               <Icon type="plus" /> 增加分次明细
             </Button>
           </FormItem>
@@ -638,7 +656,7 @@ export default class List extends PureComponent {
             label="发票开出时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -646,7 +664,7 @@ export default class List extends PureComponent {
             label="到达时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
         </Modal>
         <Modal
@@ -662,7 +680,7 @@ export default class List extends PureComponent {
             label="货物取样时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -670,7 +688,7 @@ export default class List extends PureComponent {
             label="到达第三方"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -678,7 +696,7 @@ export default class List extends PureComponent {
             label="质检时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
           </FormItem>
           <FormItem
             labelCol={{ span: 5 }}
@@ -686,7 +704,24 @@ export default class List extends PureComponent {
             label="质检报告时间"
             hasFeedback
           >
-            <DatePicker disabled />
+            <DatePicker style={{ width: '100%' }} disabled />
+          </FormItem>
+        </Modal>
+        <Modal
+          title="履行计划模板详情"
+          visible={this.state.other}
+          onOk={this.hiddenModalVisible}
+          onCancel={() => this.hiddenModalVisible()}
+          style={{ width: 1200 }}
+        >
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="是否完成"
+            hasFeedback
+          >
+            <Button style={{ width: '100%', display: 'block' }} disabled type="primary">是</Button>
+            <Button style={{ width: '100%', display: 'block', marginTop: '20px' }} disabled type="primary">否</Button>
           </FormItem>
         </Modal>
         <Modal
@@ -707,7 +742,7 @@ export default class List extends PureComponent {
                 { required: true, message: '请输入履行计划模板名称' },
               ],
             })(
-              <Input placeholder="请输入" />
+              <Input style={{ width: '100%' }} placeholder="请输入" />
             )}
           </FormItem>
           <FormItem
@@ -723,7 +758,7 @@ export default class List extends PureComponent {
             })(
               <Select
                 showSearch
-                style={{ width: 200 }}
+                style={{ width: '100%' }}
                 placeholder="选择履行计划类目"
                 optionFilterProp="children"
               >
@@ -735,11 +770,11 @@ export default class List extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <Divider>自定义规则</Divider>
+          <Divider>自定义条目</Divider>
           {formItems}
           <FormItem {...formItemLayoutWithOutLabel}>
             <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
-              <Icon type="plus" /> 增加规则描述
+              <Icon type="plus" /> 增加条目
             </Button>
           </FormItem>
         </Modal>
