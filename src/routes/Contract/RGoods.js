@@ -55,23 +55,30 @@ export default class RContract extends PureComponent {
       title: `${tabsKey === '1' ? '出库' : '入库'}单价`,
       dataIndex: 'price',
       key: 'price',
+    }, {
+      title: '仓库名称',
+      dataIndex: 'wname',
+      key: 'wname',
     }];
     const dataSourceInput = [{
       id: 1,
       time: '2017-08-22',
       number: '20吨',
       price: '10万元',
+      wname: '散货仓库',
     }];
     const dataSourceOut = [{
       id: 1,
       time: '2017-08-23',
       number: '5吨',
       price: '11.5万元',
+      wname: '散货仓库',
     }, {
-      id: 1,
+      id: 2,
       time: '2017-08-26',
       number: '10吨',
       price: '11.5万元',
+      wname: '散货仓库',
     }];
     return (
       <div>
@@ -111,9 +118,9 @@ export default class RContract extends PureComponent {
           <Col span={24}>
             <Card style={{ width: '100%' }} tabList={[{ key: '1', tab: '出库记录' }, { key: '2', tab: '入库记录' }]} onTabChange={(key) => { this.onTabChange(key); }}>
               {tabsKey === '1' ? (
-                <Table dataSource={dataSourceOut} columns={columns} rowKey="id" />
+                <Table dataSource={dataSourceOut} columns={columns} scroll={{ x: 1000 }} rowKey="id" />
               ) : (
-                <Table dataSource={dataSourceInput} columns={columns} rowKey="id" />
+                <Table dataSource={dataSourceInput} columns={columns} scroll={{ x: 1000 }} rowKey="id" />
               )}
             </Card>
           </Col>

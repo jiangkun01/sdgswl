@@ -14,6 +14,7 @@ export default class Annex extends PureComponent {
       id: '1',
       name: '铝锭采购合同',
       type: '合同文本',
+      uploaduser: '李雷',
       uploadtime: '2017-08-21',
       updatetime: '暂无',
     }],
@@ -85,6 +86,10 @@ export default class Annex extends PureComponent {
     }
     return e && e.fileList;
   }
+  // 将所有文件归档
+  archiveFile = () => {
+    Message.success('归档成功');
+  }
   // 隐藏弹出框
   modalHandleOk = () => {
     this.setState({
@@ -107,6 +112,10 @@ export default class Annex extends PureComponent {
       title: '所属类型',
       dataIndex: 'type',
       key: 'type',
+    }, {
+      title: '上传人',
+      dataIndex: 'uploaduser',
+      key: 'uploaduser',
     }, {
       title: '上传时间',
       dataIndex: 'uploadtime',
@@ -138,7 +147,7 @@ export default class Annex extends PureComponent {
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button type="primary" onClick={this.showModalAdd}>添加新文档</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button type="primary" onClick={this.finishPlan}>将所有文档入库</Button>
+            <Button type="primary" onClick={this.archiveFile}>将所有文件归档</Button>
           </Col>
         </Row>
         <Form onSubmit={this.handleFormSubmit}>
