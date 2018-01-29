@@ -38,7 +38,7 @@ export default class Document extends PureComponent {
   }
   // 转到详情
   toModalMessage = () => {
-    location.href = '/#/contract/index/details?dStatus=6';
+    location.href = '/#/contract/index/details/6';
   }
   // 删除
   handleMenuClick = () => {
@@ -83,7 +83,6 @@ export default class Document extends PureComponent {
         title: '编号',
         dataIndex: 'id',
         key: 'id',
-        width: 160,
         sorter: (a, b) => a.id - b.id,
         sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
       },
@@ -102,9 +101,9 @@ export default class Document extends PureComponent {
         filteredValue: filteredInfo.name || null,
         onFilter: (value, record) => record.name.includes(value),
       },
-      { title: '合同文档数量', dataIndex: 'number', key: 'number', width: 160 },
-      { title: '添加时间', dataIndex: 'addtime', key: 'addtime', width: 160 },
-      { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime', width: 160 },
+      { title: '合同文档数量', dataIndex: 'number', key: 'number' },
+      { title: '添加时间', dataIndex: 'addtime', key: 'addtime' },
+      { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime' },
       {
         title: '操作',
         key: 'operation',

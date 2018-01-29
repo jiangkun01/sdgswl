@@ -91,6 +91,9 @@ export default class Details extends PureComponent {
         </Row>
         <Card border="false">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+            <Col {...topColResponsiveProps} xl={{ span: 1 }}>
+              <div style={{ display: 'none' }}>123</div>
+            </Col>
             <Col {...topColResponsiveProps} xl={{ span: 4 }}>
               <h3>发起人：<strong>李雷</strong></h3>
             </Col>

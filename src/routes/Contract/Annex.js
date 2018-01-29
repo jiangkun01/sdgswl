@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Form, Upload, Message, Button, Table, Modal, Select, Icon } from 'antd';
+import { Row, Col, Form, Upload, Message, Input, Button, Table, Modal, Select, Icon } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -16,6 +16,7 @@ export default class Annex extends PureComponent {
       type: '合同文本',
       uploaduser: '李雷',
       uploadtime: '2017-08-21',
+      updateuser: '暂无',
       updatetime: '暂无',
     }],
   }
@@ -59,10 +60,12 @@ export default class Annex extends PureComponent {
     const name = values.upload[0].name.toString();
     dataSource.push({
       id: Number(dataSource[dataSource.length - 1].id) + 1,
-      name: name.substr(0, name.indexOf('.')),
+      name: name.substr(0, name.lastIndexOf('.')),
       type: values.type,
+      uploaduser: values.user,
       uploadtime: `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`,
       updatetime: '暂无',
+      updateuser: '暂无',
     });
   }
   // 修改文件操作
@@ -72,8 +75,9 @@ export default class Annex extends PureComponent {
     for (let i = 0; i < dataSource.length; i += 1) {
       if (dataSource[i].id === id) {
         const tempName = dataSource[i].name;
-        dataSource[i].name = name != null ? name.substr(0, name.indexOf('.')) : tempName;
+        dataSource[i].name = name != null ? name.substr(0, name.lastIndexOf('.')) : tempName;
         dataSource[i].type = values.type;
+        dataSource[i].updateuser = values.user;
         dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
       }
     }
@@ -100,54 +104,38 @@ export default class Annex extends PureComponent {
   render() {
     const { type, modalVisible, modalStatus, dataSource } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const columns = [{
-      title: '编号',
-      dataIndex: 'id',
-      key: 'id',
-    }, {
-      title: '文件名称',
-      dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '所属类型',
-      dataIndex: 'type',
-      key: 'type',
-    }, {
-      title: '上传人',
-      dataIndex: 'uploaduser',
-      key: 'uploaduser',
-    }, {
-      title: '上传时间',
-      dataIndex: 'uploadtime',
-      key: 'uploadtime',
-    }, {
-      title: '修改时间',
-      dataIndex: 'updatetime',
-      key: 'updatetime',
-    }, {
-      title: '操作',
-      key: 'operation',
-      fixed: 'right',
-      width: 65,
-      render: (text, record) => (
-        <span>
-          <a onClick={() => this.showModalUpdate(record)}>修改</a>
-        </span>
-      ),
-    }];
+    const columns = [
+      { title: '编号', dataIndex: 'id', key: 'id' },
+      { title: '文件名称', dataIndex: 'name', key: 'name' },
+      { title: '所属类型', dataIndex: 'type', key: 'type' },
+      { title: '上传人', dataIndex: 'uploaduser', key: 'uploaduser' },
+      { title: '上传时间', dataIndex: 'uploadtime', key: 'uploadtime' },
+      { title: '修改人', dataIndex: 'updateuser', key: 'updateuser' },
+      { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime' },
+      {
+        title: '操作',
+        key: 'operation',
+        fixed: 'right',
+        width: 65,
+        render: (text, record) => (
+          <span>
+            <a onClick={() => this.showModalUpdate(record)}>修改</a>
+          </span>
+        ),
+      }];
     return (
       <div>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24}>
-            <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 800 }} />
+            <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1000 }} />
           </Col>
         </Row>
         <br />
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24} style={{ textAlign: 'right' }}>
-            <Button type="primary" onClick={this.showModalAdd}>添加新文档</Button>
+            <Button type="primary" onClick={this.showModalAdd}>添加新文件</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button type="primary" onClick={this.archiveFile}>将所有文件归档</Button>
+            <Button type="primary" onClick={this.archiveFile}>全部归档</Button>
           </Col>
         </Row>
         <Form onSubmit={this.handleFormSubmit}>
@@ -177,15 +165,27 @@ export default class Annex extends PureComponent {
                 </FormItem>
               </Col>
               <Col span={22}>
+                <FormItem labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="填写操作人">
+                  {getFieldDecorator('user', {
+                    rules: [{ required: true, message: '请填写操作人!' }],
+                  })(
+                    <Input placeholder="请输入" />
+                  )}
+                </FormItem>
+              </Col>
+              <Col span={22}>
                 {
                   modalStatus.indexOf('修改') >= 0 ? (
                     <FormItem labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择文件">
                       {getFieldDecorator('upload', { valuePropName: 'fileList',
                         getValueFromEvent: this.normModalFile,
                       })(
-                        <Upload action="">
-                          <Button><Icon type="upload" />选择文件</Button>
-                        </Upload>
+                        <Upload.Dragger action="">
+                          <p className="ant-upload-drag-icon">
+                            <Icon type="inbox" />
+                          </p>
+                          <p className="ant-upload-text">单击或拖动文件到该区域上传</p>
+                        </Upload.Dragger >
                       )}
                     </FormItem>
                   ) : (
@@ -194,9 +194,13 @@ export default class Annex extends PureComponent {
                         getValueFromEvent: this.normModalFile,
                         rules: [{ required: true, message: '请选择文件!' }],
                       })(
-                        <Upload action="">
-                          <Button><Icon type="upload" />选择文件</Button>
-                        </Upload>
+                        <Upload.Dragger action="">
+                          <p className="ant-upload-drag-icon">
+                            <Icon type="inbox" />
+                          </p>
+                          <p className="ant-upload-text">单击或拖动文件到该区域上传</p>
+                          <p className="ant-upload-hint">支持单个或批量上载</p>
+                        </Upload.Dragger >
                       )}
                     </FormItem>
                   )

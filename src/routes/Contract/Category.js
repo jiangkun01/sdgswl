@@ -211,7 +211,7 @@ export default class Category extends PureComponent {
                 dataSource={data}
                 columns={columns}
                 rowKey="id"
-                scroll={{ x: 1366 }}
+                scroll={{ x: 1000 }}
                 onChange={this.handleTableChange}
                 loading={loading}
               />
