@@ -56,7 +56,7 @@ export default class Detail extends PureComponent {
         y: 660,
       },
       {
-        x: '未付款',
+        x: '未回款',
         y: 560,
       },
     ];

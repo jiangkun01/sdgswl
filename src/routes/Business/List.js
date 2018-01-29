@@ -7,6 +7,7 @@ import styles from './TableList.less';
 
 const { Option } = Select;
 const FormItem = Form.Item;
+const { TextArea } = Input;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 @connect(({ rule, loading }) => ({
   rule,
@@ -381,6 +382,13 @@ export default class TableList extends PureComponent {
               <Option value="0">内贸</Option>
               <Option value="1">外贸</Option>
             </Select>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="业务描述"
+          >
+            <TextArea placeholder="请输入" />
           </FormItem>
           <Divider />
           {ItemArray}

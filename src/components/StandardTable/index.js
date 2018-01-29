@@ -186,6 +186,11 @@ class StandardTable extends PureComponent {
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
+        title: '业务描述',
+        dataIndex: 'title',
+        key: 'title',
+      },
+      {
         title: '操作',
         width: 200,
         fixed: 'right',
