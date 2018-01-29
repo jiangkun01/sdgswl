@@ -269,7 +269,7 @@ export default class List extends PureComponent {
           <Divider type="vertical" />
           <a href="/#/contract/index/details/2">查看履行计划</a>
           <Divider type="vertical" />
-          <a onClick={this.updateOne}>修改</a>
+          <a href="/#/contract/create/">修改</a>
           <Divider type="vertical" />
           <a onClick={this.deteteOne}>终止</a>
         </span>

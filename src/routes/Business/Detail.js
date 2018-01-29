@@ -12,6 +12,7 @@ import {
   Input,
   Badge,
   BackTop,
+  Divider,
 } from 'antd';
 import {
   ChartCard,
@@ -20,7 +21,7 @@ import {
 } from '../../components/Charts';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from '../Dashboard/Analysis.less';
-
+import RGoods from '../Contract/RGoods';
 
 const FormItem = Form.Item;
 @Form.create()
@@ -143,7 +144,7 @@ export default class Detail extends PureComponent {
       key: 'operation',
       fixed: 'right',
       width: 100,
-      render: () => <a href="/#/contract/index/details?dStatus=1">详情</a>,
+      render: () => <a href="/#/contract/index/details/1">详情</a>,
     }];
     const data = [];
     for (let i = 5; i < 10; i += 1) {
@@ -340,6 +341,7 @@ export default class Detail extends PureComponent {
                   bodyStyle={{ padding: 24 }}
                   style={{ marginTop: 24, minHeight: 509 }}
                 >
+                  <Divider>合同信息</Divider>
                   <Form onSubmit={this.handleSearch} layout="inline">
                     <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                       <Col md={8} sm={24}>
@@ -383,6 +385,8 @@ export default class Detail extends PureComponent {
                     rowKey={record => record.key}
                     scroll={{ x: 1366 }}
                   />
+                  <Divider>货物信息</Divider>
+                  <RGoods />
                 </Card>
               </Col>
             </Row>

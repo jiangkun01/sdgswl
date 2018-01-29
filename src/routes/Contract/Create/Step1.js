@@ -64,15 +64,15 @@ class Step1 extends React.PureComponent {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="择贸易环节"
+            label="选择合同类目"
             hasFeedback
           >
             {getFieldDecorator('mLink', {
               rules: [
-                { required: true, message: '请选择贸易环节' },
+                { required: true, message: '选择合同类目' },
               ],
             })(
-              <Select placeholder="请选择贸易环节" onChange={this.changeMlink} >
+              <Select placeholder="选择合同类目" onChange={this.changeMlink} >
                 <Option value="0">采购</Option>
                 <Option value="1">销售</Option>
                 <Option value="2">仓储</Option>
