@@ -56,15 +56,23 @@ export default class RContract extends PureComponent {
       dataIndex: 'price',
       key: 'price',
     }];
-    const dataSource = [];
-    for (let i = 1; i < 12; i += 1) {
-      dataSource.push({
-        id: i,
-        time: i < 10 ? `2017-0${i}-0${i}` : `2017-${i}-${i}`,
-        number: `${Math.round((Math.random() * 30) + 30)}吨`,
-        price: `${Math.round((Math.random() * 15) + 15)}万元`,
-      });
-    }
+    const dataSourceInput = [{
+      id: 1,
+      time: '2017-08-22',
+      number: '20吨',
+      price: '10万元',
+    }];
+    const dataSourceOut = [{
+      id: 1,
+      time: '2017-08-23',
+      number: '5吨',
+      price: '11.5万元',
+    }, {
+      id: 1,
+      time: '2017-08-26',
+      number: '10吨',
+      price: '11.5万元',
+    }];
     return (
       <div>
         <Row>
@@ -75,17 +83,14 @@ export default class RContract extends PureComponent {
                 <h3>
                   货物名称：
                   <Select defaultValue="1" style={{ width: '60%' }}>
-                    <Select.Option value="1">果汁</Select.Option>
-                    <Select.Option value="2">焦炭</Select.Option>
-                    <Select.Option value="3">玉米</Select.Option>
-                    <Select.Option value="4">大豆</Select.Option>
+                    <Select.Option value="1">铝锭</Select.Option>
                   </Select>
                 </h3>
               </Row>
             </Col>
-            <Col span={4}><h3>货物总重：<strong>500吨</strong></h3></Col>
-            <Col span={4}><h3>货物均价：<strong>6万/吨</strong></h3></Col>
-            <Col span={4}><h3>当前货物总库存：<strong>6万</strong></h3></Col>
+            <Col span={4}><h3>货物总重：<strong>20吨</strong></h3></Col>
+            <Col span={4}><h3>货物均价：<strong>10万/吨</strong></h3></Col>
+            <Col span={4}><h3>当前货物总库存：<strong>5吨</strong></h3></Col>
           </Card>
         </Row>
         <br />
@@ -105,7 +110,11 @@ export default class RContract extends PureComponent {
         <Row>
           <Col span={24}>
             <Card style={{ width: '100%' }} tabList={[{ key: '1', tab: '出库记录' }, { key: '2', tab: '入库记录' }]} onTabChange={(key) => { this.onTabChange(key); }}>
-              <Table dataSource={dataSource} columns={columns} rowKey="id" />
+              {tabsKey === '1' ? (
+                <Table dataSource={dataSourceOut} columns={columns} rowKey="id" />
+              ) : (
+                <Table dataSource={dataSourceInput} columns={columns} rowKey="id" />
+              )}
             </Card>
           </Col>
         </Row>

@@ -10,61 +10,73 @@ const { Option } = Select;
 @Form.create()
 export default class Plan extends PureComponent {
   state = {
+    modalStatus: '',
     modalVisible: false,
     ModalMessage: false,
     ModalUpdate: false,
     ModalTerminate: false,
+    ModalPerform: false,
     selectedRowKeys: [],
     selectedRows: [],
     isInput: 'none',
     isOutput: 'none',
+    isQuality: 'none',
+    isPay: 'none',
+    dataSource: [{
+      id: 1,
+      status: '执行中',
+      precondition: '暂无',
+      name: '出库20吨铝锭',
+      expectedtime: '2018-1-21',
+      actualtime: '暂无',
+      updatetime: '2017-08-26',
+      username: '李雷',
+      createtime: '2017-08-21',
+    }],
   }
+  // 显示新建计划
   handleModalVisible = (flag) => {
     this.setState({
+      modalStatus: '新建计划',
       modalVisible: !!flag,
     });
     this.props.form.resetFields();
-  };
-  handleAdd = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err) => {
-      if (!err) {
-        Message.success('添加成功');
-        this.setState({
-          modalVisible: false,
-        });
-      } else {
-        console.log(err);
-      }
-    });
-  }
-  deteteOne =() => {
-    confirm({
-      title: '确认终止吗？',
-      onOk() {
-        Message.error('合同暂无法删除');
-      },
-    });
-  };
-  updateOne =() => {
-    Message.error('合同暂无法修改');
   };
   changeCTemplat = (value) => {
     if (value === '0') {
       this.setState({
         isInput: 'block',
         isOutput: 'none',
+        isQuality: 'none',
+        isPay: 'none',
       });
-    } else {
+    } else if (value === '1') {
       this.setState({
         isInput: 'none',
         isOutput: 'block',
+        isQuality: 'none',
+        isPay: 'none',
+      });
+    } else if (value === '2') {
+      this.setState({
+        isInput: 'none',
+        isOutput: 'none',
+        isQuality: 'none',
+        isPay: 'block',
+      });
+    } else if (value === '3') {
+      this.setState({
+        isInput: 'none',
+        isOutput: 'none',
+        isQuality: 'block',
+        isPay: 'none',
       });
     }
   };
   // 显示详情
   showModalMessage = () => {
     this.setState({
+      modalStatus: '显示详情',
       ModalMessage: true,
     });
   }
@@ -76,7 +88,10 @@ export default class Plan extends PureComponent {
     } else if (selectedRows.length > 1) {
       Message.warning('无法操作多条履行计划');
     } else {
-      this.rowSelectionOnChange([], []);
+      this.setState({
+        modalStatus: '执行计划',
+        ModalPerform: true,
+      });
       Message.success('履行计划已开始执行');
     }
   }
@@ -88,8 +103,8 @@ export default class Plan extends PureComponent {
     } else if (selectedRows.length > 1) {
       Message.warning('无法操作多条履行计划');
     } else {
-      this.rowSelectionOnChange([], []);
       this.setState({
+        modalStatus: '变更计划',
         ModalUpdate: true,
       });
     }
@@ -102,8 +117,8 @@ export default class Plan extends PureComponent {
     } else if (selectedRows.length > 1) {
       Message.warning('无法操作多条履行计划');
     } else {
-      this.rowSelectionOnChange([], []);
       this.setState({
+        modalStatus: '终止计划',
         ModalTerminate: true,
       });
     }
@@ -116,36 +131,85 @@ export default class Plan extends PureComponent {
     } else if (selectedRows.length > 1) {
       Message.warning('无法操作多条履行计划');
     } else {
-      this.rowSelectionOnChange([], []);
+      this.planComplete();
+      this.modalHandleOk();
       Message.success('履行计划完成');
     }
   }
-  // 变更计划form方法
-  modalUpdateSubmit = (e) => {
+  // form方法
+  modalSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const { modalStatus } = this.state;
+        if (modalStatus.indexOf('新建') >= 0) {
+          this.planAdd(values);
+        } else if (modalStatus.indexOf('执行') >= 0) {
+          this.planPerform();
+        } else if (modalStatus.indexOf('终止') >= 0) {
+          this.planTerminate();
+        }
         this.modalHandleOk();
       }
     });
   }
-  // 终止计划form方法
-  modalTerminateSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-        this.modalHandleOk();
-      }
+  // 添加履行计划
+  planAdd = (values) => {
+    const { dataSource } = this.state;
+    dataSource.push({
+      id: Number(dataSource[dataSource.length - 1].id) + 1,
+      status: '未执行',
+      precondition: '暂无',
+      name: values.mess,
+      expectedtime: values.wilDate != null ? `${new Date(values.wilDate).getFullYear()}-${new Date(values.wilDate).getMonth() + 1 < 10 ? `0${new Date(values.wilDate).getMonth() + 1}` : `${new Date(values.wilDate).getMonth() + 1}`}-${new Date(values.wilDate).getDate()}` : '暂无',
+      actualtime: '暂无',
+      updatetime: '暂无',
+      username: values.flowO,
+      createtime: `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`,
     });
+  }
+  // 执行计划
+  planPerform = () => {
+    const { selectedRowKeys, dataSource } = this.state;
+    for (let i = 0; i < dataSource.length; i += 1) {
+      if (dataSource[i].id === selectedRowKeys[0]) {
+        dataSource[i].status = '执行中';
+        dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
+      }
+    }
+  }
+  // 终止计划
+  planTerminate = () => {
+    const { selectedRowKeys, dataSource } = this.state;
+    for (let i = 0; i < dataSource.length; i += 1) {
+      if (dataSource[i].id === selectedRowKeys[0]) {
+        dataSource[i].status = '已终止';
+        dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
+      }
+    }
+  }
+  // 完成计划
+  planComplete = () => {
+    const { selectedRowKeys, dataSource } = this.state;
+    for (let i = 0; i < dataSource.length; i += 1) {
+      if (dataSource[i].id === selectedRowKeys[0]) {
+        dataSource[i].status = '已完成';
+        dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
+      }
+    }
   }
   // 隐藏弹出框
   modalHandleOk = () => {
+    this.rowSelectionOnChange([], []);
     this.setState({
       ModalMessage: false,
       ModalUpdate: false,
       ModalTerminate: false,
+      modalVisible: false,
+      ModalPerform: false,
+    });
+    this.setState({
+      modalStatus: '',
     });
     this.props.form.resetFields();
   }
@@ -165,12 +229,12 @@ export default class Plan extends PureComponent {
   }
   render() {
     const { ModalMessage, ModalUpdate, ModalTerminate, selectedRowKeys,
-      modalVisible, isInput, isOutput } = this.state;
+      modalVisible, ModalPerform, isInput, isOutput, isQuality, isPay, dataSource } = this.state;
     const { getFieldDecorator } = this.props.form;
     const columns = [
       { title: '编号', dataIndex: 'id', key: 'id' },
       { title: '状态', dataIndex: 'status', key: 'status' },
-      { title: '前置条件', dataIndex: 'note', key: 'note' },
+      { title: '前置条件', dataIndex: 'precondition', key: 'precondition' },
       { title: '履行计划名称', dataIndex: 'name', key: 'name' },
       { title: '预计完成时间', dataIndex: 'expectedtime', key: 'expectedtime' },
       { title: '实际完成时间', dataIndex: 'actualtime', key: 'actualtime' },
@@ -187,27 +251,6 @@ export default class Plan extends PureComponent {
           </span>
         ),
       }];
-    const dataSource = [{
-      id: 1,
-      status: '执行中',
-      note: '暂无',
-      name: '入库20吨焦炭',
-      expectedtime: '2017-05-25',
-      actualtime: '2017-06-01',
-      updatetime: '2017-06-01',
-      username: '李雷',
-      createtime: '2017-04-25',
-    }, {
-      id: 2,
-      status: '执行中',
-      note: '暂无',
-      name: '入库30吨玉米',
-      expectedtime: '2017-06-25',
-      actualtime: '2017-07-01',
-      updatetime: '2017-07-01',
-      username: '韩涛',
-      createtime: '2017-05-25',
-    }];
     const rowSelection = {
       selectedRowKeys,
       onChange: this.rowSelectionOnChange,
@@ -222,6 +265,12 @@ export default class Plan extends PureComponent {
         sm: { span: 15 },
       },
     };
+    const formItemLayoutWithOutLabel = {
+      wrapperCol: {
+        xs: { span: 24, offset: 0 },
+        sm: { span: 20, offset: 4 },
+      },
+    };
     return (
       <div>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
@@ -232,47 +281,70 @@ export default class Plan extends PureComponent {
         <br />
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24} style={{ textAlign: 'right' }}>
-            <Button type="primary" onClick={this.handleModalVisible}>创建履行计划</Button>
+            <Button type="primary" onClick={this.handleModalVisible}>新建计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button onClick={this.carryPlan}>执行计划</Button>
+            <Button type="primary" onClick={this.carryPlan}>执行计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button onClick={this.showModalUpdate}>变更计划</Button>
+            <Button type="primary" onClick={this.showModalUpdate}>变更计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button onClick={this.showModalTerminate}>终止计划</Button>
+            <Button type="primary" onClick={this.showModalTerminate}>终止计划</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button onClick={this.finishPlan}> 完成计划</Button>
+            <Button type="primary" onClick={this.finishPlan}> 完成计划</Button>
           </Col>
         </Row>
+        <Form>
+          <Modal
+            visible={ModalPerform}
+            title="执行计划"
+            onCancel={this.modalHandleOk}
+            footer={[
+              <Button key="back" onClick={this.modalHandleOk}>关闭</Button>,
+              <Button key="submit" type="primary" onClick={this.modalSubmit}>提交</Button>,
+            ]}
+          >
+            <FormItem {...formItemLayout} label="入库数量" >
+              {getFieldDecorator('sInputSum', {
+              })(
+                <InputNumber style={{ width: '100%' }} min={1} max={10000000} />
+              )}
+            </FormItem>
+          </Modal>
+        </Form>
         <Modal title="履行计划详情" visible={ModalMessage} onOk={this.modalHandleOk} onCancel={this.modalHandleOk}>
           <Table
-            dataSource={[{ id: '1', number: '2', time: '2017-01-01' }, { id: '2', number: '2', time: '2017-01-02' }]}
-            columns={[{ title: '编号', dataIndex: 'id', key: 'id' }, { title: '入库数量(吨)', dataIndex: 'number', key: 'number' }, { title: '入库时间', dataIndex: 'time', key: 'time' }]}
+            dataSource={[{ id: '1', number: '5', time: '2017-08-23' }, { id: '2', number: '10', time: '2017-08-26' }]}
+            columns={[{ title: '编号', dataIndex: 'id', key: 'id' }, { title: '出库数量(吨)', dataIndex: 'number', key: 'number' }, { title: '出库时间', dataIndex: 'time', key: 'time' }]}
+            rowKey="id"
+          />
+          <Table
+            dataSource={[{ id: '1', content: '修改执行人为李雷', reason: '工作责任人调换', time: '2017-08-31' }, { id: '2', content: '修改预计时间为2018-2-21', reason: '不可控因素', time: '2018-01-21' }]}
+            columns={[{ title: '编号', dataIndex: 'id', key: 'id' }, { title: '变更内容', dataIndex: 'content', key: 'content' }, { title: '变更原因', dataIndex: 'reason', key: 'reason' }, { title: '变更时间', dataIndex: 'time', key: 'time' }]}
             rowKey="id"
           />
         </Modal>
         <Form>
           <Modal
             visible={ModalUpdate}
-            title="变更履行计划"
+            title="变更计划"
             onCancel={this.modalHandleOk}
             footer={[
               <Button key="back" onClick={this.modalHandleOk}>关闭</Button>,
-              <Button key="submit" type="primary" onClick={this.modalUpdateSubmit}>提交</Button>,
+              <Button key="submit" type="primary" onClick={this.modalSubmit}>提交</Button>,
             ]}
           >
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <FormItem {...formItemLayout} label="编号" >
-                {getFieldDecorator('id', {
+                {getFieldDecorator('upId', {
                   initialValue: '1',
                 })(
                   <Input disabled style={{ color: 'black' }} />
                 )}
               </FormItem>
               <FormItem {...formItemLayout} label="状态" >
-                {getFieldDecorator('status', {
+                {getFieldDecorator('upStatus', {
                   initialValue: '2',
                 })(
-                  <Select showSearch style={{ width: '100%' }} placeholder="请选择变更类型">
+                  <Select disabled showSearch style={{ width: '100%' }} placeholder="请选择变更类型">
                     <Select.Option value="1">未执行</Select.Option>
                     <Select.Option value="2">执行中</Select.Option>
                     <Select.Option value="3">已终止</Select.Option>
@@ -281,34 +353,43 @@ export default class Plan extends PureComponent {
                 )}
               </FormItem>
               <FormItem {...formItemLayout} label="前置条件" >
-                <Row>
-                  <Col span={12}><Checkbox value="A" defaultChecked disabled>货物入库</Checkbox></Col>
-                  <Col span={12}><Checkbox value="B"> 支付80%货款</Checkbox></Col>
-                  <Col span={12}><Checkbox value="C" defaultChecked disabled>收到上游发票</Checkbox></Col>
-                  <Col span={12}><Checkbox value="D">支付20%货款</Checkbox></Col>
-                </Row>
+                <Checkbox.Group style={{ width: '100%' }}>
+                  <Row>
+                    <Col span={12}><Checkbox value="A" defaultChecked>货物入库</Checkbox></Col>
+                    <Col span={12}><Checkbox value="B"> 支付80%货款</Checkbox></Col>
+                    <Col span={12}><Checkbox value="C" defaultChecked>收到上游发票</Checkbox></Col>
+                    <Col span={12}><Checkbox value="D">支付20%货款</Checkbox></Col>
+                  </Row>
+                </Checkbox.Group>
               </FormItem>
               <FormItem {...formItemLayout} label="履行计划名称" >
-                {getFieldDecorator('name', {
+                {getFieldDecorator('upName', {
                   initialValue: '入库焦炭20吨',
                 })(
-                  <Input disabled style={{ color: 'black' }} />
+                  <Input />
                 )}
               </FormItem>
               <FormItem {...formItemLayout} label="预计完成时间" >
-                {getFieldDecorator('expectedtime', {
+                {getFieldDecorator('upExpectedtime', {
                   initialValue: moment('2017-05-05'),
-                  rules: [{ required: true, message: '请选择预计完成时间!' }],
+                  /* rules: [{ required: true, message: '请选择预计完成时间!' }], */
                 })(
                   <DatePicker />
                 )}
               </FormItem>
               <FormItem {...formItemLayout} label="执行人" >
-                {getFieldDecorator('username', {
+                {getFieldDecorator('upUsername', {
                   initialValue: '李雷',
-                  rules: [{ required: true, message: '请填写执行人!' }],
+                  /* rules: [{ required: true, message: '请填写执行人!' }], */
                 })(
                   <Input placeholder="请输入" />
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="变更备注" >
+                {getFieldDecorator('upNote', {
+                  /* rules: [{ required: true, message: '请填写变更备注!' }], */
+                })(
+                  <TextArea rows={2} placeholder="请输入" />
                 )}
               </FormItem>
             </Row>
@@ -317,23 +398,23 @@ export default class Plan extends PureComponent {
         <Form>
           <Modal
             visible={ModalTerminate}
-            title="终止合同"
+            title="终止计划"
             onCancel={this.modalHandleOk}
             footer={[
               <Button key="back" onClick={this.modalHandleOk}>关闭</Button>,
-              <Button key="submit" type="primary" onClick={this.modalTerminateSubmit}>终止履行计划</Button>,
+              <Button key="submit" type="primary" onClick={this.modalSubmit}>提交</Button>,
             ]}
           >
             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
               <FormItem {...formItemLayout} label="终止理由" >
-                {getFieldDecorator('reason', {
-                  rules: [{ required: true, message: '请填写终止理由!' }],
+                {getFieldDecorator('teReason', {
+                  /* rules: [{ required: true, message: '请填写终止理由!' }], */
                 })(
                   <TextArea rows={2} placeholder="请输入" />
                 )}
               </FormItem>
               <FormItem {...formItemLayout} label="选择上传文件">
-                {getFieldDecorator('upload', {
+                {getFieldDecorator('teUpload', {
                   valuePropName: 'fileList',
                   getValueFromEvent: this.normModalFile,
                 })(
@@ -344,13 +425,16 @@ export default class Plan extends PureComponent {
               </FormItem>
             </Row>
           </Modal>
+        </Form>
+        <Form>
           <Modal
-            title="新增履行计划条目"
+            title="新增计划"
             visible={modalVisible}
-            onOk={this.handleAdd}
-            destroyOnClose={this.state.destroyOnClose}
-            onCancel={() => this.handleModalVisible()}
-            style={{ width: 1200 }}
+            onCancel={this.modalHandleOk}
+            footer={[
+              <Button key="back" onClick={this.modalHandleOk}>关闭</Button>,
+              <Button key="submit" type="primary" onClick={this.modalSubmit}>提交</Button>,
+            ]}
           >
             <FormItem
               labelCol={{ span: 5 }}
@@ -358,9 +442,9 @@ export default class Plan extends PureComponent {
               label="履行计划条目"
             >
               {getFieldDecorator('mess', {
-                rules: [
-                  { required: true, message: '请输入履行计划内容' },
-                ],
+                /* rules: [
+                  { required: true, message: '请输入履行计划条目' },
+                ], */
               })(
                 <Input placeholder="请输入" />
               )}
@@ -371,9 +455,9 @@ export default class Plan extends PureComponent {
               label="履行计划内容"
             >
               {getFieldDecorator('textA', {
-                rules: [
+                /* rules: [
                   { required: true, message: '请输入履行计划内容' },
-                ],
+                ], */
               })(
                 <TextArea placeholder="请输入" />
               )}
@@ -384,9 +468,9 @@ export default class Plan extends PureComponent {
               label="预计完成时间"
             >
               {getFieldDecorator('wilDate', {
-                rules: [
+                /* rules: [
                   { required: true, message: '请输入预计完成时间' },
-                ],
+                ], */
               })(
                 <DatePicker style={{ width: '100%' }} />
               )}
@@ -397,9 +481,9 @@ export default class Plan extends PureComponent {
               label="执行者"
             >
               {getFieldDecorator('flowO', {
-                rules: [
+                /* rules: [
                   { required: true, message: '请输入执行者' },
-                ],
+                ], */
               })(
                 <Input />
               )}
@@ -425,13 +509,15 @@ export default class Plan extends PureComponent {
               label="履行计划模板"
             >
               {getFieldDecorator('cTemplat', {
-                rules: [
+                /* rules: [
                   { required: true, message: '请选择履行计划模板' },
-                ],
+                ], */
               })(
                 <Select style={{ width: 295 }} showSearch placeholder="请选择履行计划模板" onChange={this.changeCTemplat}>
                   <Option value="0">货物入库</Option>
                   <Option value="1">货物出库</Option>
+                  <Option value="2">支付模板</Option>
+                  <Option value="3">质检模板</Option>
                 </Select>
               )}
             </FormItem>
@@ -444,9 +530,9 @@ export default class Plan extends PureComponent {
                 hasFeedback
               >
                 {getFieldDecorator('inputSum', {
-                  rules: [
+                 /* rules: [
                     { required: false, message: '请输入入库数量' },
-                  ],
+                  ], */
                 })(
                   <InputNumber style={{ width: 295 }} min={1} max={10000000} />
                 )}
@@ -459,12 +545,46 @@ export default class Plan extends PureComponent {
                 hasFeedback
               >
                 {getFieldDecorator('inputDate', {
-                  rules: [
+                 /* rules: [
                     { required: false, message: '请输入入库时间' },
-                  ],
+                  ], */
                 })(
                   <DatePicker style={{ width: 295 }} />
                 )}
+              </FormItem>
+            </div>
+            <div style={{ display: isQuality }}>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="货物取样时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="到达第三方"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="质检时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="质检报告时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
               </FormItem>
             </div>
             <div style={{ display: isOutput }}>
@@ -475,9 +595,9 @@ export default class Plan extends PureComponent {
                 hasFeedback
               >
                 {getFieldDecorator('outSum', {
-                  rules: [
+                  /* rules: [
                     { required: false, message: '请输入出库数量' },
-                  ],
+                  ], */
                 })(
                   <InputNumber style={{ width: 295 }} min={1} max={10000000} />
                 )}
@@ -490,12 +610,91 @@ export default class Plan extends PureComponent {
                 hasFeedback
               >
                 {getFieldDecorator('outDate', {
-                  rules: [
+                  /* rules: [
                     { required: false, message: '请输入出库时间' },
-                  ],
+                  ], */
                 })(
                   <DatePicker style={{ width: 295 }} />
                 )}
+              </FormItem>
+            </div>
+            <div style={{ display: isPay }}>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="首款金额"
+                hasFeedback
+              >
+                <InputNumber style={{ width: '100%' }} /><span>万元</span>
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="首款时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="尾款金额"
+                hasFeedback
+              >
+                <InputNumber style={{ width: '100%' }} /><span>万元</span>
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="尾款时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="支付笔数"
+                hasFeedback
+              >
+                <InputNumber style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="第一笔金额"
+                hasFeedback
+              >
+                <InputNumber style={{ width: '100%' }} /><span>万元</span>
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="第一笔时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem {...formItemLayoutWithOutLabel}>
+                <Button type="dashed" style={{ width: '75%', marginLeft: '5%' }}>
+                  <Icon type="plus" /> 增加分次明细
+                </Button>
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="发票开出时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </FormItem>
+              <FormItem
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                label="到达时间"
+                hasFeedback
+              >
+                <DatePicker style={{ width: '100%' }} />
               </FormItem>
             </div>
           </Modal>
