@@ -48,7 +48,7 @@ const menuData = [{
   }],
 }, {
   name: '客户管理',
-  icon: 'warning',
+  icon: 'team',
   path: 'exception',
   children: [{
     name: '客户管理列表',
@@ -78,7 +78,7 @@ const menuData = [{
   }],
 }, {
   name: '系统管理',
-  icon: 'book',
+  icon: 'database',
   path: 'sys ',
   children: [{
     name: '系统参数列表',

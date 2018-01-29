@@ -42,6 +42,7 @@ export default class List extends PureComponent {
     formLable: '',
     formLable1: '',
     isInputNumber: 'none',
+    modelUpVisible: false,
   };
   onChange = (e) => {
     console.log('radio checked', e.target.value);
@@ -87,9 +88,31 @@ export default class List extends PureComponent {
       }
     });
   };
-  updateOne =(value) => {
-    message.error('暂无法修改');
-    console.log(value);
+  updateOne =(flag) => {
+    if (flag === '15172109760006') {
+      this.setState({
+        modelUpVisible: !!flag,
+      });
+    } else {
+      message.error('此模板暂时无法修改');
+    }
+  };
+  updateOneSuc =(flag) => {
+    this.setState({
+      modelUpVisible: !!flag,
+    });
+    message.success('修改成功');
+    this.props.form.setFieldsValue({
+      keys: [],
+    });
+  };
+  updateOneCancel =(flag) => {
+    this.setState({
+      modelUpVisible: !!flag,
+    });
+    this.props.form.setFieldsValue({
+      keys: [],
+    });
   };
   deleteOne =() => {
     confirm({
@@ -324,7 +347,7 @@ export default class List extends PureComponent {
         dataVo.push({
           key: i,
           no: i + 1,
-          agreementNo: `${no}${i + 1}`,
+          agreementNo: '15172109760006',
           agreementName: `货权转入${i + 1}`,
           type: '出库计划',
           type1: 1,
@@ -765,6 +788,217 @@ export default class List extends PureComponent {
                 <Option value="收款">收款</Option>
                 <Option value="其他">其他</Option>
               </Select>
+            )}
+          </FormItem>
+          <Divider>自定义条目</Divider>
+          {formItems}
+          <FormItem {...formItemLayoutWithOutLabel}>
+            <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
+              <Icon type="plus" /> 增加条目
+            </Button>
+          </FormItem>
+        </Modal>
+        <Modal
+          title="修改履行计划模板"
+          visible={this.state.modelUpVisible}
+          onOk={() => this.updateOneSuc()}
+          onCancel={() => this.updateOneCancel()}
+          style={{ width: 1200 }}
+        >
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="模板名称"
+            hasFeedback
+          >
+            {getFieldDecorator('b_name', { validateTrigger: ['onChange', 'onBlur'],
+              initialValue: '出库计划',
+              rules: [
+                { required: true, message: '请输入履行计划模板名称' },
+              ],
+            })(
+              <Input style={{ width: '100%' }} placeholder="请输入" />
+            )}
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="类目选择"
+            hasFeedback
+          >
+            {getFieldDecorator('b_type', { initialValue: 'input', validateTrigger: ['onChange', 'onBlur'],
+            })(
+              <Select
+                showSearch
+                style={{ width: '100%' }}
+                placeholder="选择履行计划类目"
+                optionFilterProp="children"
+              >
+                <Option value="input">货权转入</Option>
+                <Option value="output">货权转出</Option>
+                <Option value="pay">支付</Option>
+                <Option value="收款">收款</Option>
+                <Option value="其他">其他</Option>
+              </Select>
+            )}
+          </FormItem>
+          <Divider />
+          <FormItem
+            {...formItemLayout}
+            label="条目描述"
+            required={false}
+            key="rulek"
+            hasFeedback
+          >
+            {getFieldDecorator('rulek', {
+              validateTrigger: ['onChange', 'onBlur'],
+              initialValue: '出库数量',
+              rules: [{
+                required: true,
+                whitespace: true,
+                message: '请输入描述',
+              }],
+            })(
+              <Input placeholder="请输入" />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="输入框类型"
+            required={false}
+            key="inputTypek"
+            hasFeedback
+          >
+            {getFieldDecorator('inputTypek', { initialValue: 2 })(
+              <RadioGroup OnChange={this.onChange}>
+                <Radio value={1}>文字输入框</Radio>
+                <Radio value={2}>数字输入框</Radio>
+                <Radio value={3}>文本输入框</Radio>
+                <Radio value={4}>完成按钮</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="数字框单位"
+            required={false}
+            key="unitk"
+            hasFeedback
+            type={{ display: isInputNumber }}
+          >
+            {getFieldDecorator('unitk', { initialValue: '吨' })(
+              <Input />
+            )}
+            <Checkbox defaultChecked />
+          </FormItem>
+          <Divider />
+          <FormItem
+            {...formItemLayout}
+            label="条目描述"
+            required={false}
+            key="rulek1"
+            hasFeedback
+          >
+            {getFieldDecorator('rulek1', {
+              validateTrigger: ['onChange', 'onBlur'],
+              initialValue: '出库单价',
+              rules: [{
+                required: true,
+                whitespace: true,
+                message: '请输入描述',
+              }],
+            })(
+              <Input placeholder="请输入" />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="输入框类型"
+            required={false}
+            key="inputTypek1"
+            hasFeedback
+          >
+            {getFieldDecorator('inputTypek', { initialValue: 2 })(
+              <RadioGroup OnChange={this.onChange}>
+                <Radio value={1}>文字输入框</Radio>
+                <Radio value={2}>数字输入框</Radio>
+                <Radio value={3}>文本输入框</Radio>
+                <Radio value={4}>完成按钮</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="数字框单位"
+            required={false}
+            key="unitk1"
+            hasFeedback
+            type={{ display: isInputNumber }}
+          >
+            {getFieldDecorator('unitk', { initialValue: '元/吨' })(
+              <Input />
+            )}
+            <Checkbox defaultChecked />
+          </FormItem>
+          <Divider />
+          <FormItem
+            {...formItemLayout}
+            label="条目描述"
+            required={false}
+            key="rulek2"
+            hasFeedback
+          >
+            {getFieldDecorator('rulek2', {
+              validateTrigger: ['onChange', 'onBlur'],
+              initialValue: '总金额',
+              rules: [{
+                required: true,
+                whitespace: true,
+                message: '请输入描述',
+              }],
+            })(
+              <Input placeholder="请输入" />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="输入框类型"
+            required={false}
+            key="inputTypek2"
+            hasFeedback
+          >
+            {getFieldDecorator('inputTypek2', { initialValue: 2 })(
+              <RadioGroup OnChange={this.onChange}>
+                <Radio value={1}>文字输入框</Radio>
+                <Radio value={2}>数字输入框</Radio>
+                <Radio value={3}>文本输入框</Radio>
+                <Radio value={4}>完成按钮</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="数字框单位"
+            required={false}
+            key="unitk2"
+            hasFeedback
+            type={{ display: isInputNumber }}
+          >
+            {getFieldDecorator('unitk2', { initialValue: '万元' })(
+              <Input />
+            )}
+            <Checkbox defaultChecked />
+          </FormItem>
+          <Divider />
+          <FormItem
+            {...formItemLayout}
+            label="截止时间条目"
+            required={false}
+            key="rk"
+            hasFeedback
+          >
+            {getFieldDecorator('rk')(
+              <Checkbox defaultChecked >选择</Checkbox>
             )}
           </FormItem>
           <Divider>自定义条目</Divider>
