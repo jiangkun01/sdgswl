@@ -17,7 +17,7 @@ for (let i = 0; i < 46; i += 1) {
     href: 'https://ant.design',
     avatar: ['https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png', 'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png'][i % 2],
     no: Math.floor(Math.random() * 10000000),
-    title: `一个任务名称 ${i}`,
+    title: '这是一笔铝锭业务......',
     owner: '曲丽丽',
     bName: `铝锭业务 ${i}`,
     ItemArray: ItemVo,
