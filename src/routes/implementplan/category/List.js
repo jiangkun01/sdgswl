@@ -88,6 +88,12 @@ export default class List extends PureComponent {
       upModalVisible: !!flag,
     });
   };
+  updateOneSu =(flag) => {
+    this.setState({
+      upModalVisible: !!flag,
+    });
+    message.success('修改成功');
+  };
   render() {
     const { loading } = this.props;
     // table
@@ -346,7 +352,7 @@ export default class List extends PureComponent {
         <Modal
           title="修改履行计划类目"
           visible={this.state.upModalVisible}
-          onOk={() => this.updateOne()}
+          onOk={() => this.updateOneSu()}
           onCancel={() => this.updateOne()}
           style={{ width: 1200 }}
         >
@@ -370,7 +376,7 @@ export default class List extends PureComponent {
           >
             {getFieldDecorator('tem1', { initialValue: 'LG',
             })(
-              <Select style={{ width: '100%' }} mode="multiple" defaultValue={['LG']} placeholder="请选择模板" >
+              <Select style={{ width: '100%' }} mode="multiple" placeholder="请选择模板" >
                 <Option value="LG">支付模板</Option>
                 <Option value="green">质检模板</Option>
                 <Option value="DP">入库模板</Option>
