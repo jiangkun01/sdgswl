@@ -1,10 +1,14 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
-import { Table, Alert, Badge, Modal, Divider, message } from 'antd';
+import { Table, Alert, Badge, Modal, Divider,
+  message, Form, Select, Input, Button } from 'antd';
 import styles from './index.less';
 
 const { confirm } = Modal;
+const { Option } = Select;
+const FormItem = Form.Item;
+const { TextArea } = Input;
 const statusMap = ['default', 'processing', 'success', 'error'];
 @connect(({ rule }) => ({
   rule,
@@ -13,9 +17,9 @@ class StandardTable extends PureComponent {
   state = {
     selectedRowKeys: [],
     visible: false,
-    BussGoods: {},
-    ItemArrayVoShow: [],
     confirmLoading: false,
+    GJson: 1,
+    ItemArray: [],
   };
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedRows.length === 0) {
@@ -43,7 +47,9 @@ class StandardTable extends PureComponent {
     });
   };
   updateOne =() => {
-    message.error('业务暂无法修改');
+    this.setState({
+      visible: true,
+    });
   };
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
@@ -57,12 +63,47 @@ class StandardTable extends PureComponent {
     this.setState({
       visible: false,
       confirmLoading: false,
+      ItemArray: [],
+      GJson: 1,
     });
+    message.success('修改成功');
   }
   handleCancel = () => {
-    console.log('Clicked cancel button');
     this.setState({
       visible: false,
+      ItemArray: [],
+      GJson: 1,
+    });
+  }
+  addItemArray =() => {
+    const ItemArrayVo = [];
+    this.setState({
+      GJson: this.state.GJson + 1,
+      ItemArray: [],
+    });
+    for (let i = 1; i <= this.state.GJson; i += 1) {
+      ItemArrayVo.push(
+        <div>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label={`货物名称${i}`}
+          >
+            <Input placeholder="请输入" />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label={`货物规格${i}`}
+          >
+            <Input placeholder="请输入" />
+          </FormItem>
+          <Divider />
+        </div>
+      );
+    }
+    this.setState({
+      ItemArray: ItemArrayVo,
     });
   }
   // handleMenuClick = (record, e) => {
@@ -118,7 +159,7 @@ class StandardTable extends PureComponent {
   //   }
   // };
   render() {
-    const { selectedRowKeys, visible, confirmLoading, BussGoods, ItemArrayVoShow } = this.state;
+    const { selectedRowKeys, visible, confirmLoading } = this.state;
     const { data: { list, pagination }, loading } = this.props;
 
     const status = ['新建', '已完成', '履行中', '终止'];
@@ -242,18 +283,57 @@ class StandardTable extends PureComponent {
           scroll={{ x: 1500 }}
         />
         <Modal
-          title="业务详情"
+          title="修改业务"
           visible={visible}
           onOk={this.handleOk}
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
         >
-          <Divider>业务信息</Divider>
-          <p>业务编号：{BussGoods.no}</p>
-          <p>业务名称：{BussGoods.bName}</p>
-          <p>业务创建人：张建国</p>
-          <p>业务创建时间:{moment(BussGoods.createdAt).format('YYYY-MM-DD HH:mm:ss')}</p>
-          {ItemArrayVoShow}
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="业务名称"
+          >
+            <Input placeholder="请输入" defaultValue="铝锭业务" />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="业务类型"
+          >
+            <Select
+              defaultValue="0"
+              style={{ width: '100%' }}
+              onChange={this.handleChange}
+            >
+              <Option value="0">内贸</Option>
+              <Option value="1">外贸</Option>
+            </Select>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="业务描述"
+          >
+            <TextArea placeholder="请输入" defaultValue="这是一笔铝铝锭业务，紧急时间紧迫" />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="货物名称"
+          >
+            <Input placeholder="请输入" defaultValue="铝锭" />
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="货物规格"
+          >
+            <Input placeholder="请输入" defaultValue="A00" />
+          </FormItem>
+          <Divider />
+          {this.state.ItemArray}
+          <Button onClick={this.addItemArray}>增加货物描述</Button>
         </Modal>
       </div>
     );
