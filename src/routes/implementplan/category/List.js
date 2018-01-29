@@ -45,6 +45,7 @@ export default class List extends PureComponent {
     this.setState({
       modalVisible: !!flag,
     });
+    this.props.form.resetFields();
   };
   deteteOne =() => {
     confirm({
@@ -77,6 +78,10 @@ export default class List extends PureComponent {
       dataIndex: 'createDate',
       render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       sorter: (a, b) => a.createDate - b.createDate,
+    }, {
+      title: '包含模板',
+      dataIndex: 'tem',
+      render: val => <a onClick={this.temDetail}>{val}</a>,
     }, {
       title: '操作',
       key: 'operation',
@@ -121,48 +126,49 @@ export default class List extends PureComponent {
         agreementName: '支付',
         status: '李雷',
         gender: 'M',
+        tem: '支付模板',
         createDate: new Date(),
       },
-      {
-        key: 2,
-        agreementNo: `${no}${2}`,
-        agreementName: '收款',
-        status: '李雷',
-        gender: 'M',
-        createDate: new Date(),
-      },
-      {
-        key: 3,
-        agreementNo: `${no}${3}`,
-        agreementName: '物流',
-        status: '李雷',
-        gender: 'M',
-        createDate: new Date(),
-      },
-      {
-        key: 4,
-        agreementNo: `${no}${4}`,
-        agreementName: '仓储',
-        status: '李雷',
-        gender: 'M',
-        createDate: new Date(),
-      },
-      {
-        key: 5,
-        agreementNo: `${no}${5}`,
-        agreementName: '质检',
-        status: '李雷',
-        gender: 'M',
-        createDate: new Date(),
-      },
-      {
-        key: 6,
-        agreementNo: `${no}${5}`,
-        agreementName: '其他',
-        status: '李雷',
-        gender: 'M',
-        createDate: new Date(),
-      },
+      // {
+      //   key: 2,
+      //   agreementNo: `${no}${2}`,
+      //   agreementName: '收款',
+      //   status: '李雷',
+      //   gender: 'M',
+      //   createDate: new Date(),
+      // },
+      // {
+      //   key: 3,
+      //   agreementNo: `${no}${3}`,
+      //   agreementName: '物流',
+      //   status: '李雷',
+      //   gender: 'M',
+      //   createDate: new Date(),
+      // },
+      // {
+      //   key: 4,
+      //   agreementNo: `${no}${4}`,
+      //   agreementName: '仓储',
+      //   status: '李雷',
+      //   gender: 'M',
+      //   createDate: new Date(),
+      // },
+      // {
+      //   key: 5,
+      //   agreementNo: `${no}${5}`,
+      //   agreementName: '质检',
+      //   status: '李雷',
+      //   gender: 'M',
+      //   createDate: new Date(),
+      // },
+      // {
+      //   key: 6,
+      //   agreementNo: `${no}${5}`,
+      //   agreementName: '其他',
+      //   status: '李雷',
+      //   gender: 'M',
+      //   createDate: new Date(),
+      // },
     ];
     const { getFieldDecorator } = this.props.form;
     return (
