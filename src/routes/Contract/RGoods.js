@@ -80,12 +80,22 @@ export default class RContract extends PureComponent {
       price: '11.5万元',
       wname: '散货仓库',
     }];
+    const topColResponsiveProps = {
+      xs: 24,
+      sm: 12,
+      md: 12,
+      lg: 12,
+      xl: 6,
+      style: { marginBottom: 24 },
+    };
     return (
       <div>
         <Row>
           <Card>
-            <Col span={6}><h3>货物编号：<strong>SDGSWLKH232</strong></h3></Col>
-            <Col span={6}>
+            <Col {...topColResponsiveProps} xl={{ span: 6 }}>
+              <h3>货物编号：<strong>SDGSWLKH232</strong></h3>
+            </Col>
+            <Col {...topColResponsiveProps} xl={{ span: 6 }}>
               <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                 <h3>
                   货物名称：
@@ -95,9 +105,15 @@ export default class RContract extends PureComponent {
                 </h3>
               </Row>
             </Col>
-            <Col span={4}><h3>货物总重：<strong>20吨</strong></h3></Col>
-            <Col span={4}><h3>货物均价：<strong>10万/吨</strong></h3></Col>
-            <Col span={4}><h3>当前货物总库存：<strong>5吨</strong></h3></Col>
+            <Col {...topColResponsiveProps} xl={{ span: 4 }}>
+              <h3>货物总重：<strong>20吨</strong></h3>
+            </Col>
+            <Col {...topColResponsiveProps} xl={{ span: 4 }}>
+              <h3>货物均价：<strong>10万/吨</strong></h3>
+            </Col>
+            <Col {...topColResponsiveProps} xl={{ span: 4 }}>
+              <h3>当前货物总库存：<strong>5吨</strong></h3>
+            </Col>
           </Card>
         </Row>
         <br />
@@ -107,7 +123,7 @@ export default class RContract extends PureComponent {
               <Bar height={250} color="#0F6CBF" title="出库情况" data={exchart} />
             </Card>
           </Col>
-          <Col span={11} offset={1}>
+          <Col span={11} offset={2}>
             <Card>
               <Bar height={250} title="入库情况" data={imchart} />
             </Card>

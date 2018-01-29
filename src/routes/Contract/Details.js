@@ -14,12 +14,7 @@ export default class Details extends PureComponent {
     tabsKey: '1',
   }
   componentWillMount() {
-    const dDatas = this.props.location.search.substr(1).split('&');
-    let tK = '1';
-    for (let i = 0; i < dDatas.length; i += 1) {
-      tK = dDatas[i].indexOf('dStatus') >= 0 ? dDatas[i].substr(dDatas[i].indexOf('=') + 1) : '1';
-    }
-    this.tabsCallback(tK);
+    this.tabsCallback(this.props.match.params.dStatus);
   }
   tabsCallback = (key) => {
     this.setState({ tabsKey: key });
@@ -36,7 +31,6 @@ export default class Details extends PureComponent {
     };
     return (
       <PageHeaderLayout title="详情页">
-
         <Row gutter={16}>
           <Col {...topColResponsiveProps}>
             <ChartCard
@@ -97,10 +91,18 @@ export default class Details extends PureComponent {
         </Row>
         <Card border="false">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col span={4} offset={1}><h3>发起人：<strong>李雷</strong></h3></Col>
-            <Col span={5}><h3>发起日期：<strong>2017-08-21</strong></h3></Col>
-            <Col span={7}><h3>合同发起部门：<strong>山东高速物流公司管控部</strong></h3></Col>
-            <Col span={5}><h3>合同状态：<strong>履约中</strong></h3></Col>
+            <Col {...topColResponsiveProps} xl={{ span: 4 }}>
+              <h3>发起人：<strong>李雷</strong></h3>
+            </Col>
+            <Col {...topColResponsiveProps} xl={{ span: 5 }}>
+              <h3>发起日期：<strong>2017-08-21</strong></h3>
+            </Col>
+            <Col {...topColResponsiveProps} xl={{ span: 8 }}>
+              <h3>合同发起部门：<strong>山东高速物流公司管控部</strong></h3>
+            </Col>
+            <Col {...topColResponsiveProps} xl={{ span: 5 }}>
+              <h3>合同状态：<strong>履约中</strong></h3>
+            </Col>
           </Row>
         </Card>
         <br />
