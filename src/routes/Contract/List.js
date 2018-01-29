@@ -265,9 +265,9 @@ export default class List extends PureComponent {
       fixed: 'right',
       render: () => (
         <span>
-          <a href="/#/contract/index/details?dStatus=1">详情</a>
+          <a href="/#/contract/index/details/1">详情</a>
           <Divider type="vertical" />
-          <a href="/#/contract/index/details?dStatus=2">查看履行计划</a>
+          <a href="/#/contract/index/details/2">查看履行计划</a>
           <Divider type="vertical" />
           <a onClick={this.updateOne}>修改</a>
           <Divider type="vertical" />
