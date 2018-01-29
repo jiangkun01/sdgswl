@@ -35,7 +35,7 @@ const menuData = [{
     path: 'document',
   }],
 }, {
-  name: '履行计划管理',
+  name: '履行计划配置管理',
   icon: 'profile',
   path: 'implementplan',
   children: [{

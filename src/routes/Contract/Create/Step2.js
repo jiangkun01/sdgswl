@@ -16,6 +16,7 @@ const formItemLayout = {
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const { Option } = Select;
+const { TextArea } = Input;
 let uuid = 1;
 @Form.create()
 class Step2 extends React.PureComponent {
@@ -330,6 +331,13 @@ class Step2 extends React.PureComponent {
               <Option value="0">内贸</Option>
               <Option value="1">外贸</Option>
             </Select>
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="业务描述"
+          >
+            <TextArea placeholder="请输入" />
           </FormItem>
           <Divider />
           {formItems}

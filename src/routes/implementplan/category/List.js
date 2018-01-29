@@ -14,11 +14,13 @@ import {
   Modal,
   message,
   Tabs,
+  Select,
 } from 'antd';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 import styles from '../../Dashboard/Analysis.less';
 import listStyles from '../List.less';
 
+const { Option } = Select;
 const FormItem = Form.Item;
 const { confirm } = Modal;
 const { RangePicker } = DatePicker;
@@ -154,7 +156,7 @@ export default class List extends PureComponent {
         createDate: new Date(),
       },
       {
-        key: 5,
+        key: 6,
         agreementNo: `${no}${5}`,
         agreementName: '其他',
         status: '李雷',
@@ -281,6 +283,22 @@ export default class List extends PureComponent {
               ],
             })(
               <Input placeholder="请输入" />
+            )}
+          </FormItem>
+          <FormItem
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 15 }}
+            label="履行计划模板"
+          >
+            {getFieldDecorator('tem', {
+            })(
+              <Select style={{ width: '100%' }} mode="multiple" placeholder="请选择付款方式" >
+                <Option value="LG">支付计划</Option>
+                <Option value="green">质检计划</Option>
+                <Option value="DP">入库计划</Option>
+                <Option value="blue">出库计划</Option>
+                <Option value="TT">物流计划</Option>
+              </Select>
             )}
           </FormItem>
         </Modal>

@@ -752,9 +752,6 @@ export default class List extends PureComponent {
             hasFeedback
           >
             {getFieldDecorator('b_type', { validateTrigger: ['onChange', 'onBlur'],
-              rules: [
-                { required: true, message: '请输入履行计划类目' },
-              ],
             })(
               <Select
                 showSearch
