@@ -46,7 +46,8 @@ const menuData = [{
     path: 'templat/list',
     // authority: 'admin',
   }],
-}, {
+}];
+/* , {
   name: '客户管理',
   icon: 'team',
   path: 'exception',
@@ -84,7 +85,7 @@ const menuData = [{
     name: '系统参数列表',
     path: '14',
   }],
-}];
+} */
 
 function formatter(data, parentPath = '', parentAuthority) {
   return data.map((item) => {
