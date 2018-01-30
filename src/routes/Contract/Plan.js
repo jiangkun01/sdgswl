@@ -27,6 +27,7 @@ export default class Plan extends PureComponent {
       actualtime: '暂无',
       updatetime: '2017-08-26',
       executor: '李雷',
+      supervisor: '韩涛',
       createtime: '2017-08-21',
     }],
   }
@@ -141,6 +142,8 @@ export default class Plan extends PureComponent {
           this.planPerform();
         } else if (modalStatus.indexOf('终止') >= 0) {
           this.planTerminate();
+        } else if (modalStatus.indexOf('变更') >= 0) {
+          Message.success('变更成功');
         }
         this.modalHandleOk();
       }
@@ -158,6 +161,7 @@ export default class Plan extends PureComponent {
       actualtime: '暂无',
       updatetime: '暂无',
       executor: values.flowO,
+      supervisor: values.flow1,
       createtime: `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`,
     });
   }
@@ -240,6 +244,7 @@ export default class Plan extends PureComponent {
       { title: '实际完成时间', dataIndex: 'actualtime', key: 'actualtime' },
       { title: '更新日期', dataIndex: 'updatetime', key: 'updatetime' },
       { title: '执行者', dataIndex: 'executor', key: 'executor' },
+      { title: '督办人', dataIndex: 'supervisor', key: 'supervisor' },
       { title: '创建时间', dataIndex: 'createtime', key: 'createtime' },
       { title: '操作',
         key: 'operation',
@@ -377,6 +382,22 @@ export default class Plan extends PureComponent {
                       rules: [{ required: true, message: '请输入执行者' }],
                     })(
                       <Input />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    labelCol={{ span: 5 }}
+                    wrapperCol={{ span: 15 }}
+                    label="督办人"
+                  >
+                    {getFieldDecorator('flow1', {
+                      rules: [{ required: true, message: '请选择督办人' }],
+                    })(
+                      <Select placeholder="请选择督办人" style={{ width: '100%' }}>
+                        <Select.Option value="韩涛">韩涛</Select.Option>
+                        <Select.Option value="李俊">李俊</Select.Option>
+                        <Select.Option value="王帅">王帅</Select.Option>
+                        <Select.Option value="张淼">张淼</Select.Option>
+                      </Select>
                     )}
                   </FormItem>
                   <FormItem
@@ -649,11 +670,24 @@ export default class Plan extends PureComponent {
                     )}
                   </FormItem>
                   <FormItem {...formItemLayout} label="执行人" >
-                    {getFieldDecorator('upUsername', {
+                    {getFieldDecorator('executor', {
                       initialValue: '李雷',
                       rules: [{ required: true, message: '请填写执行人!' }],
                     })(
                       <Input placeholder="请输入" />
+                    )}
+                  </FormItem>
+                  <FormItem {...formItemLayout} label="督办人" >
+                    {getFieldDecorator('supervisor', {
+                      initialValue: '韩涛',
+                      rules: [{ required: true, message: '请选择督办人!' }],
+                    })(
+                      <Select placeholder="请选择督办人" style={{ width: '100%' }}>
+                        <Select.Option value="韩涛">韩涛</Select.Option>
+                        <Select.Option value="李俊">李俊</Select.Option>
+                        <Select.Option value="王帅">王帅</Select.Option>
+                        <Select.Option value="张淼">张淼</Select.Option>
+                      </Select>
                     )}
                   </FormItem>
                   <FormItem {...formItemLayout} label="变更备注" >

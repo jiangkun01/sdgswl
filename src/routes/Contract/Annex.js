@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Form, Upload, Message, Input, Button, Table, Modal, Select, Icon } from 'antd';
+import { Row, Col, Form, Upload, Message, Button, Table, Modal, Select, Icon } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -62,7 +62,7 @@ export default class Annex extends PureComponent {
       id: Number(dataSource[dataSource.length - 1].id) + 1,
       name: name.substr(0, name.lastIndexOf('.')),
       type: values.type,
-      uploaduser: values.user,
+      uploaduser: '李雷',
       uploadtime: `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`,
       updatetime: '暂无',
       updateuser: '暂无',
@@ -77,7 +77,7 @@ export default class Annex extends PureComponent {
         const tempName = dataSource[i].name;
         dataSource[i].name = name != null ? name.substr(0, name.lastIndexOf('.')) : tempName;
         dataSource[i].type = values.type;
-        dataSource[i].updateuser = values.user;
+        dataSource[i].updateuser = '李雷';
         dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
       }
     }
@@ -161,15 +161,6 @@ export default class Annex extends PureComponent {
                       <Select.Option value="变更确认函">变更确认函</Select.Option>
                       <Select.Option value="审批单">审批单</Select.Option>
                     </Select>
-                  )}
-                </FormItem>
-              </Col>
-              <Col span={22}>
-                <FormItem labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="填写操作人">
-                  {getFieldDecorator('user', {
-                    rules: [{ required: true, message: '请填写操作人!' }],
-                  })(
-                    <Input placeholder="请输入" />
                   )}
                 </FormItem>
               </Col>
