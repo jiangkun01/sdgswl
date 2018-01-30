@@ -116,13 +116,11 @@ export default class Document extends PureComponent {
         ),
       }];
     // 表格数据
-    const data = [{
-      id: 1,
-      name: '铝锭销售合同',
-      number: '1',
-      addtime: '2017-08-21',
-      updatetime: '暂无',
-    }];
+    const data = [
+      { id: 1, name: '铝锭销售合同', number: '4', addtime: '2017-08-22', updatetime: '暂无' },
+      { id: 1, name: '铝锭代理销售合同', number: '4', addtime: '2017-08-26', updatetime: '暂无' },
+      { id: 1, name: '铝锭代理采购合同', number: '4', addtime: '2017-08-28', updatetime: '暂无' },
+    ];
     return (
       <PageHeaderLayout title="合同相关文档">
         <Card border="false">

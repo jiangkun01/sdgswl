@@ -84,15 +84,11 @@ export default class Modify extends PureComponent {
         </span>
       ),
     }];
-    const dataSource = [{
-      id: '1',
-      name: '铝锭销售合同',
-      time: '2017-08-31',
-      type: '数量变更',
-      content: '将原计划销售20吨改为30吨',
-      reason: '相对方需求增加',
-      filename: '铝锭销售合同',
-    }];
+    const dataSource = [
+      { id: '1', name: '铝锭销售合同', time: '2017-08-31', type: '数量变更', content: '将原计划销售20吨改为30吨', reason: '相对方需求增加', filename: '铝锭销售合同' },
+      { id: '2', name: '铝锭代理销售合同', time: '2017-09-20', type: '数量变更', content: '将原计划销售5吨改为10吨', reason: '相对方需求增加', filename: '铝锭代理销售合同' },
+      { id: '3', name: '铝锭代理采购合同', time: '2018-01-01', type: '合同终止', content: '合同已终止', reason: '相对方暂无需求', filename: '铝锭代理采购合同' },
+    ];
     /* const formItemLayout = {
       labelCol: {
         xs: { span: 24 },

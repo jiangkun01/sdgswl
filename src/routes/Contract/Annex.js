@@ -10,15 +10,12 @@ export default class Annex extends PureComponent {
     type: '合同文本',
     modalVisible: false,
     modalStatus: '',
-    dataSource: [{
-      id: '1',
-      name: '铝锭采购合同',
-      type: '合同文本',
-      uploaduser: '李雷',
-      uploadtime: '2017-08-21',
-      updateuser: '暂无',
-      updatetime: '暂无',
-    }],
+    dataSource: [
+      { id: 1, name: '铝锭采购合同', type: '合同文本', uploaduser: '李雷', uploadtime: '2017-08-21', updateuser: '暂无', updatetime: '暂无' },
+      { id: 2, name: '合同变更函', type: '变更确认函', uploaduser: '李雷', uploadtime: '2017-08-23', updateuser: '暂无', updatetime: '暂无' },
+      { id: 3, name: '合同财务审批单', type: '审批单', uploaduser: '李雷', uploadtime: '2017-08-26', updateuser: '暂无', updatetime: '暂无' },
+      { id: 4, name: '合同补充协议', type: '补充协议', uploaduser: '李雷', uploadtime: '2017-08-28', updateuser: '暂无', updatetime: '暂无' },
+    ],
   }
   // 添加modal
   showModalAdd = () => {

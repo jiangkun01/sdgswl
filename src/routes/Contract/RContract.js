@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
-import { Table } from 'antd';
+import { Table, Badge } from 'antd';
+
+const statusMap = ['default', 'processing', 'error', 'success'];
 
 export default class RContract extends PureComponent {
   reset = () => {
     location.reload();
   }
   render() {
+    const status = ['未履行', '履行中', '已终止', '已完成'];
     const columns = [{
       title: '编号',
       dataIndex: 'id',
@@ -26,6 +29,9 @@ export default class RContract extends PureComponent {
       title: '合同执行状态',
       dataIndex: 'status',
       key: 'status',
+      render(val) {
+        return <Badge status={statusMap[val]} text={status[val]} />;
+      },
     }, {
       title: '签订时间',
       dataIndex: 'signtime',
@@ -57,18 +63,11 @@ export default class RContract extends PureComponent {
         </span>
       ),
     }];
-    const dataSource = [{
-      id: '1',
-      number: '2017SDHSLGGM0256',
-      name: '铝锭采购合同',
-      type: '采购合同',
-      status: '履行中',
-      signtime: '2017-08-22',
-      amount: '287.4万元',
-      goodstype: '集装箱货物',
-      goodsamount: '287.4万元',
-      goodsprice: '10万元',
-    }];
+    const dataSource = [
+      { id: 1, number: '2017SDHSLGGM0256', name: '铝锭采购合同', type: '采购合同', status: 1, signtime: '2017-08-22', amount: '287.4万元', goodstype: '集装箱货物', goodsamount: '287.4万元', goodsprice: '10万元' },
+      { id: 2, number: '2017SDHSLGGM0257', name: '铝锭代理销售合同', type: '销售合同', status: 0, signtime: '2017-08-26', amount: '36.6万元', goodstype: '集装箱货物', goodsamount: '36.6万元', goodsprice: '11万元' },
+      { id: 3, number: '2017SDHSLGGM0258', name: '铝锭代理采购合同', type: '采购合同', status: 2, signtime: '2017-08-28', amount: '56.4万元', goodstype: '集装箱货物', goodsamount: '56.4万元', goodsprice: '10万元' },
+    ];
     return (
       <div>
         <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
