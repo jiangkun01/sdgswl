@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import { Table, Alert, Badge, Modal, Divider,
-  message, Form, Select, Input, Button } from 'antd';
+  message, Icon, Form, Select, Input, Button } from 'antd';
 import styles from './index.less';
 
 const { confirm } = Modal;
@@ -18,7 +18,7 @@ class StandardTable extends PureComponent {
     selectedRowKeys: [],
     visible: false,
     confirmLoading: false,
-    GJson: 1,
+    GJson: 0,
     ItemArray: [],
   };
   componentWillReceiveProps(nextProps) {
@@ -64,7 +64,7 @@ class StandardTable extends PureComponent {
       visible: false,
       confirmLoading: false,
       ItemArray: [],
-      GJson: 1,
+      GJson: 0,
     });
     message.success('修改成功');
   }
@@ -72,16 +72,15 @@ class StandardTable extends PureComponent {
     this.setState({
       visible: false,
       ItemArray: [],
-      GJson: 1,
+      GJson: 0,
     });
   }
-  addItemArray =() => {
+  addItemArray =(k) => {
     const ItemArrayVo = [];
     this.setState({
-      GJson: this.state.GJson + 1,
       ItemArray: [],
     });
-    for (let i = 1; i <= this.state.GJson; i += 1) {
+    for (let i = 1; i <= this.state.GJson + k; i += 1) {
       ItemArrayVo.push(
         <div>
           <FormItem
@@ -98,11 +97,22 @@ class StandardTable extends PureComponent {
           >
             <Input placeholder="请输入" />
           </FormItem>
-          <Divider />
+          <Divider>
+            {this.state.GJson + k > 1 ? (
+              <Icon
+                type="close-circle-o"
+                spin="true"
+                disabled={this.state.GJson + k === 1}
+                onClick={() => this.addItemArray(-1)}
+                style={{ fontSize: 16, color: '#F25D46' }}
+              />
+            ) : null}
+          </Divider>
         </div>
       );
     }
     this.setState({
+      GJson: this.state.GJson + k,
       ItemArray: ItemArrayVo,
     });
   }
@@ -333,7 +343,7 @@ class StandardTable extends PureComponent {
           </FormItem>
           <Divider />
           {this.state.ItemArray}
-          <Button onClick={this.addItemArray}>增加货物描述</Button>
+          <Button onClick={() => this.addItemArray(1)}>增加货物描述</Button>
         </Modal>
       </div>
     );

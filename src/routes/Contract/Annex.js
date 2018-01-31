@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Form, Upload, Message, Button, Table, Modal, Select, Icon } from 'antd';
+import { Row, Col, Form, Upload, Message, Button, Table, Modal, Select, Divider, Icon } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -113,10 +113,12 @@ export default class Annex extends PureComponent {
         title: '操作',
         key: 'operation',
         fixed: 'right',
-        width: 65,
+        width: 120,
         render: (text, record) => (
           <span>
             <a onClick={() => this.showModalUpdate(record)}>修改</a>
+            <Divider type="vertical" />
+            <a href="http://localhost:8000/铝锭销售合同相关文件.docx">下载</a>
           </span>
         ),
       }];

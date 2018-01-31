@@ -145,20 +145,19 @@ export default class TableList extends PureComponent {
       ItemArray: [],
       GJson: 1,
     });
-    this.addItemArray();
+    this.addItemArray(0);
   };
   handleAddInput = (e) => {
     this.setState({
       addInputValue: e.target.value,
     });
   }
-  addItemArray =() => {
+  addItemArray =(k) => {
     const ItemArrayVo = [];
     this.setState({
-      GJson: this.state.GJson + 1,
       ItemArray: [],
     });
-    for (let i = 1; i <= this.state.GJson; i += 1) {
+    for (let i = 1; i <= this.state.GJson + k; i += 1) {
       ItemArrayVo.push(
         <div>
           <FormItem
@@ -175,11 +174,22 @@ export default class TableList extends PureComponent {
           >
             <Input placeholder="请输入" />
           </FormItem>
-          <Divider />
+          <Divider>
+            {this.state.GJson + k > 1 ? (
+              <Icon
+                type="close-circle-o"
+                spin="true"
+                disabled={this.state.GJson + k === 1}
+                onClick={() => this.addItemArray(-1)}
+                style={{ fontSize: 16, color: '#F25D46' }}
+              />
+            ) : null}
+          </Divider>
         </div>
       );
     }
     this.setState({
+      GJson: this.state.GJson + k,
       ItemArray: ItemArrayVo,
     });
   }
@@ -392,7 +402,7 @@ export default class TableList extends PureComponent {
           </FormItem>
           <Divider />
           {ItemArray}
-          <Button onClick={this.addItemArray}>增加货物描述</Button>
+          <Button onClick={() => this.addItemArray(1)}>增加货物描述</Button>
         </Modal>
       </PageHeaderLayout>
     );
