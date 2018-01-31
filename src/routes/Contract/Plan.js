@@ -22,7 +22,7 @@ export default class Plan extends PureComponent {
       { id: 1, status: 0, precondition: '暂无', name: '出库20吨铝锭', expectedtime: '2018-02-21', actualtime: '暂无', updatetime: '暂无', executor: '李雷', supervisor: '韩涛', createtime: '2017-08-21' },
       { id: 2, status: 1, precondition: '暂无', name: '入库5吨铝锭', expectedtime: '2018-02-22', actualtime: '暂无', updatetime: '暂无', executor: '李雷', supervisor: '韩涛', createtime: '2017-08-22' },
       { id: 3, status: 3, precondition: '暂无', name: '入库10吨铝锭', expectedtime: '2018-02-23', actualtime: '2018-01-30', updatetime: '2018-01-30', executor: '李雷', supervisor: '韩涛', createtime: '2017-08-23' },
-      { id: 3, status: 2, precondition: '暂无', name: '入库5吨铝锭', expectedtime: '2018-02-24', actualtime: '暂无', updatetime: '2018-01-26', executor: '李雷', supervisor: '韩涛', createtime: '2017-08-24' },
+      { id: 4, status: 2, precondition: '暂无', name: '入库5吨铝锭', expectedtime: '2018-02-24', actualtime: '暂无', updatetime: '2018-01-26', executor: '李雷', supervisor: '韩涛', createtime: '2017-08-24' },
     ],
   }
   changeCTemplat = (value) => {
@@ -610,6 +610,16 @@ export default class Plan extends PureComponent {
                       rules: [{ required: true, message: '请输入入库数量!' }],
                     })(
                       <InputNumber style={{ width: '100%' }} min={1} max={10000000} />
+                    )}
+                  </FormItem>
+                  <FormItem {...formItemLayout} label="对应的仓库" >
+                    {getFieldDecorator('sWareHouse', {
+                      rules: [{ required: true, message: '请选择对应的仓库!' }],
+                    })(
+                      <Select placeholder="请选择对应的仓库" style={{ width: '100%' }}>
+                        <Select.Option value="散货仓库">散货仓库</Select.Option>
+                        <Select.Option value="集装箱仓库">集装箱仓库</Select.Option>
+                      </Select>
                     )}
                   </FormItem>
                 </Row>
