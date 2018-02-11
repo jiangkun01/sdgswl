@@ -56,6 +56,9 @@ export default class RContract extends PureComponent {
       dataIndex: 'price',
       key: 'price',
     }, {
+      title: '库存',
+      dataIndex: 'aount',
+    }, {
       title: '仓库名称',
       dataIndex: 'wname',
       key: 'wname',
@@ -63,7 +66,8 @@ export default class RContract extends PureComponent {
     const dataSourceInput = [{
       id: 1,
       time: '2017-08-22',
-      number: '20吨',
+      number: '28吨',
+      aount: '28吨',
       price: '10万元',
       wname: '散货仓库',
     }];
@@ -71,12 +75,14 @@ export default class RContract extends PureComponent {
       id: 1,
       time: '2017-08-23',
       number: '5吨',
+      aount: '23吨',
       price: '11.5万元',
       wname: '散货仓库',
     }, {
       id: 2,
       time: '2017-08-26',
-      number: '10吨',
+      number: '23吨',
+      aount: '0吨',
       price: '11.5万元',
       wname: '散货仓库',
     }];

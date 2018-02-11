@@ -600,6 +600,9 @@ export default class Plan extends PureComponent {
             {
               modalStatus.indexOf('执行') >= 0 && (
                 <Row>
+                  <FormItem {...formItemLayout} label="当前库存" >
+                    <Input value="20 吨" disabled style={{ color: 'black' }} />
+                  </FormItem>
                   <FormItem {...formItemLayout} label="已入库" >
                     <Input value="10 吨" disabled style={{ color: 'black' }} />
                   </FormItem>
