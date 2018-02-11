@@ -158,7 +158,7 @@ export default class Analysis extends Component {
       sm: 12,
       md: 12,
       lg: 12,
-      xl: 6,
+      xl: 4,
       style: { marginBottom: 24 },
     };
     const trendsData = new View().source(salesData);
@@ -239,8 +239,6 @@ export default class Analysis extends Component {
               </Trend>
             </ChartCard>
           </Col>
-        </Row>
-        <Row gutter={24}>
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
@@ -270,42 +268,6 @@ export default class Analysis extends Component {
               }
               total={13}
               footer={<Field label="周超支合同：" value={`${numeral(3).format('0,0')}`} />}
-              contentHeight={46}
-            >
-              <Trend flag="down" style={{ marginRight: 16 }}>
-                周同比<span className={styles.trendText}>3</span>
-              </Trend>
-            </ChartCard>
-          </Col>
-          <Col {...topColResponsiveProps}>
-            <ChartCard
-              bordered={false}
-              title="2017年12月提前完成"
-              action={
-                <span title="2017年12月提前完成">
-                  <Icon type="frown-o" />
-                </span>
-              }
-              total={15}
-              footer={<Field label="周提前完成合同：" value={`${numeral(4).format('0,0')}`} />}
-              contentHeight={46}
-            >
-              <Trend flag="up" style={{ marginRight: 16 }}>
-                周同比<span className={styles.trendText}>1</span>
-              </Trend>
-            </ChartCard>
-          </Col>
-          <Col {...topColResponsiveProps}>
-            <ChartCard
-              bordered={false}
-              title="2017年12月执行中合同"
-              action={
-                <span title="2017年12月执行中合同">
-                  <Icon type="frown-o" />
-                </span>
-              }
-              total={13}
-              footer={<Field label="周执行中合同：" value={`${numeral(3).format('0,0')}`} />}
               contentHeight={46}
             >
               <Trend flag="down" style={{ marginRight: 16 }}>
