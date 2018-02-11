@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import { Chart, Axis, Geom, Legend, Tooltip } from 'bizcharts';
+import { View } from '@antv/data-set';
 import {
   Row,
   Col,
-  Icon,
   Card,
   Tabs,
   Radio,
+  Icon,
   DatePicker,
-  Tooltip,
 } from 'antd';
 import numeral from 'numeral';
 import {
@@ -17,7 +18,6 @@ import {
   MiniArea,
   MiniBar,
   Field,
-  Bar,
   Pie,
 } from '../../components/Charts';
 import Trend from '../../components/Trend';
@@ -29,12 +29,22 @@ const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 
 const rankingListData = [];
-for (let i = 0; i < 7; i += 1) {
-  rankingListData.push({
-    title: `测试货种 ${i} 类型`,
-    total: 323234,
-  });
-}
+rankingListData.push({
+  title: '氧化铝',
+  total: 1423234,
+});
+rankingListData.push({
+  title: '氧锭',
+  total: 523234,
+});
+rankingListData.push({
+  title: '乙二酸',
+  total: 423234,
+});
+rankingListData.push({
+  title: '焦炭',
+  total: 323234,
+});
 
 @connect(({ chart, loading }) => ({
   chart,
@@ -129,9 +139,6 @@ export default class Analysis extends Component {
     const salesExtra = (
       <div className={styles.salesExtraWrap}>
         <div className={styles.salesExtra}>
-          <a className={this.isActive('week')} onClick={() => this.selectDate('week')}>
-            本周
-          </a>
           <a className={this.isActive('month')} onClick={() => this.selectDate('month')}>
             本月
           </a>
@@ -154,7 +161,13 @@ export default class Analysis extends Component {
       xl: 6,
       style: { marginBottom: 24 },
     };
-
+    const trendsData = new View().source(salesData);
+    trendsData.transform({
+      type: 'fold',
+      fields: ['一月 ', '二月 ', '三月 ', '四月 ', '五月 ', '六月 ', '七月 ', '八月 ', '九月 ', '十月 ', '十一月 ', '十二月 '], // 展开字段集
+      key: 'month', // key字段
+      value: 'members', // value字段
+    });
     return (
       <div>
         <Row gutter={24}>
@@ -163,9 +176,9 @@ export default class Analysis extends Component {
               bordered={false}
               title="2017-12-30贸易类业务利润"
               action={
-                <Tooltip title="2017-12-30贸易类业务利润">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
+                <span title="贸易类业务利润">
+                  <Icon type="red-envelope" />
+                </span>
               }
               total="￥126560 万"
               footer={<Field label="月利润额：" value={`￥${numeral(12423).format('0,0')} 万`} />}
@@ -181,9 +194,9 @@ export default class Analysis extends Component {
               bordered={false}
               title="2017年贸易类合同总额"
               action={
-                <Tooltip title="2017年贸易类合同总额">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
+                <span title="2017年贸易类合同总额">
+                  <Icon type="line-chart" />
+                </span>
               }
               total="￥1636000 万"
               footer={<Field label="最佳月份" value={`￥${numeral(23756).format('0,0')} 万`} />}
@@ -197,9 +210,9 @@ export default class Analysis extends Component {
               bordered={false}
               title="2017年完成合同累计（份）"
               action={
-                <Tooltip title="2017年完成合同累计">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
+                <span title="2017年完成合同累计（份">
+                  <Icon type="bar-chart" />
+                </span>
               }
               total={numeral(120).format('0,0')}
               footer={<Field label="单月完成最大合同数" value="20" />}
@@ -211,14 +224,14 @@ export default class Analysis extends Component {
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title="2017年12月履行中的合同统计"
+              title="2017年12月合同逾期"
               action={
-                <Tooltip title="2017-12月合同履行中统计">
-                  <Icon type="info-circle-o" />
-                </Tooltip>
+                <span title="2017年12月合同逾期">
+                  <Icon type="frown-o" />
+                </span>
               }
               total={126}
-              footer={<Field label="周履行合同：" value={`${numeral(13).format('0,0')}`} />}
+              footer={<Field label="周逾期合同：" value={`${numeral(13).format('0,0')}`} />}
               contentHeight={46}
             >
               <Trend flag="up" style={{ marginRight: 16 }}>
@@ -227,46 +240,108 @@ export default class Analysis extends Component {
             </ChartCard>
           </Col>
         </Row>
+        <Row gutter={24}>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              bordered={false}
+              title="2017年12月违约合同"
+              action={
+                <span title="2017年12月违约合同">
+                  <Icon type="frown-o" />
+                </span>
+              }
+              total={11}
+              footer={<Field label="周违约合同：" value={`${numeral(2).format('0,0')}`} />}
+              contentHeight={46}
+            >
+              <Trend flag="down" style={{ marginRight: 16 }}>
+                周同比<span className={styles.trendText}>1</span>
+              </Trend>
+            </ChartCard>
+          </Col>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              bordered={false}
+              title="2017年12月超支合同"
+              action={
+                <span title="2017年12月超支合同">
+                  <Icon type="frown-o" />
+                </span>
+              }
+              total={13}
+              footer={<Field label="周超支合同：" value={`${numeral(3).format('0,0')}`} />}
+              contentHeight={46}
+            >
+              <Trend flag="down" style={{ marginRight: 16 }}>
+                周同比<span className={styles.trendText}>3</span>
+              </Trend>
+            </ChartCard>
+          </Col>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              bordered={false}
+              title="2017年12月提前完成"
+              action={
+                <span title="2017年12月提前完成">
+                  <Icon type="frown-o" />
+                </span>
+              }
+              total={15}
+              footer={<Field label="周提前完成合同：" value={`${numeral(4).format('0,0')}`} />}
+              contentHeight={46}
+            >
+              <Trend flag="up" style={{ marginRight: 16 }}>
+                周同比<span className={styles.trendText}>1</span>
+              </Trend>
+            </ChartCard>
+          </Col>
+          <Col {...topColResponsiveProps}>
+            <ChartCard
+              bordered={false}
+              title="2017年12月执行中合同"
+              action={
+                <span title="2017年12月执行中合同">
+                  <Icon type="frown-o" />
+                </span>
+              }
+              total={13}
+              footer={<Field label="周执行中合同：" value={`${numeral(3).format('0,0')}`} />}
+              contentHeight={46}
+            >
+              <Trend flag="down" style={{ marginRight: 16 }}>
+                周同比<span className={styles.trendText}>3</span>
+              </Trend>
+            </ChartCard>
+          </Col>
+        </Row>
         <Card loading={loading} bordered={false} bodyStyle={{ padding: 0 }}>
           <div className={styles.salesCard}>
             <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{ marginBottom: 24 }}>
-              <TabPane tab="2017年采购额(万)" key="sales">
+              <TabPane tab="2017年采购（销售）额(万元)" key="sales">
                 <Row>
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
-                      <Bar height={295} title="采购额趋势" data={salesData} />
+                      <Chart height={250} data={trendsData} forceFit>
+                        <Axis name="month" />
+                        <Axis name="members" />
+                        <Legend />
+                        <Tooltip crosshairs={{ type: 'y' }} />
+                        <Geom
+                          type="interval"
+                          position="month*members"
+                          color="name"
+                          adjust={[{ type: 'dodge', marginRatio: 1 / 32 }]}
+                        />
+                      </Chart>
                     </div>
                   </Col>
                   <Col xl={8} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>货种采购排名</h4>
+                      <h4 className={styles.rankingTitle}>货种利润排名（万元）</h4>
                       <ul className={styles.rankingList}>
                         {rankingListData.map((item, i) => (
                           <li key={item.title}>
                             <span className={i < 3 ? styles.active : ''}>{i + 1}</span>
-                            <span>{item.title}</span>
-                            <span>{numeral(item.total).format('0,0')}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </Col>
-                </Row>
-              </TabPane>
-              <TabPane tab="2017年销售额（万）" key="views">
-                <Row>
-                  <Col xl={16} lg={12} md={12} sm={24} xs={24}>
-                    <div className={styles.salesBar}>
-                      <Bar height={292} title="销售额趋势" data={salesData} />
-                    </div>
-                  </Col>
-                  <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>货种销售排名</h4>
-                      <ul className={styles.rankingList}>
-                        {rankingListData.map((item, i) => (
-                          <li key={item.title}>
-                            <span className={i < 3 && styles.active}>{i + 1}</span>
                             <span>{item.title}</span>
                             <span>{numeral(item.total).format('0,0')}</span>
                           </li>

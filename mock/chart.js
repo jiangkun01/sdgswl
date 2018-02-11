@@ -1,5 +1,4 @@
 import moment from 'moment';
-
 // mock data
 const visitData = [];
 const visitData1 = [];
@@ -28,13 +27,10 @@ for (let i = 0; i < fakeY2.length; i += 1) {
   });
 }
 
-const salesData = [];
-for (let i = 0; i < 12; i += 1) {
-  salesData.push({
-    x: `${i + 1}月`,
-    y: Math.floor(Math.random() * 1000) + 200,
-  });
-}
+const salesData = [
+  { name: '采购', '一月 ': 18, '二月 ': 28, '三月 ': 39, '四月 ': 81, '五月 ': 47, '六月 ': 20, '七月 ': 24, '八月 ': 35, '九月 ': 41, '十月 ': 70, '十一月 ': 55, '十二月 ': 68 },
+  { name: '销售', '一月 ': 20, '二月 ': 33, '三月 ': 44, '四月 ': 99, '五月 ': 52, '六月 ': 35, '七月 ': 37, '八月 ': 42, '九月 ': 45, '十月 ': 80, '十一月 ': 65, '十二月 ': 78 },
+];
 const searchData = [];
 for (let i = 0; i < 50; i += 1) {
   searchData.push({
