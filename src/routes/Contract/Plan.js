@@ -239,17 +239,7 @@ export default class Plan extends PureComponent {
       { title: '更新日期', dataIndex: 'updatetime', key: 'updatetime' },
       { title: '执行者', dataIndex: 'executor', key: 'executor' },
       { title: '督办人', dataIndex: 'supervisor', key: 'supervisor' },
-      { title: '创建时间', dataIndex: 'createtime', key: 'createtime' },
-      { title: '操作',
-        key: 'operation',
-        fixed: 'right',
-        width: 100,
-        render: () => (
-          <span>
-            <a onClick={this.showModalMessage}>详情</a>
-          </span>
-        ),
-      }];
+      { title: '创建时间', dataIndex: 'createtime', key: 'createtime' }];
     const rowSelection = {
       selectedRowKeys,
       onChange: this.rowSelectionOnChange,
@@ -282,7 +272,18 @@ export default class Plan extends PureComponent {
       <div>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24}>
-            <Table rowSelection={rowSelection} dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
+            <Table
+              rowSelection={rowSelection}
+              onRow={() => ({
+                onClick: () => {
+                  this.showModalMessage();
+                },
+              })}
+              dataSource={dataSource}
+              columns={columns}
+              rowKey="id"
+              scroll={{ x: 1366 }}
+            />
           </Col>
         </Row>
         <Row>

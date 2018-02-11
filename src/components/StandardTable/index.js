@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import { Table, Alert, Badge, Modal, Divider,
   message, Icon, Form, Select, Input, Button } from 'antd';
@@ -28,11 +29,13 @@ class StandardTable extends PureComponent {
       });
     }
   }
+  onClickOne = () => {
+    this.props.dispatch(routerRedux.push('/business/detail'));
+  }
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
     if (this.props.onSelectRow) {
       this.props.onSelectRow(selectedRows);
     }
-
     this.setState({ selectedRowKeys });
   }
   handleTableChange = (pagination, filters, sorter) => {
@@ -247,8 +250,6 @@ class StandardTable extends PureComponent {
         fixed: 'right',
         render: () => (
           <span>
-            <a href="/#/business/detail">详情</a>
-            <Divider type="vertical" />
             <a onClick={this.updateOne}>修改</a>
             <Divider type="vertical" />
             <a onClick={this.deteteOne}>删除</a>
@@ -267,7 +268,6 @@ class StandardTable extends PureComponent {
       selectedRowKeys,
       onChange: this.handleRowSelectChange,
     };
-
     return (
       <div className={styles.standardTable}>
         <div className={styles.tableAlert}>
@@ -291,6 +291,11 @@ class StandardTable extends PureComponent {
           pagination={paginationProps}
           onChange={this.handleTableChange}
           scroll={{ x: 1500 }}
+          onRow={record => ({
+            onClick: () => {
+              this.onClickOne(record);
+            },
+          })}
         />
         <Modal
           title="修改业务"

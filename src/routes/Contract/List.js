@@ -76,6 +76,9 @@ export default class List extends PureComponent {
   //     });
   //   }
   // };
+  onClickOne = () => {
+    this.props.dispatch(routerRedux.push('/contract/index/details/1'));
+  }
   handleModalVisible = (flag) => {
     this.setState({
       modalVisible: !!flag,
@@ -265,8 +268,6 @@ export default class List extends PureComponent {
       fixed: 'right',
       render: () => (
         <span>
-          <a href="/#/contract/index/details/1">详情</a>
-          <Divider type="vertical" />
           <a href="/#/contract/index/details/2">查看履行计划</a>
           <Divider type="vertical" />
           <a href="/#/contract/create/">修改</a>
@@ -503,6 +504,11 @@ export default class List extends PureComponent {
                     columns={columns}
                     rowKey={record => record.key}
                     scroll={{ x: 1366 }}
+                    onRow={record => ({
+                      onClick: () => {
+                        this.onClickOne(record);
+                      },
+                    })}
                   />
                 </Card>
               </Col>

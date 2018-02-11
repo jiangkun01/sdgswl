@@ -286,38 +286,6 @@ export default class Analysis extends Component {
               loading={loading}
               className={styles.salesCard}
               bordered={false}
-              title="当月销售额类别占比（万）"
-              bodyStyle={{ padding: 24 }}
-              extra={
-                <div className={styles.salesCardExtra}>
-                  <div className={styles.salesTypeRadio}>
-                    <Radio.Group value={salesType} onChange={this.handleChangeSalesType}>
-                      <Radio.Button value="all">全部类型</Radio.Button>
-                      <Radio.Button value="online">内贸</Radio.Button>
-                      <Radio.Button value="offline">外贸</Radio.Button>
-                    </Radio.Group>
-                  </div>
-                </div>
-              }
-              style={{ marginTop: 24, minHeight: 509 }}
-            >
-              <h4 style={{ marginTop: 8, marginBottom: 32 }}>销售额</h4>
-              <Pie
-                hasLegend
-                subTitle="销售额"
-                total={`${yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))} 万元`}
-                data={salesPieData}
-                valueFormat={val => yuan(val)}
-                height={248}
-                lineWidth={4}
-              />
-            </Card>
-          </Col>
-          <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-            <Card
-              loading={loading}
-              className={styles.salesCard}
-              bordered={false}
               title="当月采购额货种占比（万）"
               bodyStyle={{ padding: 24 }}
               extra={
@@ -340,6 +308,38 @@ export default class Analysis extends Component {
                 total={`${yuan(salesPieData1.reduce((pre, now) => now.y + pre, 0))} 万元`}
                 data={salesPieData1}
                 valueFormat={val1 => val1}
+                height={248}
+                lineWidth={4}
+              />
+            </Card>
+          </Col>
+          <Col xl={12} lg={24} md={24} sm={24} xs={24}>
+            <Card
+              loading={loading}
+              className={styles.salesCard}
+              bordered={false}
+              title="当月销售额类别占比（万）"
+              bodyStyle={{ padding: 24 }}
+              extra={
+                <div className={styles.salesCardExtra}>
+                  <div className={styles.salesTypeRadio}>
+                    <Radio.Group value={salesType} onChange={this.handleChangeSalesType}>
+                      <Radio.Button value="all">全部类型</Radio.Button>
+                      <Radio.Button value="online">内贸</Radio.Button>
+                      <Radio.Button value="offline">外贸</Radio.Button>
+                    </Radio.Group>
+                  </div>
+                </div>
+              }
+              style={{ marginTop: 24, minHeight: 509 }}
+            >
+              <h4 style={{ marginTop: 8, marginBottom: 32 }}>销售额</h4>
+              <Pie
+                hasLegend
+                subTitle="销售额"
+                total={`${yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))} 万元`}
+                data={salesPieData}
+                valueFormat={val => yuan(val)}
                 height={248}
                 lineWidth={4}
               />

@@ -391,15 +391,15 @@ export default class create extends PureComponent {
                   </FormItem>
                   <FormItem
                     {...formItemLayout}
-                    label="向对方"
+                    label="相对方"
                     hasFeedback
                   >
                     {getFieldDecorator('toEachOther', {
                       rules: [
-                        { required: true, message: '请选择向对方' },
+                        { required: true, message: '请选择相对方' },
                       ],
                     })(
-                      <Select showSearch placeholder="请选择向对方" onChange={this.changeMlinkB} >
+                      <Select showSearch placeholder="请选择相对方" onChange={this.changeMlinkB} >
                         <Option value="测试数据1">测试数据1</Option>
                         <Option value="测试数据2">测试数据2</Option>
                         <Option value="测试数据3">测试数据3</Option>
@@ -409,7 +409,7 @@ export default class create extends PureComponent {
                   </FormItem>
                   <FormItem
                     {...formItemLayout}
-                    label="向对方合同编号"
+                    label="相对方合同编号"
                     hasFeedback
                   >
                     {getFieldDecorator('toEachOtherNo')(

@@ -103,18 +103,7 @@ export default class Document extends PureComponent {
       },
       { title: '合同文档数量', dataIndex: 'number', key: 'number' },
       { title: '添加时间', dataIndex: 'addtime', key: 'addtime' },
-      { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime' },
-      {
-        title: '操作',
-        key: 'operation',
-        fixed: 'right',
-        width: 65,
-        render: (/* text, record */) => (
-          <span>
-            <a onClick={this.toModalMessage} >详情</a>
-          </span>
-        ),
-      }];
+      { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime' }];
     // 表格数据
     const data = [
       { id: 1, name: '铝锭销售合同', number: '4', addtime: '2017-08-22', updatetime: '暂无' },
@@ -181,6 +170,11 @@ export default class Document extends PureComponent {
                 scroll={{ x: 1000 }}
                 onChange={this.handleTableChange}
                 loading={loading}
+                onRow={record => ({
+                  onClick: () => {
+                    this.toModalMessage(record);
+                  },
+                })}
               />
             </Col>
           </Row>

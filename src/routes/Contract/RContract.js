@@ -52,16 +52,6 @@ export default class RContract extends PureComponent {
       title: '货物单价',
       dataIndex: 'goodsprice',
       key: 'goodsprice',
-    }, {
-      title: '操作',
-      key: 'operation',
-      fixed: 'right',
-      width: 65,
-      render: () => (
-        <span>
-          <a onClick={this.reset}>详情</a>
-        </span>
-      ),
     }];
     const dataSource = [
       { id: 1, number: '2017SDHSLGGM0256', name: '铝锭采购合同', type: '采购合同', status: 1, signtime: '2017-08-22', amount: '287.4万元', goodstype: '集装箱货物', goodsamount: '287.4万元', goodsprice: '10万元' },
@@ -70,7 +60,17 @@ export default class RContract extends PureComponent {
     ];
     return (
       <div>
-        <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
+        <Table
+          onRow={() => ({
+          onClick: () => {
+            this.reset();
+          },
+        })}
+          dataSource={dataSource}
+          columns={columns}
+          rowKey="id"
+          scroll={{ x: 1366 }}
+        />
       </div>
     );
   }

@@ -145,15 +145,15 @@ class Step1 extends React.PureComponent {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="向对方"
+            label="相对方"
             hasFeedback
           >
             {getFieldDecorator('toEachOther', {
               rules: [
-                { required: true, message: '请选择向对方' },
+                { required: true, message: '请选择相对方' },
               ],
             })(
-              <Select showSearch placeholder="请选择向对方">
+              <Select showSearch placeholder="请选择相对方">
                 <Option value="测试数据1">测试数据1</Option>
                 <Option value="测试数据2">测试数据2</Option>
                 <Option value="测试数据3">测试数据3</Option>
@@ -163,7 +163,7 @@ class Step1 extends React.PureComponent {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="向对方合同编号"
+            label="相对方合同编号"
             hasFeedback
           >
             {getFieldDecorator('toEachOtherNo')(

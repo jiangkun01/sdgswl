@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import {
   Row,
@@ -24,12 +26,14 @@ import styles from '../Dashboard/Analysis.less';
 import RGoods from '../Contract/RGoods';
 
 const FormItem = Form.Item;
+@connect(({ rule, loading }) => ({
+  rule,
+  loading: loading.models.rule,
+}))
 @Form.create()
 export default class Detail extends PureComponent {
-  routeTitle = () => {
-    return (
-      <div><span style={{ fontSize: 15 }}><a href="/#/business/list">业务管理</a></span>/<span style={{ fontSize: 10 }}>业务详情</span></div>
-    );
+  onClickOne = () => {
+    this.props.dispatch(routerRedux.push('/contract/index/details/1'));
   }
   render() {
     const { loading } = this.props;
@@ -139,12 +143,6 @@ export default class Detail extends PureComponent {
     }, {
       title: '客户电话',
       dataIndex: 'bPhone',
-    }, {
-      title: '操作',
-      key: 'operation',
-      fixed: 'right',
-      width: 100,
-      render: () => <a href="/#/contract/index/details/1">详情</a>,
     }];
     const data = [];
     for (let i = 5; i < 10; i += 1) {
@@ -384,6 +382,11 @@ export default class Detail extends PureComponent {
                     columns={columns}
                     rowKey={record => record.key}
                     scroll={{ x: 1366 }}
+                    onRow={record => ({
+                      onClick: () => {
+                        this.onClickOne(record);
+                      },
+                    })}
                   />
                   <Divider>货物信息</Divider>
                   <RGoods />

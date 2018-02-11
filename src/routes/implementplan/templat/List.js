@@ -207,20 +207,6 @@ export default class List extends PureComponent {
       render(val) {
         return <Badge status={statusMap[val]} text={bTypeVo[val]} />;
       },
-    }, {
-      title: '操作',
-      key: 'operation',
-      fixed: 'right',
-      width: 100,
-      // render: (text, record) => (
-      //   <span>
-      //     <a href="#">Action 一 {record.type1}</a>
-      //   </span>
-      // ),
-      render: () => (
-        <a>
-          <span onClick={() => this.handleModalVisible(2)}>详情</span>
-        </a>),
     }];
     const columnsVo = [{
       title: '模板编号',
@@ -282,8 +268,6 @@ export default class List extends PureComponent {
       // ),
       render: (text, record) => (
         <a>
-          <span onClick={() => this.handleModalVisible(record.key)}>详情</span>
-          <Divider type="vertical" />
           <span onClick={() => this.updateOne(record.agreementNo)}>修改</span>
           <Divider type="vertical" />
           <span onClick={() => this.deleteOne(record.agreementNo)}>删除</span>
@@ -512,6 +496,11 @@ export default class List extends PureComponent {
                         columns={columnsVo}
                         rowKey={record => record.key}
                         scroll={{ x: 1366 }}
+                        onRow={record => ({
+                          onClick: () => {
+                            this.handleModalVisible(record.key);
+                          },
+                        })}
                       />
                     </Card>
                   </TabPane>
@@ -554,6 +543,11 @@ export default class List extends PureComponent {
                         columns={columns}
                         rowKey={record => record.key}
                         scroll={{ x: 1366 }}
+                        onRow={() => ({
+                          onClick: () => {
+                            this.handleModalVisible(2);
+                          },
+                        })}
                       />
                     </Card>
                   </TabPane>

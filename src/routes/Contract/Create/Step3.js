@@ -25,7 +25,7 @@ class Step3 extends React.PureComponent {
           <Col span={16}>铝锭采购合同</Col>
         </Row>
         <Row>
-          <Col span={8} className={styles.label}>向对方：</Col>
+          <Col span={8} className={styles.label}>相对方：</Col>
           <Col span={16}>上海六易贸易有限公司</Col>
         </Row>
         <Row>
