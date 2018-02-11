@@ -118,7 +118,7 @@ export default class Annex extends PureComponent {
           <span>
             <a onClick={() => this.showModalUpdate(record)}>修改</a>
             <Divider type="vertical" />
-            <a href="http://localhost:8000/铝锭销售合同相关文件.docx">下载</a>
+            <a href="http://124.133.5.194:8000/铝锭销售合同相关文件.docx">下载</a>
           </span>
         ),
       }];
