@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Table, Form, Icon } from 'antd';
+import styles from './index.less';
 
 /* const FormItem = Form.Item;
 const { TextArea } = Input; */
@@ -103,7 +104,7 @@ export default class Modify extends PureComponent {
       <div>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24}>
-            <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
+            <Table className={styles.defaultCursor} dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1366 }} />
           </Col>
         </Row>
       </div>

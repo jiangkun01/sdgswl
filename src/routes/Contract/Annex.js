@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Form, Upload, Message, Button, Table, Modal, Select, Divider, Icon } from 'antd';
+import styles from './index.less';
 
 const FormItem = Form.Item;
 
@@ -126,7 +127,7 @@ export default class Annex extends PureComponent {
       <div>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col span={24}>
-            <Table dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1000 }} />
+            <Table className={styles.defaultCursor} dataSource={dataSource} columns={columns} rowKey="id" scroll={{ x: 1000 }} />
           </Col>
         </Row>
         <br />

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Card, Table, Select } from 'antd';
 import { Bar } from '../../components/Charts';
+import styles from './index.less';
 
 export default class RContract extends PureComponent {
   state = {
@@ -140,7 +141,7 @@ export default class RContract extends PureComponent {
           <Col span={24}>
             <Card style={{ width: '100%' }} tabList={[{ key: '1', tab: '出库记录' }, { key: '2', tab: '入库记录' }]} onTabChange={(key) => { this.onTabChange(key); }}>
               {tabsKey === '1' ? (
-                <Table dataSource={dataSourceOut} columns={columns} scroll={{ x: 1000 }} rowKey="id" />
+                <Table className={styles.defaultCursor} dataSource={dataSourceOut} columns={columns} scroll={{ x: 1000 }} rowKey="id" />
               ) : (
                 <Table dataSource={dataSourceInput} columns={columns} scroll={{ x: 1000 }} rowKey="id" />
               )}

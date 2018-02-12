@@ -265,6 +265,7 @@ export default class List extends PureComponent {
                         </Form>
                       </div>
                       <Table
+                        className={listStyles.defaultCursor}
                         dataSource={data}
                         columns={columns}
                         rowKey={record => record.key}
@@ -300,6 +301,7 @@ export default class List extends PureComponent {
                         </Form>
                       </div>
                       <Table
+                        className={listStyles.defaultCursor}
                         dataSource={data1}
                         columns={columnsVo}
                         rowKey={record => record.key}

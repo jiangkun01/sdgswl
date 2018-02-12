@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Form, Input, Button, Table, Divider, Menu, Dropdown, Alert, Modal, DatePicker, message, Icon } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import styles from './index.less';
 
 const FormItem = Form.Item;
 const { confirm } = Modal;
@@ -207,6 +208,7 @@ export default class Category extends PureComponent {
               />
               <br />
               <Table
+                className={styles.defaultCursor}
                 rowSelection={rowSelection}
                 dataSource={data}
                 columns={columns}
