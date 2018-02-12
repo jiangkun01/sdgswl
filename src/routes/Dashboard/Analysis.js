@@ -263,8 +263,8 @@ export default class Analysis extends Component {
                   <Icon type="red-envelope" />
                 </span>
               }
-              total="￥26 千万"
-              footer={<Field label="月利润额：" value={`￥${numeral(12423).format('0,0')} 万`} />}
+              total="￥2，600万"
+              footer={<Field label="月利润额：" value={`￥${numeral(123).format('0,0')} 万`} />}
               contentHeight={46}
             >
               <Trend flag="up" style={{ marginRight: 16 }}>
@@ -281,8 +281,8 @@ export default class Analysis extends Component {
                   <Icon type="line-chart" />
                 </span>
               }
-              total="￥1，636亿"
-              footer={<Field label="最佳月份" value={`￥${numeral(23756).format('0,0')} 万`} />}
+              total="￥16.111 万"
+              footer={<Field label="最佳月份" value={`￥${numeral(1756).format('0,0')} 万`} />}
               contentHeight={46}
             >
               <MiniArea color="#975FE4" data={visitData} />
