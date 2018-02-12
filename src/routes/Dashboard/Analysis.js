@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import { Chart, Axis, Geom, Legend, Tooltip } from 'bizcharts';
 import { View } from '@antv/data-set';
 import {
@@ -10,8 +11,11 @@ import {
   Radio,
   Icon,
   DatePicker,
+  Table,
+  Badge,
 } from 'antd';
 import numeral from 'numeral';
+import moment from 'moment';
 import {
   ChartCard,
   yuan,
@@ -45,10 +49,13 @@ rankingListData.push({
   title: '焦炭',
   total: 323234,
 });
+const statusMap = ['default', 'processing', 'success', 'error'];
 
-@connect(({ chart, loading }) => ({
+@connect(({ chart, rule, loading }) => ({
   chart,
+  rule,
   loading: loading.effects['chart/fetch'],
+  loading1: loading.effects['rule/fetch'],
 }))
 export default class Analysis extends Component {
   state = {
@@ -61,6 +68,9 @@ export default class Analysis extends Component {
     this.props.dispatch({
       type: 'chart/fetch',
     });
+    this.props.dispatch({
+      type: 'rule/fetch',
+    });
   }
 
   componentWillUnmount() {
@@ -69,7 +79,9 @@ export default class Analysis extends Component {
       type: 'chart/clear',
     });
   }
-
+  onClickOne = () => {
+    this.props.dispatch(routerRedux.push('/business/detail'));
+  }
   handleChangeSalesType = (e) => {
     this.setState({
       salesType: e.target.value,
@@ -113,10 +125,9 @@ export default class Analysis extends Component {
       return styles.currentDate;
     }
   }
-
   render() {
     const { rangePickerValue, salesType, salesType1 } = this.state;
-    const { chart, loading } = this.props;
+    const { chart, loading, rule, loading1 } = this.props;
     const {
       visitData,
       visitData1,
@@ -128,6 +139,78 @@ export default class Analysis extends Component {
       salesTypeDataOffline,
       salesTypeDataOffline1,
     } = chart;
+    const { data } = rule;
+    console.log(data.list);
+    const status = ['新建', '已完成', '履行中', '终止'];
+    const bType = ['内贸', '外贸'];
+    const columns = [
+      {
+        title: '业务编号',
+        dataIndex: 'no',
+        width: 200,
+        fixed: 'left',
+        sorter: (a, b) => a.no - b.no,
+      },
+      {
+        title: '业务名称',
+        dataIndex: 'bName',
+      },
+      {
+        title: '业务类型',
+        dataIndex: 'BType',
+        filters: [
+          {
+            text: bType[0],
+            value: 0,
+          },
+          {
+            text: bType[1],
+            value: 1,
+          },
+        ],
+        render(val) {
+          return <Badge status={statusMap[val]} text={bType[val]} />;
+        },
+        sorter: (a, b) => a.BType - b.BType,
+      },
+      {
+        title: '状态',
+        dataIndex: 'status',
+        filters: [
+          {
+            text: status[0],
+            value: 0,
+          },
+          {
+            text: status[1],
+            value: 1,
+          },
+          {
+            text: status[2],
+            value: 2,
+          },
+          {
+            text: status[3],
+            value: 3,
+          },
+        ],
+        render(val) {
+          return <Badge status={statusMap[val]} text={status[val]} />;
+        },
+        sorter: (a, b) => a.status - b.status,
+      },
+      {
+        title: '创建时间',
+        dataIndex: 'createdAt',
+        sorter: (a, b) => a.createdAt - b.createdAt,
+        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      },
+      {
+        title: '业务描述',
+        dataIndex: 'title',
+        key: 'title',
+      },
+    ];
     const salesPieData1 =
       salesType1 === 'all'
         ? salesTypeData1
@@ -317,7 +400,7 @@ export default class Analysis extends Component {
           </div>
         </Card>
 
-        <Row gutter={24}>
+        <Row gutter={24} >
           <Col xl={12} lg={24} md={24} sm={24} xs={24}>
             <Card
               loading={loading}
@@ -379,6 +462,22 @@ export default class Analysis extends Component {
                 valueFormat={val => yuan(val)}
                 height={248}
                 lineWidth={4}
+              />
+            </Card>
+          </Col>
+        </Row>
+        <Row gutter={24} style={{ marginTop: '20px' }}>
+          <Col xl={24} lg={24} md={24} sm={24} xs={24}>
+            <Card title="重点业务">
+              <Table
+                loading={loading1}
+                dataSource={data.list}
+                columns={columns}
+                onRow={record => ({
+                  onClick: () => {
+                    this.onClickOne(record);
+                  },
+                })}
               />
             </Card>
           </Col>

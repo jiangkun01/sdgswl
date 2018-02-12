@@ -240,6 +240,12 @@ class StandardTable extends PureComponent {
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
+        title: '是否是重点业务',
+        render() {
+          return '否';
+        },
+      },
+      {
         title: '业务描述',
         dataIndex: 'title',
         key: 'title',
@@ -250,6 +256,8 @@ class StandardTable extends PureComponent {
         fixed: 'right',
         render: () => (
           <span>
+            <a>置为重点</a>
+            <Divider type="vertical" />
             <a onClick={this.updateOne}>修改</a>
             <Divider type="vertical" />
             <a onClick={this.deteteOne}>删除</a>
