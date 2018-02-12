@@ -240,7 +240,7 @@ class StandardTable extends PureComponent {
         render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
-        title: '是否是重点业务',
+        title: '是否是关注业务',
         render() {
           return '否';
         },
@@ -256,7 +256,7 @@ class StandardTable extends PureComponent {
         fixed: 'right',
         render: () => (
           <span>
-            <a>置为重点</a>
+            <a onClick={() => { message.success('已关注'); }} >关注</a>
             <Divider type="vertical" />
             <a onClick={this.updateOne}>修改</a>
             <Divider type="vertical" />

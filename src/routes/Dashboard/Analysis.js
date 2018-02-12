@@ -263,7 +263,7 @@ export default class Analysis extends Component {
                   <Icon type="red-envelope" />
                 </span>
               }
-              total="￥126560 万"
+              total="￥26 千万"
               footer={<Field label="月利润额：" value={`￥${numeral(12423).format('0,0')} 万`} />}
               contentHeight={46}
             >
@@ -281,7 +281,7 @@ export default class Analysis extends Component {
                   <Icon type="line-chart" />
                 </span>
               }
-              total="￥1636000 万"
+              total="￥1，636亿"
               footer={<Field label="最佳月份" value={`￥${numeral(23756).format('0,0')} 万`} />}
               contentHeight={46}
             >
@@ -313,8 +313,8 @@ export default class Analysis extends Component {
                   <Icon type="frown-o" />
                 </span>
               }
-              total={126}
-              footer={<Field label="周逾期合同：" value={`${numeral(13).format('0,0')}`} />}
+              total={8}
+              footer={<Field label="周逾期合同：" value={`${numeral(1).format('0,0')}`} />}
               contentHeight={46}
             >
               <Trend flag="up" style={{ marginRight: 16 }}>
@@ -468,7 +468,7 @@ export default class Analysis extends Component {
         </Row>
         <Row gutter={24} style={{ marginTop: '20px' }}>
           <Col xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Card title="重点业务">
+            <Card title="关注业务">
               <Table
                 loading={loading1}
                 dataSource={data.list}
