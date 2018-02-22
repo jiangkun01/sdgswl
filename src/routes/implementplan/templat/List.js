@@ -47,7 +47,10 @@ export default class List extends PureComponent {
   onChange = (e) => {
     console.log('radio checked', e.target.value);
   };
-  handleModalVisible = (flag) => {
+  handleModalVisible = (e, flag) => {
+    if (typeof (e) !== 'undefined' && e.target.localName === 'a') {
+      return false;
+    }
     if (flag === 7) {
       this.setState({
         payModalVisible: !!flag,
@@ -268,9 +271,9 @@ export default class List extends PureComponent {
       // ),
       render: (text, record) => (
         <a>
-          <span onClick={() => this.updateOne(record.agreementNo)}>修改</span>
+          <a onClick={() => this.updateOne(record.agreementNo)}>修改</a>
           <Divider type="vertical" />
-          <span onClick={() => this.deleteOne(record.agreementNo)}>删除</span>
+          <a onClick={() => this.deleteOne(record.agreementNo)}>删除</a>
         </a>),
     }];
     const data = [];
@@ -497,8 +500,8 @@ export default class List extends PureComponent {
                         rowKey={record => record.key}
                         scroll={{ x: 1366 }}
                         onRow={record => ({
-                          onClick: () => {
-                            this.handleModalVisible(record.key);
+                          onClick: (e) => {
+                            this.handleModalVisible(e, record.key);
                           },
                         })}
                       />
@@ -544,8 +547,8 @@ export default class List extends PureComponent {
                         rowKey={record => record.key}
                         scroll={{ x: 1366 }}
                         onRow={() => ({
-                          onClick: () => {
-                            this.handleModalVisible(2);
+                          onClick: (e) => {
+                            this.handleModalVisible(e, 2);
                           },
                         })}
                       />

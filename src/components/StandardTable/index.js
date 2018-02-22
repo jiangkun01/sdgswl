@@ -29,8 +29,12 @@ class StandardTable extends PureComponent {
       });
     }
   }
-  onClickOne = () => {
-    this.props.dispatch(routerRedux.push('/business/detail'));
+  onClickOne = (e, record) => {
+    // console.log(e.target.localName === 'a');
+    // console.log(record);
+    if (e.target.localName !== 'a') {
+      this.props.dispatch(routerRedux.push('/business/detail', record));
+    }
   }
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
     if (this.props.onSelectRow) {
@@ -300,8 +304,8 @@ class StandardTable extends PureComponent {
           onChange={this.handleTableChange}
           scroll={{ x: 1500 }}
           onRow={record => ({
-            onClick: () => {
-              this.onClickOne(record);
+            onClick: (e) => {
+              this.onClickOne(e, record);
             },
           })}
         />

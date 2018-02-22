@@ -9,7 +9,7 @@ import {
   Card,
   Tabs,
   Radio,
-  Icon,
+  // Icon,
   DatePicker,
   Table,
   Badge,
@@ -258,11 +258,11 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="2017-12-30贸易类业务利润"
-              action={
-                <span title="贸易类业务利润">
-                  <Icon type="red-envelope" />
-                </span>
-              }
+              // action={
+              //   <span title="贸易类业务利润">
+              //     <Icon type="red-envelope" />
+              //   </span>
+              // }
               total="￥2，600万"
               footer={<Field label="月利润额：" value={`￥${numeral(123).format('0,0')} 万`} />}
               contentHeight={46}
@@ -276,11 +276,11 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="2017年贸易类合同总额"
-              action={
-                <span title="2017年贸易类合同总额">
-                  <Icon type="line-chart" />
-                </span>
-              }
+              // action={
+              //   <span title="2017年贸易类合同总额">
+              //     <Icon type="line-chart" />
+              //   </span>
+              // }
               total="￥16.111 万"
               footer={<Field label="最佳月份" value={`￥${numeral(1756).format('0,0')} 万`} />}
               contentHeight={46}
@@ -292,11 +292,11 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="2017年完成合同累计（份）"
-              action={
-                <span title="2017年完成合同累计（份">
-                  <Icon type="bar-chart" />
-                </span>
-              }
+              // action={
+              //   {/*<span title="2017年完成合同累计（份">*/}
+              //     {/*<Icon type="bar-chart" />*/}
+              //   {/*</span>*/}
+              // }
               total={numeral(120).format('0,0')}
               footer={<Field label="单月完成最大合同数" value="20" />}
               contentHeight={46}
@@ -308,11 +308,11 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="2017年12月合同逾期"
-              action={
-                <span title="2017年12月合同逾期">
-                  <Icon type="frown-o" />
-                </span>
-              }
+              // action={
+              //   <span title="2017年12月合同逾期">
+              //     <Icon type="frown-o" />
+              //   </span>
+              // }
               total={8}
               footer={<Field label="周逾期合同：" value={`${numeral(1).format('0,0')}`} />}
               contentHeight={46}
@@ -326,11 +326,11 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="2017年12月违约合同"
-              action={
-                <span title="2017年12月违约合同">
-                  <Icon type="frown-o" />
-                </span>
-              }
+              // action={
+              //   <span title="2017年12月违约合同">
+              //     <Icon type="frown-o" />
+              //   </span>
+              // }
               total={11}
               footer={<Field label="周违约合同：" value={`${numeral(2).format('0,0')}`} />}
               contentHeight={46}
@@ -344,11 +344,11 @@ export default class Analysis extends Component {
             <ChartCard
               bordered={false}
               title="2017年12月超支合同"
-              action={
-                <span title="2017年12月超支合同">
-                  <Icon type="frown-o" />
-                </span>
-              }
+              // action={
+              //   <span title="2017年12月超支合同">
+              //     <Icon type="frown-o" />
+              //   </span>
+              // }
               total={13}
               footer={<Field label="周超支合同：" value={`${numeral(3).format('0,0')}`} />}
               contentHeight={46}

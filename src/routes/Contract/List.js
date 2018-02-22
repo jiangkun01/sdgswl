@@ -76,8 +76,10 @@ export default class List extends PureComponent {
   //     });
   //   }
   // };
-  onClickOne = () => {
-    this.props.dispatch(routerRedux.push('/contract/index/details/1'));
+  onClickOne = (e, record) => {
+    if (e.target.localName !== 'a') {
+      this.props.dispatch(routerRedux.push('/contract/index/details/1', record));
+    }
   }
   handleModalVisible = (flag) => {
     this.setState({
@@ -505,8 +507,8 @@ export default class List extends PureComponent {
                     rowKey={record => record.key}
                     scroll={{ x: 1366 }}
                     onRow={record => ({
-                      onClick: () => {
-                        this.onClickOne(record);
+                      onClick: (e) => {
+                        this.onClickOne(e, record);
                       },
                     })}
                   />
