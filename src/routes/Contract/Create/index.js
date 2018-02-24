@@ -13,11 +13,13 @@ export default class Index extends PureComponent {
     const { location } = this.props;
     const { pathname } = location;
     const pathList = pathname.split('/');
-    console.log(pathList[pathList.length - 1]);
     switch (pathList[pathList.length - 1]) {
       case 'info': return 0;
       case 'confirm': return 1;
-      case 'result': return 2;
+      case 'selectflowname': return 2;
+      case 'setflow': return 2;
+      case 'conductnode': return 2;
+      case 'result': return 3;
       default: return 0;
     }
   }
@@ -40,6 +42,7 @@ export default class Index extends PureComponent {
             <Steps current={this.getCurrentStep()} className={styles.steps}>
               <Step title="合同基本信息" />
               <Step title="关联业务" />
+              <Step title="提交审批" />
               <Step title="已提交" />
             </Steps>
             <Switch>

@@ -110,7 +110,16 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step2')),
     },
     '/contract/create/result': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step3')),
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step4')),
+    },
+    '/contract/create/selectflowname': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step3.1')),
+    },
+    '/contract/create/setflow': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step3.2')),
+    },
+    '/contract/create/conductnode': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step3.3')),
     },
     '/form/advanced-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),

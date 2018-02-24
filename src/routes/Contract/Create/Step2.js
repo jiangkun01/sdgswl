@@ -252,12 +252,12 @@ class Step2 extends React.PureComponent {
       );
     });
     const onPrev = () => {
-      dispatch(routerRedux.push('/contract/create'));
+      dispatch(routerRedux.push('/contract/create/info'));
     };
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields(() => {
-        dispatch(routerRedux.push('/contract/create/result'));
+        dispatch(routerRedux.push('/contract/create/selectflowname'));
       });
     };
     return (

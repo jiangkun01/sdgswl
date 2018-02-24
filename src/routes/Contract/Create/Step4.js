@@ -5,7 +5,7 @@ import { routerRedux } from 'dva/router';
 import Result from '../../../components/Result/index';
 import styles from './style.less';
 
-class Step3 extends React.PureComponent {
+class Step4 extends React.PureComponent {
   render() {
     const { dispatch } = this.props;
     const onFinish = () => {
@@ -36,6 +36,10 @@ class Step3 extends React.PureComponent {
           <Col span={8} className={styles.label}>合同总金额：</Col>
           <Col span={16}><span className={styles.money}>320.66</span> 万元</Col>
         </Row>
+        <Row>
+          <Col span={8} className={styles.label}>下一个节点办理人：</Col>
+          <Col span={16}>业务部负责人: 李想</Col>
+        </Row>
       </div>
     );
     const actions = (
@@ -63,4 +67,4 @@ class Step3 extends React.PureComponent {
 
 export default connect(({ form }) => ({
   data: form.step,
-}))(Step3);
+}))(Step4);
