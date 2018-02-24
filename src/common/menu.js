@@ -46,6 +46,10 @@ const menuData = [{
     path: 'templat/list',
     // authority: 'admin',
   }],
+}, {
+  name: '待办事项',
+  icon: 'paper-clip',
+  path: 'todo/list',
 }];
 /* , {
   name: '客户管理',
