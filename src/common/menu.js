@@ -33,6 +33,11 @@ const menuData = [{
     // authority: 'admin',
     // path: 'advanced-form',
     path: 'document',
+  }, {
+    name: '合同审批流程列表',
+    // authority: 'admin',
+    // path: 'advanced-form',
+    path: 'flow/index',
   }],
 }, {
   name: '履行计划配置管理',

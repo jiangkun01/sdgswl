@@ -88,6 +88,15 @@ export const getRouterData = (app) => {
     '/contract/document': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Document')),
     },
+    '/contract/flow/index': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Flow/Index')),
+    },
+    '/contract/flow/index/list': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Flow/List')),
+    },
+    '/contract/flow/index/detail/:no': {
+      component: dynamicWrapper(app, [], () => import('../routes/Contract/Flow/Detail')),
+    },
     '/contract/create': {
       component: dynamicWrapper(app, [], () => import('../routes/Contract/Create/index')),
     },
@@ -117,9 +126,6 @@ export const getRouterData = (app) => {
     },
     '/contract/create/setflow': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step3.2')),
-    },
-    '/contract/create/conductnode': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Contract/Create/Step3.3')),
     },
     '/form/advanced-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
