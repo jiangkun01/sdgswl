@@ -19,6 +19,7 @@ export default class Index extends PureComponent {
       case 'selectflowname': return 2;
       case 'setflow': return 2;
       case 'conductnode': return 2;
+
       case 'result': return 3;
       default: return 0;
     }

@@ -1,8 +1,7 @@
 import BpmnViewer from 'bpmn-js';
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
-import { Button, Modal, Tabs, Divider, message } from 'antd';
+import { Form } from 'antd';
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
@@ -558,11 +557,14 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
-</bpmn:definitions>`;
-class setFlow extends React.Component {
-  state = {
-    modalVisible: false,
-  }
+</bpmn:definitions>
+`;
+@connect(({ ccategory, loading }) => ({
+  ccategory,
+  loading: loading.models.rule,
+}))
+@Form.create()
+export default class Document extends PureComponent {
   componentDidMount() {
     const viewer = new BpmnViewer({
       container: '#uid',
@@ -574,128 +576,11 @@ class setFlow extends React.Component {
         console.log('rendered');
       }
     });
-    const eventBus = viewer.get('eventBus');
-
-    const events = [
-      'element.hover',
-      'element.out',
-      'element.click',
-      'element.dblclick',
-      'element.mousedown',
-      'element.mouseup',
-    ];
-
-    events.forEach((event) => {
-      eventBus.on(event, (e) => {
-        // e.element = the model element
-        // e.gfx = the graphical element
-        if (event === 'element.click' &&
-          e.element.id !== 'StartEvent_1' &&
-          e.element.id !== 'EndEvent_0zunkal'
-        ) {
-          this.setState({
-            modalVisible: true,
-          });
-        }
-        console.log(event, 'on', e.element.id);
-      });
-    });
   }
+  // 转到详情
   render() {
-    const { dispatch } = this.props;
-    window.callbackD = function () {
-      showModal();
-    };
-    const onPrev = () => {
-      dispatch(routerRedux.push('/contract/create/selectflowname'));
-    };
-    const onOk = () => {
-      dispatch(routerRedux.push('/contract/create/result'));
-    };
-    const showModal = () => {
-      this.setState({
-        modalVisible: true,
-      });
-    };
-    const hideModalCancel = () => {
-      this.setState({
-        modalVisible: false,
-      });
-    };
-    const hideModalOk = () => {
-      this.setState({
-        modalVisible: false,
-      });
-      message.success('保存成功');
-    };
     return (
-      <div style={{ overflowX: 'auto', width: '100%' }}>
-        <div id="uid" style={{ height: '1200px', width: '1366px' }}>审批流程</div>
-        <div style={{ marginTop: 10, textAlign: 'center' }}>
-          <Button onClick={onPrev} style={{ marginRight: 8 }}>
-            上一步
-          </Button>
-          <Button onClick={() => { message.success('设置完成'); }} style={{ marginRight: 8 }}>
-            完成设置
-          </Button>
-          <Button onClick={() => { message.success('已还原到默认设置'); }} style={{ marginRight: 8 }}>
-            还原默认设置
-          </Button>
-          <Button onClick={onOk} style={{ marginRight: 8 }}>
-            提交
-          </Button>
-        </div>
-        <Modal
-          title="节点设置: 经办人"
-          okText="保存"
-          cancelText="取消"
-          onOk={hideModalOk}
-          onCancel={hideModalCancel}
-          visible={this.state.modalVisible}
-        >
-          <Tabs defaultActiveKey="1">
-            <Tabs.TabPane tab="组织架构" key="1">
-              <strong>山东高速物流集团</strong>
-              <div style={{ marginTop: '24px' }}>
-                <Button icon="plus" size="large" >公司领导</Button>
-                <Button icon="plus" size="large">综合办公室</Button>
-                <Button icon="plus" size="large">安全技术部</Button>
-                <Button icon="plus" size="large">人事政工部</Button>
-              </div>
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="常用联系人" key="2">
-              <div>
-                <strong>联系人
-                </strong>
-              </div>
-              <div style={{ marginTop: '24px' }}>
-                <Button icon="plus" size="large">李雷</Button>
-                <Button icon="plus" size="large">张建国</Button>
-                <Button icon="plus" size="large">张爱丽</Button>
-                <Button icon="plus" size="large">韩梅梅</Button>
-              </div>
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="自定义" key="3">
-              <div>
-                <Button icon="plus" size="large" >财务部 李峰</Button>
-              </div>
-            </Tabs.TabPane>
-          </Tabs>
-          <Divider />
-          <div>
-            <div style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }}>
-              <Button icon="minus" size="large" >公司领导</Button>
-            </div>
-            <div style={{ marginTop: '24px' }}>
-              <Button onClick={() => message.success('添加到自定义成功！')}>添加到自定义</Button>
-            </div>
-          </div>
-        </Modal>
-      </div>
+      <div id="uid" style={{ width: '100%', height: '1000px' }}>审批流程 </div>
     );
   }
 }
-export default connect(({ form, loading }) => ({
-  submitting: loading.effects['form/submitStepForm'],
-  data: form.step,
-}))(setFlow);
