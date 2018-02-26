@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Form, Input, Button, Radio, Divider, Select,
-  Table, InputNumber, Icon } from 'antd';
+  Table, InputNumber, Icon, message } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './style.less';
 
@@ -359,7 +359,10 @@ class Step2 extends React.PureComponent {
             上一步
           </Button>
           <Button type="primary" onClick={onValidateForm} loading={submitting}>
-            提交
+            下一步
+          </Button>
+          <Button onClick={() => { message.success('暂存成功'); }}>
+            暂存
           </Button>
         </Form.Item>
       </Form>

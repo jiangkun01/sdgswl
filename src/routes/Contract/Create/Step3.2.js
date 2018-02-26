@@ -160,6 +160,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <bpmn:incoming>SequenceFlow_19vqjpb</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0s7txvl</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0y7tsbu</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_00su6qv</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_19vqjpb" sourceRef="Task_0vdnii1" targetRef="Task_0d8axlv" />
     <bpmn:task id="Task_17kx1q7" name="全书单位业务代表意见修订">
@@ -170,6 +171,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <bpmn:sequenceFlow id="SequenceFlow_0s7txvl" sourceRef="Task_17kx1q7" targetRef="Task_0d8axlv" />
     <bpmn:task id="Task_1iqbgeb" name="执行董事意见">
       <bpmn:incoming>SequenceFlow_152lbl8</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_00su6qv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1h30xgi</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0egrj60</bpmn:outgoing>
     </bpmn:task>
@@ -181,6 +183,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <bpmn:sequenceFlow id="SequenceFlow_152lbl8" sourceRef="Task_00sa8nw" targetRef="Task_1iqbgeb" />
     <bpmn:sequenceFlow id="SequenceFlow_0egrj60" sourceRef="Task_1iqbgeb" targetRef="EndEvent_0zunkal" />
     <bpmn:sequenceFlow id="SequenceFlow_1iwurhj" sourceRef="Task_1kvrmqe" targetRef="EndEvent_0zunkal" />
+    <bpmn:sequenceFlow id="SequenceFlow_00su6qv" sourceRef="Task_0d8axlv" targetRef="Task_1iqbgeb" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -556,9 +559,17 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
           <dc:Bounds x="197" y="501.5" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_00su6qv_di" bpmnElement="SequenceFlow_00su6qv">
+        <di:waypoint x="709" y="731" />
+        <di:waypoint x="659" y="731" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="684" y="710" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
-</bpmn:definitions>`;
+</bpmn:definitions>
+`;
 class setFlow extends React.Component {
   state = {
     modalVisible: false,
@@ -643,6 +654,9 @@ class setFlow extends React.Component {
           </Button>
           <Button onClick={onOk} style={{ marginRight: 8 }}>
             提交
+          </Button>
+          <Button type="primary" onClick={() => { message.success('暂存成功'); }}>
+            暂存
           </Button>
         </div>
         <Modal
