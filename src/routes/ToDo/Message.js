@@ -6,21 +6,15 @@ const FormItem = Form.Item;
 const { TextArea } = Input;
 
 @Form.create()
-export default class Task extends Component {
+export default class Message extends Component {
   state = {
     modalVisible: false,
   }
 
   modalShow = () => {
-    Modal.confirm({
-      title: '确定删除此通知吗？',
-      content: '请确保下午三点准时到达领取地点！',
-      okText: '确认',
-      cancelText: '取消',
-    });
-    /* this.setState({
+    this.setState({
       modalVisible: true,
-    }); */
+    });
   }
 
   modalHandleCancel = () => {
@@ -50,32 +44,43 @@ export default class Task extends Component {
         >
           <Row>
             <Col span={24}>
-              <a className={styles.messageA}><span>物品发放</span></a>：
-              <span className={styles.messageA}>今天下午三点请领取个人所上报需要的办公用品</span>
-              <span className={styles.messageA} style={{ float: 'right' }}>任务时间：<strong>2018-02-27 15：00</strong></span>
+              <a className={styles.messageA}><span>李雷</span></a>：
+              <span className={styles.messageA}>今天下午几点开会</span>
             </Col>
           </Row>
         </Card>
-        <Form onSubmit={this.modalFormSubmit}>
+        <Card
+          className={styles.chartCardhover}
+          onClick={this.modalShow}
+          style={{ marginBottom: 24, borderRadius: 10 }}
+        >
+          <Row>
+            <Col span={24}>
+              <a className={styles.messageA}><span>韩梅梅</span></a>：
+              <span className={styles.messageA}>开会有什么要准备的吗</span>
+            </Col>
+          </Row>
+        </Card>
+        <Form onSubmit={this.modalFormConfirm}>
           <Modal
-            title="待处理事项"
+            title="待回复消息"
             visible={this.state.modalVisible}
             onCancel={this.modalHandleCancel}
             footer={[
               <Button key="back" onClick={this.modalHandleCancel}>取消</Button>,
-              <Button key="submit" type="primary" onClick={this.modalFormSubmit}>确定</Button>,
+              <Button key="submit" type="primary" onClick={this.modalFormSubmit}>回复</Button>,
             ]}
             width={800}
           >
             <Row>
               <Col span={24}>
                 <div className={styles.stepsContent}>
-                  <h3>任务完成情况：</h3>
+                  <h3>回复李雷的消息：</h3>
                   <FormItem>
                     {getFieldDecorator('upload', { valuePropName: 'note',
-                      rules: [{ required: true, message: '请填写任务完成情况!' }],
+                      rules: [{ required: true, message: '请填写回复消息!' }],
                     })(
-                      <TextArea rows={6} />
+                      <TextArea rows={2} />
                     )}
                   </FormItem>
                 </div>

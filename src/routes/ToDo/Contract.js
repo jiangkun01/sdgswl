@@ -1,27 +1,39 @@
 import React, { Component } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import { Row, Col, Card, Modal, Form, Input, Button } from 'antd';
 import styles from './list.less';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
+@connect(({ rule, loading }) => ({
+  rule,
+  loading: loading.models.rule,
+}))
 @Form.create()
-export default class Task extends Component {
+export default class Contract extends Component {
   state = {
     modalVisible: false,
   }
 
   modalShow = () => {
-    Modal.confirm({
-      title: '确定删除此通知吗？',
-      content: '请确保下午三点准时到达领取地点！',
+    this.props.dispatch(routerRedux.push('/contract/create/info'));
+    /* Modal.confirm({
+      title: '确定吗？',
+      content: '',
       okText: '确认',
       cancelText: '取消',
-    });
+      onOk: this.toCreateContract,
+    }); */
     /* this.setState({
       modalVisible: true,
     }); */
   }
+
+  /* toCreateContract = () => {
+    this.props.dispatch(routerRedux.push('/contract/create/info'));
+  } */
 
   modalHandleCancel = () => {
     this.setState({
