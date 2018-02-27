@@ -881,7 +881,7 @@ export default class Detail extends PureComponent {
               </Card>
               <Card title="回复意见" style={{ marginBottom: '24px' }}>
                 <Row>
-                  <Col span={24}>
+                  <Col span={24} style={{ marginBottom: '24px' }}>
                     <div>
                       <strong>意见人：李想&nbsp;意见内容：合同条款第三项表达不清楚&nbsp;退回时间： 2018-01-02
                       </strong>
