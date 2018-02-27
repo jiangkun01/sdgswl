@@ -358,10 +358,10 @@ class Step2 extends React.PureComponent {
           <Button onClick={onPrev} style={{ marginRight: 8 }}>
             上一步
           </Button>
-          <Button type="primary" onClick={onValidateForm} loading={submitting}>
+          <Button onClick={onValidateForm} loading={submitting}>
             下一步
           </Button>
-          <Button onClick={() => { message.success('暂存成功'); }}>
+          <Button type="primary" onClick={() => { message.success('暂存成功'); }}>
             暂存
           </Button>
         </Form.Item>

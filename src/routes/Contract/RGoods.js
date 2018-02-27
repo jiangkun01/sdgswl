@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Card, Table, Select } from 'antd';
-import { Bar } from '../../components/Charts';
+import { View } from '@antv/data-set';
+import { Chart, Axis, Geom, Legend, Tooltip } from 'bizcharts';
 import styles from './index.less';
 
 export default class RContract extends PureComponent {
@@ -12,34 +13,6 @@ export default class RContract extends PureComponent {
   }
   render() {
     const { tabsKey } = this.state;
-    const exchart = [
-      { x: '1月', y: 1785 },
-      { x: '2月', y: 1054 },
-      { x: '3月', y: 1586 },
-      { x: '4月', y: 1430 },
-      { x: '5月', y: 1983 },
-      { x: '6月', y: 1016 },
-      { x: '7月', y: 1580 },
-      { x: '8月', y: 1077 },
-      { x: '9月', y: 1751 },
-      { x: '10月', y: 1216 },
-      { x: '11月', y: 1291 },
-      { x: '12月', y: 1344 },
-    ];
-    const imchart = [
-      { x: '1月', y: 1284 },
-      { x: '2月', y: 1184 },
-      { x: '3月', y: 1182 },
-      { x: '4月', y: 1297 },
-      { x: '5月', y: 1462 },
-      { x: '6月', y: 1116 },
-      { x: '7月', y: 1166 },
-      { x: '8月', y: 1170 },
-      { x: '9月', y: 1359 },
-      { x: '10月', y: 1007 },
-      { x: '11月', y: 1603 },
-      { x: '12月', y: 1990 },
-    ];
     const columns = [{
       title: '编号',
       dataIndex: 'id',
@@ -95,6 +68,17 @@ export default class RContract extends PureComponent {
       xl: 6,
       style: { marginBottom: 24 },
     };
+    const salesData = [
+      { name: '采购', '一月 ': 18, '二月 ': 28, '三月 ': 39, '四月 ': 81, '五月 ': 47, '六月 ': 20, '七月 ': 24, '八月 ': 35, '九月 ': 41, '十月 ': 70, '十一月 ': 55, '十二月 ': 68 },
+      { name: '销售', '一月 ': 20, '二月 ': 33, '三月 ': 44, '四月 ': 99, '五月 ': 52, '六月 ': 35, '七月 ': 37, '八月 ': 42, '九月 ': 45, '十月 ': 80, '十一月 ': 65, '十二月 ': 78 },
+    ];
+    const trendsData = new View().source(salesData);
+    trendsData.transform({
+      type: 'fold',
+      fields: ['一月 ', '二月 ', '三月 ', '四月 ', '五月 ', '六月 ', '七月 ', '八月 ', '九月 ', '十月 ', '十一月 ', '十二月 '], // 展开字段集
+      key: 'month', // key字段
+      value: 'members', // value字段
+    });
     return (
       <div>
         <Row>
@@ -125,14 +109,20 @@ export default class RContract extends PureComponent {
         </Row>
         <br />
         <Row>
-          <Col span={11}>
-            <Card>
-              <Bar height={250} color="#0F6CBF" title="出库情况" data={exchart} />
-            </Card>
-          </Col>
-          <Col span={11} offset={2}>
-            <Card>
-              <Bar height={250} title="入库情况" data={imchart} />
+          <Col span={24}>
+            <Card title="采购/销售（吨）">
+              <Chart height={250} data={trendsData} forceFit>
+                <Axis name="month" />
+                <Axis name="members" />
+                <Legend />
+                <Tooltip crosshairs={{ type: 'y' }} />
+                <Geom
+                  type="interval"
+                  position="month*members"
+                  color="name"
+                  adjust={[{ type: 'dodge', marginRatio: 1 / 32 }]}
+                />
+              </Chart>
             </Card>
           </Col>
         </Row>

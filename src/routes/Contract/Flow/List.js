@@ -64,10 +64,19 @@ export default class List extends PureComponent {
         title: '发起人',
         dataIndex: 'sp',
       },
-      { title: '发起时间', dataIndex: 'addtime', key: 'addtime' }];
+      { title: '发起时间', dataIndex: 'addtime', key: 'addtime' },
+      {
+        title: '当前处理节点',
+        dataIndex: 'currentNode',
+      },
+      {
+        title: '当前处理人',
+        dataIndex: 'dp',
+      },
+    ];
     // 表格数据
     const data = [
-      { id: 1234, name: '铝锭贸易类合同审批流程', number: '4', addtime: '2017-08-22', sp: '李雷', updatetime: '暂无' },
+      { id: 1234, name: '铝锭贸易类合同审批流程', currentNode: '业务部负责人', dp: '李想', addtime: '2017-08-22', sp: '李雷', updatetime: '暂无' },
     ];
     return (
       <PageHeaderLayout title="审批列表">

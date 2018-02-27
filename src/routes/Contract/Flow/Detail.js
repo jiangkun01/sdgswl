@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Form,
-  Input, Button, Table, Tabs } from 'antd';
+  Input, Button, Table, Tabs, Divider, Icon } from 'antd';
+import Information from '../Information';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 
 const { TabPane } = Tabs;
@@ -13,10 +14,25 @@ const { TabPane } = Tabs;
 export default class Detail extends PureComponent {
   state = {
     loading: false,
+    GJson: 1,
+    ItemArray: [],
   };
   // loading...
   componentWillMount() {
     this.setState({ loading: true });
+    const Ia = [];
+    Ia.push(
+      <Row gutter={24} style={{ marginBottom: '24px' }}>
+        <Col span={8} >
+          <h3>办理意见1：
+            <strong>
+              <Input style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
+            </strong>
+          </h3>
+        </Col>
+      </Row>
+    );
+    this.setState({ ItemArray: Ia });
     setTimeout(() => {
       this.setState({ loading: false });
     }, 1000);
@@ -31,6 +47,40 @@ export default class Detail extends PureComponent {
   }
   render() {
     const { loading } = this.state;
+    const addItemArray = (k) => {
+      const ItemArrayVo = [];
+      this.setState({
+        ItemArray: [],
+      });
+      for (let i = 1; i <= this.state.GJson + k; i += 1) {
+        ItemArrayVo.push(
+          <Row gutter={24} style={{ marginBottom: '24px' }}>
+            <Col span={8} >
+              <h3>办理意见{i}：
+                <strong>
+                  <Input style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
+                </strong>
+              </h3>
+            </Col>
+            <Divider>
+              {this.state.GJson + k > 1 ? (
+                <Icon
+                  type="close-circle-o"
+                  spin="true"
+                  disabled={this.state.GJson + k === 1}
+                  onClick={() => addItemArray(-1)}
+                  style={{ fontSize: 16, color: '#F25D46' }}
+                />
+              ) : null}
+            </Divider>
+          </Row>
+        );
+      }
+      this.setState({
+        GJson: this.state.GJson + k,
+        ItemArray: ItemArrayVo,
+      });
+    };
     const columns = [
       {
         title: '节点名称',
@@ -120,15 +170,10 @@ export default class Detail extends PureComponent {
               <Row gutter={24} style={{ marginBottom: '24px' }}>
                 <Col span={8} ><h3>经办人：<strong>李想（已办理）&nbsp;(李雷未办理)</strong></h3></Col>
               </Row>
-              <Row gutter={24} style={{ marginBottom: '24px' }}>
-                <Col span={8} >
-                  <h3>办理意见：
-                    <strong>
-                      <Input style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
-                    </strong>
-                  </h3>
-                </Col>
-              </Row>
+              <Card title="办理意见" style={{ marginBottom: '24px' }}>
+                {this.state.ItemArray}
+                <Button onClick={() => addItemArray(1)}>增加货物描述</Button>
+              </Card>
               <Row gutter={24} style={{ marginBottom: '24px' }}>
                 <Col span={8} >
                   <Button>转交下一步</Button>
@@ -138,16 +183,7 @@ export default class Detail extends PureComponent {
             </TabPane>
             <TabPane tab="合同信息" key="2">
               <Card bordered={false} style={{ marginBottom: '24px' }}>
-                <Row gutter={24} style={{ marginBottom: '24px' }}>
-                  <Col span={8} ><h3>合同编号：<strong>2017SDHSLGGM0250</strong></h3></Col>
-                  <Col span={8} ><h3>合同名称：<strong>铝锭采购合同</strong></h3></Col>
-                  <Col span={8} ><h3>合同金额：<strong>320.66 万元</strong></h3></Col>
-                </Row>
-                <Row gutter={24} style={{ marginBottom: '24px' }}>
-                  <Col span={8} ><h3>向对方：<strong>上海六合贸易</strong></h3></Col>
-                  <Col span={8} ><h3>发起人：<strong>李雷</strong></h3></Col>
-                  <Col span={8} ><h3>发起日期：<strong>2017-01-01</strong></h3></Col>
-                </Row>
+                <Information />
               </Card>
             </TabPane>
             <TabPane tab="合同正文" key="3">

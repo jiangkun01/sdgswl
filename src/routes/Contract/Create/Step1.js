@@ -223,10 +223,10 @@ class Step1 extends React.PureComponent {
             }}
             label=""
           >
-            <Button type="primary" onClick={onValidateForm}>
+            <Button onClick={onValidateForm}>
               下一步
             </Button>
-            <Button onClick={() => { message.success('暂存成功'); }}>
+            <Button type="primary" onClick={() => { message.success('暂存成功'); }}>
               暂存
             </Button>
           </FormItem>
