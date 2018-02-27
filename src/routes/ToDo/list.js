@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Tooltip, Card, Tabs, Table, Icon } from 'antd';
+import { Row, Col, Tooltip, Card, Tabs, Icon } from 'antd';
 import { ChartCard } from '../../components/Charts';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import styles from './list.less';
+import Task from './Task';
 
 export default class list extends Component {
   state = {
@@ -22,27 +24,6 @@ export default class list extends Component {
       xl: 6,
       style: { marginBottom: 24 },
     };
-    const columns = [
-      { title: '编号', dataIndex: 'id', key: 'id' },
-      {
-        title: this.state.tabsKey === '1' ? '任务名称' : this.state.tabsKey === '2' ? '履行计划名称' : this.state.tabsKey === '3' ? '合同名称' : '流程名称',
-        dataIndex: 'name',
-        key: 'name',
-      },
-      { title: '最晚处理时间', dataIndex: 'time', key: 'time' },
-      {
-        title: '',
-        key: 'message',
-        render: () => (
-          <span>
-            <a href="#">详情</a>
-          </span>
-        ),
-      },
-    ];
-    const data = [
-      { key: '1', id: '1', name: '名称1', time: '2018-02-28' },
-    ];
     return (
       <PageHeaderLayout title="待办事项">
         <Row gutter={16}>
@@ -57,7 +38,8 @@ export default class list extends Component {
               total="2（条）"
               footer=""
               contentHeight={46}
-              style={{ borderTop: '4px solid #1890FF' }}
+              className={styles.chartCardhover}
+              style={{ borderTop: '4px solid #E9686B' }}
               onClick={() => this.todoClick('1')}
             />
           </Col>
@@ -72,7 +54,8 @@ export default class list extends Component {
               total="2（条）"
               footer=""
               contentHeight={46}
-              style={{ borderTop: '4px solid #13C2C2' }}
+              className={styles.chartCardhover}
+              style={{ borderTop: '4px solid #1890FF' }}
               onClick={() => this.todoClick('2')}
             />
           </Col>
@@ -87,7 +70,8 @@ export default class list extends Component {
               total="2（条）"
               footer=""
               contentHeight={46}
-              style={{ borderTop: '4px solid #E9686B' }}
+              className={styles.chartCardhover}
+              style={{ borderTop: '4px solid #13C2C2' }}
               onClick={() => this.todoClick('3')}
             />
           </Col>
@@ -102,7 +86,8 @@ export default class list extends Component {
               total="2（条）"
               footer=""
               contentHeight={46}
-              style={{ borderTop: '4px solid #E9686B' }}
+              className={styles.chartCardhover}
+              style={{ borderTop: '4px solid #8B1A1A' }}
               onClick={() => this.todoClick('4')}
             />
           </Col>
@@ -112,16 +97,16 @@ export default class list extends Component {
             <Card>
               <Tabs activeKey={this.state.tabsKey} onChange={this.tabsChange}>
                 <Tabs.TabPane tab="待处理事项" key="1">
-                  <Table columns={columns} dataSource={data} rowKey={record => record.key} />
+                  <Task />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="待处理履行计划" key="2">
-                  <Table columns={columns} dataSource={data} />
+                  <Task />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="待处理合同" key="3">
-                  <Table columns={columns} dataSource={data} />
+                  <Task />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="待审批流程" key="4">
-                  <Table columns={columns} dataSource={data} />
+                  <Task />
                 </Tabs.TabPane>
               </Tabs>
             </Card>
