@@ -624,6 +624,18 @@ export default class Plan extends PureComponent {
                       </Select>
                     )}
                   </FormItem>
+                  <FormItem {...formItemLayout} label="审批人">
+                    {getFieldDecorator('flow1', {
+                      rules: [{ required: true, message: '请选择审批人' }],
+                    })(
+                      <Select placeholder="请选择审批人" style={{ width: '100%' }}>
+                        <Select.Option value="韩涛">韩涛</Select.Option>
+                        <Select.Option value="李俊">李俊</Select.Option>
+                        <Select.Option value="王帅">王帅</Select.Option>
+                        <Select.Option value="张淼">张淼</Select.Option>
+                      </Select>
+                    )}
+                  </FormItem>
                 </Row>
               )
             }

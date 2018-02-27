@@ -18,7 +18,7 @@ export default class Process extends Component {
   }
 
   modalShow = () => {
-    this.props.dispatch(routerRedux.push('/contract/create/info'));
+    this.props.dispatch(routerRedux.push('/contract/flow/index/detail/1234'));
     /* Modal.confirm({
       title: '确定吗？',
       content: '',

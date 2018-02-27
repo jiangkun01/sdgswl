@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Modal, Form, Input, Button } from 'antd';
+import { Row, Col, Card, Modal, Form, Input, Button, Icon } from 'antd';
 import styles from './list.less';
 
 const FormItem = Form.Item;
@@ -11,13 +11,16 @@ export default class Task extends Component {
     modalVisible: false,
   }
 
-  modalShow = () => {
+  deleteMessage = () => {
     Modal.confirm({
       title: '确定删除此通知吗？',
       content: '请确保下午三点准时到达领取地点！',
       okText: '确认',
       cancelText: '取消',
     });
+  }
+
+  modalShow = () => {
     /* this.setState({
       modalVisible: true,
     }); */
@@ -43,19 +46,24 @@ export default class Task extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Card
-          className={styles.chartCardhover}
-          onClick={this.modalShow}
-          style={{ marginBottom: 24, borderRadius: 10 }}
-        >
-          <Row>
-            <Col span={24}>
+        <Row type="flex" justify="space-around" align="middle">
+          <Col span={23}>
+            <Card
+              className={styles.chartCardhover}
+              onClick={this.modalShow}
+              style={{ borderRadius: 10 }}
+            >
               <a className={styles.messageA}><span>物品发放</span></a>：
               <span className={styles.messageA}>今天下午三点请领取个人所上报需要的办公用品</span>
               <span className={styles.messageA} style={{ float: 'right' }}>任务时间：<strong>2018-02-27 15：00</strong></span>
-            </Col>
-          </Row>
-        </Card>
+            </Card>
+          </Col>
+          <Col span={1} style={{ fontSize: 25, textAlign: 'center' }}>
+            <div>
+              <Icon className={styles.chartCardhover} type="close" onClick={this.deleteMessage} />
+            </div>
+          </Col>
+        </Row>
         <Form onSubmit={this.modalFormSubmit}>
           <Modal
             title="待处理事项"

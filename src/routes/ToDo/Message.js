@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Modal, Form, Input, Button } from 'antd';
+import { Row, Col, Card, Modal, Form, Input, Button, Icon } from 'antd';
 import styles from './list.less';
 
 const FormItem = Form.Item;
@@ -14,6 +14,15 @@ export default class Message extends Component {
   modalShow = () => {
     this.setState({
       modalVisible: true,
+    });
+  }
+
+  deleteMessage = () => {
+    Modal.confirm({
+      title: '确定删除此消息吗？',
+      content: '删除后将无法撤回！',
+      okText: '确认',
+      cancelText: '取消',
     });
   }
 
@@ -37,30 +46,41 @@ export default class Message extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Card
-          className={styles.chartCardhover}
-          onClick={this.modalShow}
-          style={{ marginBottom: 24, borderRadius: 10 }}
-        >
-          <Row>
-            <Col span={24}>
+        <Row type="flex" justify="space-around" align="middle">
+          <Col span={23}>
+            <Card
+              className={styles.chartCardhover}
+              onClick={this.modalShow}
+              style={{ borderRadius: 10 }}
+            >
               <a className={styles.messageA}><span>李雷</span></a>：
               <span className={styles.messageA}>今天下午几点开会</span>
-            </Col>
-          </Row>
-        </Card>
-        <Card
-          className={styles.chartCardhover}
-          onClick={this.modalShow}
-          style={{ marginBottom: 24, borderRadius: 10 }}
-        >
-          <Row>
-            <Col span={24}>
+            </Card>
+          </Col>
+          <Col span={1} style={{ fontSize: 25, textAlign: 'center' }}>
+            <div>
+              <Icon className={styles.chartCardhover} type="close" onClick={this.deleteMessage} />
+            </div>
+          </Col>
+        </Row>
+        <br />
+        <Row type="flex" justify="space-around" align="middle">
+          <Col span={23}>
+            <Card
+              className={styles.chartCardhover}
+              onClick={this.modalShow}
+              style={{ borderRadius: 10 }}
+            >
               <a className={styles.messageA}><span>韩梅梅</span></a>：
               <span className={styles.messageA}>开会有什么要准备的吗</span>
-            </Col>
-          </Row>
-        </Card>
+            </Card>
+          </Col>
+          <Col span={1} style={{ fontSize: 25, textAlign: 'center' }}>
+            <div>
+              <Icon className={styles.chartCardhover} type="close" onClick={this.deleteMessage} />
+            </div>
+          </Col>
+        </Row>
         <Form onSubmit={this.modalFormConfirm}>
           <Modal
             title="待回复消息"
