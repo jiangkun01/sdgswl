@@ -603,7 +603,8 @@ class setFlow extends React.Component {
         if (event === 'element.click' &&
           e.element.id !== 'StartEvent_1' &&
           e.element.id !== 'EndEvent_0zunkal' &&
-          e.element.id !== 'Task_0zfytgw'
+          e.element.id !== 'Task_0zfytgw' &&
+          e.element.id !== 'Process_1'
         ) {
           this.setState({
             modalVisible: true,

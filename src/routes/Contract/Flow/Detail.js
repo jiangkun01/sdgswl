@@ -634,7 +634,8 @@ export default class Detail extends PureComponent {
         // e.gfx = the graphical element
         if (event === 'element.click' &&
           e.element.id !== 'StartEvent_1' &&
-          e.element.id !== 'EndEvent_0zunkal'
+          e.element.id !== 'EndEvent_0zunkal' &&
+          e.element.id !== 'Process_1'
         ) {
           if (e.element.id === 'Task_0zfytgw') {
             message.info('此节点无任何意见');
@@ -809,6 +810,14 @@ export default class Detail extends PureComponent {
           <Tabs defaultActiveKey="1">
             <TabPane tab="流程图" key="1">
               <div id="uid" style={{ height: '1200px', width: '1366px' }}>节点查看</div>
+              <div style={{ marginTop: 10, textAlign: 'center' }}>
+                <Button onClick={() => { message.success('设置完成'); }} style={{ marginRight: 8 }}>
+                  完成设置
+                </Button>
+                <Button onClick={() => { message.success('已还原到默认设置'); }} style={{ marginRight: 8 }}>
+                  还原默认设置
+                </Button>
+              </div>
             </TabPane>
             <TabPane tab="合同信息" key="2">
               <Card bordered={false} style={{ marginBottom: '24px' }}>
