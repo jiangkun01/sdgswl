@@ -176,9 +176,9 @@ export default class List extends PureComponent {
     };
     // table
     const bType = ['采购', '质检合同', '物流', '仓储', '销售合同'];
-    const bStatus = ['新建', '完成', '履行中', '终止'];
+    const bStatus = ['新建', '完成', '履行中', '终止', '审批中', '审批通过'];
     const statusMap = ['default', 'processing', 'success', 'success', 'processing', 'error'];
-    const bStatusMap = ['default', 'success', 'processing', 'error'];
+    const bStatusMap = ['default', 'success', 'processing', 'error', 'processing', 'success'];
     const columns = [{
       title: '合同编号',
       dataIndex: 'agreementNo',
@@ -208,6 +208,14 @@ export default class List extends PureComponent {
         {
           text: bStatus[3],
           value: 3,
+        },
+        {
+          text: bStatus[4],
+          value: 4,
+        },
+        {
+          text: bStatus[5],
+          value: 5,
         },
       ],
       render(val) {
@@ -291,7 +299,7 @@ export default class List extends PureComponent {
           bPhone: '2133456',
           companyAddress: 'Lake Street 42',
           companyName: 'SoftLake Co',
-          status: (i + 3) % 4,
+          status: 0,
           money: 320.66,
           createDate: new Date(),
           gAmount: 222,
@@ -309,7 +317,7 @@ export default class List extends PureComponent {
           bPhone: '2133456',
           companyAddress: 'Lake Street 42',
           companyName: 'SoftLake Co',
-          status: (i + 3) % 4,
+          status: 1,
           money: 0.66,
           createDate: new Date(),
           gAmount: 0.01,
@@ -327,7 +335,7 @@ export default class List extends PureComponent {
           bPhone: '2133456',
           companyAddress: 'Lake Street 42',
           companyName: 'SoftLake Co',
-          status: (i + 3) % 4,
+          status: 2,
           money: 1.11,
           createDate: new Date(),
           gAmount: 222,
@@ -345,7 +353,7 @@ export default class List extends PureComponent {
           bPhone: '2133456',
           companyAddress: 'Lake Street 42',
           companyName: 'SoftLake Co',
-          status: (i + 3) % 4,
+          status: 3,
           money: 0.111,
           createDate: new Date(),
           gAmount: 222,
@@ -363,7 +371,7 @@ export default class List extends PureComponent {
           bPhone: '2133456',
           companyAddress: 'Lake Street 42',
           companyName: 'SoftLake Co',
-          status: (i + 3) % 4,
+          status: 4,
           money: 341.00,
           createDate: new Date(),
           gAmount: 222,

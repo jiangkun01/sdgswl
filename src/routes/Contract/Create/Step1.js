@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Select, InputNumber, DatePicker, Icon, Upload } from 'antd';
+import { Form, Input, message, Button, Select, InputNumber, DatePicker, Icon, Upload } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './style.less';
 
@@ -223,8 +223,11 @@ class Step1 extends React.PureComponent {
             }}
             label=""
           >
-            <Button type="primary" onClick={onValidateForm}>
+            <Button onClick={onValidateForm}>
               下一步
+            </Button>
+            <Button type="primary" onClick={() => { message.success('暂存成功'); }}>
+              暂存
             </Button>
           </FormItem>
         </Form>
