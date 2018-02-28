@@ -55,6 +55,10 @@ const menuData = [{
   name: '待办事项',
   icon: 'paper-clip',
   path: 'todo/list',
+}, {
+  name: '贸易台账',
+  icon: 'table',
+  path: 'account/list',
 }];
 /* , {
   name: '客户管理',

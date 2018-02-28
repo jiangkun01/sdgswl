@@ -81,7 +81,8 @@ export default class Modify extends PureComponent {
       width: 200,
       render: (text, render) => (
         <span>
-          <Icon type="file" /><a>{ render.filename }</a>
+          <Icon type="file" />
+          <a href="http://124.133.5.194:8000/铝锭销售合同相关文件.docx">{ render.filename }</a>
         </span>
       ),
     }];

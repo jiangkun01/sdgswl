@@ -196,6 +196,9 @@ export const getRouterData = (app) => {
     '/todo/list': {
       component: dynamicWrapper(app, [], () => import('../routes/ToDo/list')),
     },
+    '/account/list': {
+      component: dynamicWrapper(app, [], () => import('../routes/Account/list')),
+    },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },
