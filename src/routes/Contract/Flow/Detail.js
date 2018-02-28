@@ -2,7 +2,7 @@ import BpmnViewer from 'bpmn-js';
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Form,
-  Input, Button, Table, Tabs, Divider,
+  Button, Table, Tabs, Divider,
   Icon, message, Modal } from 'antd';
 import Information from '../Information';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
@@ -34,7 +34,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <bpmn:outgoing>SequenceFlow_1t6bca4</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_03t7qn7" sourceRef="Task_1epawsf" targetRef="Task_06ggor1" />
-    <bpmn:task id="Task_14petbl" name="操作不意见">
+    <bpmn:task id="Task_14petbl" name="操作部意见">
       <bpmn:incoming>SequenceFlow_1t6bca4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17l7oy1</bpmn:outgoing>
     </bpmn:task>
@@ -207,7 +207,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
           <dc:Bounds x="183" y="99.5" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1tx33zv_di" bpmnElement="Task_1tx33zv" fill="#009C52">
+      <bpmndi:BPMNShape id="Task_1tx33zv_di" bpmnElement="Task_1tx33zv" fill="#FDDC71">
         <dc:Bounds x="409" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1v00dav_di" bpmnElement="SequenceFlow_1v00dav">
@@ -593,9 +593,9 @@ export default class Detail extends PureComponent {
     Ia.push(
       <Row gutter={24} style={{ marginBottom: '24px' }}>
         <Col span={8} >
-          <h3>办理意见1：
+          <h3>审批意见1：
             <strong>
-              <Input style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
+              <textarea style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
             </strong>
           </h3>
         </Col>
@@ -640,7 +640,7 @@ export default class Detail extends PureComponent {
           if (e.element.id === 'Task_0zfytgw') {
             message.info('此节点无任何意见');
           } else if (e.element.id === 'Task_1epawsf') {
-            message.info('暂不支持修改自己节点');
+            message.info('暂部支持修改自己节点');
           } else if (e.element.id === 'Task_1tx33zv') {
             this.setState({
               tableModalVisible: true,
@@ -665,6 +665,29 @@ export default class Detail extends PureComponent {
   }
   render() {
     const { loading } = this.state;
+    const expandedRowRender = () => {
+      const columns = [
+        { title: '回复人', dataIndex: 'name', key: 'name' },
+        { title: '回复内容', dataIndex: 'upgradeNum', key: 'upgradeNum' },
+        { title: '回复时间', dataIndex: 'date', key: 'date' },
+      ];
+
+      const data = [];
+      data.push({
+        key: 1,
+        date: '2017-03-24',
+        name: '李雷',
+        upgradeNum: '已处理',
+      });
+      return (
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          style={{ color: 'blue' }}
+        />
+      );
+    };
     const hideModalCancel = () => {
       this.setState({
         modalVisible: false,
@@ -687,9 +710,9 @@ export default class Detail extends PureComponent {
         ItemArrayVo.push(
           <Row gutter={24} style={{ marginBottom: '24px' }}>
             <Col span={8} >
-              <h3>办理意见{i}：
+              <h3>审批意见{i}：
                 <strong>
-                  <Input style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
+                  <textarea style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
                 </strong>
               </h3>
             </Col>
@@ -730,35 +753,7 @@ export default class Detail extends PureComponent {
       {
         title: '意见内容',
         dataIndex: 'content',
-      },
-      {
-        title: '处理状态',
-        dataIndex: 'status',
       }];
-    const columns1 = [
-      {
-        title: '节点名称',
-        dataIndex: 'name',
-        key: 'name',
-      },
-      {
-        title: '办理人',
-        dataIndex: 'sp',
-      },
-      {
-        title: '办理时间',
-        dataIndex: 'addtime',
-        key: 'addtime',
-      },
-      {
-        title: '办理意见',
-        dataIndex: 'content',
-      },
-      {
-        title: '办理状态',
-        dataIndex: 'status',
-      }];
-    // 表格数据
     const data = [
       {
         id: 1,
@@ -783,24 +778,15 @@ export default class Detail extends PureComponent {
         status: '代办',
       },
     ];
-    const data1 = [
-      {
-        id: 1,
-        name: '风控部意见',
-        addtime: '2017-08-22',
-        sp: '李想',
-        content: '暂无',
-        status: '完成',
-      },
-    ];
     const columns2 = [
       { title: '提出意见人', dataIndex: 'name', key: 'name' },
       { title: '提出时间', dataIndex: 'date', key: 'date' },
       { title: '内容', dataIndex: 'address', key: 'address' },
+      { title: '操作', render: () => <div><a>修改</a><Divider type="vertical" /><a>回复</a></div> },
     ];
 
     const data2 = [
-      { key: 1, name: '李想', date: '2018-01-05', address: '第一条第三款表达不清楚', description: '已修改合同原文，请查看' },
+      { key: 1, name: '李想', date: '2018-01-05', address: '第一条第三款表达部清楚', description: '已修改合同原文，请查看' },
       { key: 2, name: '李想', date: '2018-01-03', address: '缺少流转单', description: '已上传流转单请查看' },
       { key: 3, name: '李想', date: '2018-01-01', address: '缺少合同相对方签字', description: '请带着意见往下执行' },
     ];
@@ -809,14 +795,16 @@ export default class Detail extends PureComponent {
         <Card bordered={false}>
           <Tabs defaultActiveKey="1">
             <TabPane tab="流程图" key="1">
-              <div id="uid" style={{ height: '1200px', width: '1366px' }}>节点查看</div>
-              <div style={{ marginTop: 10, textAlign: 'center' }}>
-                <Button onClick={() => { message.success('设置完成'); }} style={{ marginRight: 8 }}>
-                  完成设置
-                </Button>
-                <Button onClick={() => { message.success('已还原到默认设置'); }} style={{ marginRight: 8 }}>
-                  还原默认设置
-                </Button>
+              <div style={{ overflowX: 'auto', width: '100%' }}>
+                <div id="uid" style={{ height: '1200px', width: '1366px' }}>节点查看</div>
+                <div style={{ marginTop: 10, textAlign: 'center' }}>
+                  <Button onClick={() => { message.success('设置完成'); }} style={{ marginRight: 8 }}>
+                    完成设置
+                  </Button>
+                  <Button onClick={() => { message.success('已还原到默认设置'); }} style={{ marginRight: 8 }}>
+                    还原默认设置
+                  </Button>
+                </div>
               </div>
             </TabPane>
             <TabPane tab="合同信息" key="2">
@@ -848,8 +836,8 @@ export default class Detail extends PureComponent {
                 </Row>
               </Card>
             </TabPane>
-            <TabPane tab="意见反馈" key="6">
-              <Card title="意见反馈" bordered={false} style={{ marginBottom: '24px' }}>
+            <TabPane tab="审批意见" key="6">
+              <Card title="审批意见" bordered={false} style={{ marginBottom: '24px' }}>
                 <Row gutter={24} style={{ marginBottom: '24px' }}>
                   <Col span={24}>
                     <Table
@@ -857,40 +845,16 @@ export default class Detail extends PureComponent {
                       columns={columns}
                       loading={loading}
                       rowKey={record => record.id}
-                    />
-                  </Col>
-                </Row>
-              </Card>
-              <Card title="办理日志" bordered={false} style={{ marginBottom: '24px' }}>
-                <Row gutter={24} style={{ marginBottom: '24px' }}>
-                  <Col span={24}>
-                    <Table
-                      dataSource={data1}
-                      columns={columns1}
-                      loading={loading}
-                      rowKey={record => record.id}
+                      expandedRowRender={expandedRowRender}
                     />
                   </Col>
                 </Row>
               </Card>
             </TabPane>
             <TabPane tab="办理节点" key="7">
-              <Card title="办理意见" style={{ marginBottom: '24px' }}>
+              <Card title="审批意见" style={{ marginBottom: '24px' }}>
                 {this.state.ItemArray}
                 <Button onClick={() => addItemArray(1)}>增加意见条数</Button>
-              </Card>
-              <Card title="回复意见" style={{ marginBottom: '24px' }}>
-                <Row>
-                  <Col span={24} style={{ marginBottom: '24px' }}>
-                    <div>
-                      <strong>意见人：李想&nbsp;意见内容：合同条款第三项表达不清楚&nbsp;退回时间： 2018-01-02
-                      </strong>
-                    </div>
-                  </Col>
-                  <Col span={8}>
-                    <Input style={{ height: '100px', width: '100%', border: '1px solid #86C1F7', padding: '10px 10px' }} />
-                  </Col>
-                </Row>
               </Card>
               <Row gutter={24} style={{ marginBottom: '24px' }}>
                 <Col span={8} >
@@ -949,7 +913,7 @@ export default class Detail extends PureComponent {
           </div>
         </Modal>
         <Modal
-          title="查看办理意见"
+          title="查看审批意见"
           cancelText="取消"
           onOk={() => {
             this.setState({
@@ -958,13 +922,41 @@ export default class Detail extends PureComponent {
           }}
           onCancel={hideModalCancel}
           visible={this.state.tableModalVisible}
+          width="60%"
         >
           <Table
             columns={columns2}
             expandedRowRender={
-              record => <div><p style={{ margin: 0, color: '#0da51b' }}>{record.description}</p><div><strong>回复人：李雷&nbsp;时间：2017-01-04</strong></div></div>
+              (record) => {
+                return (
+                  <div>
+                    <div>
+                      <p style={{ margin: 0, color: '#0da51b' }}>
+                        {record.description}
+                      </p>
+                      <div>
+                        <strong style={{ float: 'right' }}>
+                          回复人：李雷&nbsp;时间：2017-01-04
+                        </strong>
+                      </div>
+                    </div>
+                    <Divider />
+                    <div>
+                      <p style={{ margin: 0, color: '#0da51b' }}>
+                        {record.description}
+                      </p>
+                      <div>
+                        <strong style={{ float: 'right' }}>
+                          回复人：李雷&nbsp;时间：2017-01-04
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
             }
             dataSource={data2}
+            scroll={{ x: 400 }}
           />
         </Modal>
       </PageHeaderLayout>

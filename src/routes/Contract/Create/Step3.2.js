@@ -30,7 +30,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <bpmn:outgoing>SequenceFlow_1t6bca4</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_03t7qn7" sourceRef="Task_1epawsf" targetRef="Task_06ggor1" />
-    <bpmn:task id="Task_14petbl" name="操作不意见">
+    <bpmn:task id="Task_14petbl" name="操作部意见">
       <bpmn:incoming>SequenceFlow_1t6bca4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17l7oy1</bpmn:outgoing>
     </bpmn:task>
