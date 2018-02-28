@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Form, Upload, Message, Button, Table, Modal, Select, Divider, Icon } from 'antd';
+import { Row, Col, Form, Upload, Message, Button, Table, Modal, Select, Icon } from 'antd';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -111,15 +111,23 @@ export default class Annex extends PureComponent {
       { title: '修改人', dataIndex: 'updateuser', key: 'updateuser' },
       { title: '修改时间', dataIndex: 'updatetime', key: 'updatetime' },
       {
+        title: '相关文件',
+        key: 'file',
+        render: (text, record) => (
+          <span>
+            <Icon type="file" />
+            <a href="http://124.133.5.194:8000/铝锭销售合同相关文件.docx">{record.name}</a>
+          </span>
+        ),
+      },
+      {
         title: '操作',
         key: 'operation',
         fixed: 'right',
-        width: 120,
+        width: 60,
         render: (text, record) => (
           <span>
             <a onClick={() => this.showModalUpdate(record)}>修改</a>
-            <Divider type="vertical" />
-            <a href="http://124.133.5.194:8000/铝锭销售合同相关文件.docx">下载</a>
           </span>
         ),
       }];

@@ -6,7 +6,7 @@ import { Row, Col, Button, Table, Form, Modal, Message, Input, Select, Checkbox,
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const { Option } = Select;
-const statusMap = ['default', 'processing', 'error', 'success'];
+const statusMap = ['default', 'warning', 'processing', 'error', 'success'];
 @Form.create()
 export default class Plan extends PureComponent {
   state = {
@@ -175,7 +175,7 @@ export default class Plan extends PureComponent {
     const { selectedRowKeys, dataSource } = this.state;
     for (let i = 0; i < dataSource.length; i += 1) {
       if (dataSource[i].id === selectedRowKeys[0]) {
-        dataSource[i].status = 2;
+        dataSource[i].status = 3;
         dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
       }
     }
@@ -186,7 +186,7 @@ export default class Plan extends PureComponent {
     const { selectedRowKeys, dataSource } = this.state;
     for (let i = 0; i < dataSource.length; i += 1) {
       if (dataSource[i].id === selectedRowKeys[0]) {
-        dataSource[i].status = 3;
+        dataSource[i].status = 4;
         dataSource[i].updatetime = `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`}-${new Date().getDate()}`;
       }
     }
@@ -221,7 +221,7 @@ export default class Plan extends PureComponent {
     const { selectedRowKeys, modalVisible, modalStatus, dataSource,
       isInput, isOutput, isQuality, isPay } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const status = ['未执行', '执行中', '已终止', '已完成'];
+    const status = ['未执行', '审批中', '执行中', '已终止', '已完成'];
     const columns = [
       { title: '编号', dataIndex: 'id', key: 'id' },
       {
@@ -261,16 +261,17 @@ export default class Plan extends PureComponent {
       },
     };
     const topColResponsiveProps = {
-      xs: 24,
-      sm: 12,
-      md: 12,
-      lg: 12,
-      xl: 6,
+      xs: 12,
+      sm: 8,
+      md: 4,
+      lg: 4,
+      xl: 3,
+      xxl: 2,
       style: { marginBottom: 24 },
     };
     return (
       <div>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+        <Row>
           <Col span={24}>
             <Table
               rowSelection={rowSelection}
@@ -287,22 +288,19 @@ export default class Plan extends PureComponent {
           </Col>
         </Row>
         <Row>
-          <Col {...topColResponsiveProps} xl={{ span: 14 }}>
-            <div style={{ display: 'none' }}>123</div>
-          </Col>
-          <Col {...topColResponsiveProps} xl={{ span: 2 }}>
+          <Col {...topColResponsiveProps}>
             <Button type="primary" onClick={this.handleModalVisible}>新建计划</Button>
           </Col>
-          <Col {...topColResponsiveProps} xl={{ span: 2 }}>
+          <Col {...topColResponsiveProps}>
             <Button type="primary" onClick={this.carryPlan}>执行计划</Button>
           </Col>
-          <Col {...topColResponsiveProps} xl={{ span: 2 }}>
+          <Col {...topColResponsiveProps}>
             <Button type="primary" onClick={this.showModalUpdate}>变更计划</Button>
           </Col>
-          <Col {...topColResponsiveProps} xl={{ span: 2 }}>
+          <Col {...topColResponsiveProps}>
             <Button type="primary" onClick={this.showModalTerminate}>终止计划</Button>
           </Col>
-          <Col {...topColResponsiveProps} xl={{ span: 2 }}>
+          <Col {...topColResponsiveProps}>
             <Button type="primary" onClick={this.finishPlan}> 完成计划</Button>
           </Col>
         </Row>
@@ -623,6 +621,18 @@ export default class Plan extends PureComponent {
                       <Select placeholder="请选择对应的仓库" style={{ width: '100%' }}>
                         <Select.Option value="散货仓库">散货仓库</Select.Option>
                         <Select.Option value="集装箱仓库">集装箱仓库</Select.Option>
+                      </Select>
+                    )}
+                  </FormItem>
+                  <FormItem {...formItemLayout} label="审批人">
+                    {getFieldDecorator('flow1', {
+                      rules: [{ required: true, message: '请选择审批人' }],
+                    })(
+                      <Select placeholder="请选择审批人" style={{ width: '100%' }}>
+                        <Select.Option value="韩涛">韩涛</Select.Option>
+                        <Select.Option value="李俊">李俊</Select.Option>
+                        <Select.Option value="王帅">王帅</Select.Option>
+                        <Select.Option value="张淼">张淼</Select.Option>
                       </Select>
                     )}
                   </FormItem>

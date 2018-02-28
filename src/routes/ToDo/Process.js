@@ -1,30 +1,39 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Modal, Form, Input, Button, Icon } from 'antd';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+import { Row, Col, Card, Modal, Form, Input, Button } from 'antd';
 import styles from './list.less';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
+@connect(({ rule, loading }) => ({
+  rule,
+  loading: loading.models.rule,
+}))
 @Form.create()
-export default class Task extends Component {
+export default class Process extends Component {
   state = {
     modalVisible: false,
   }
 
-  deleteMessage = () => {
-    Modal.confirm({
-      title: '确定删除此通知吗？',
-      content: '请确保下午三点准时到达领取地点！',
+  modalShow = () => {
+    this.props.dispatch(routerRedux.push('/contract/flow/index/detail/1234'));
+    /* Modal.confirm({
+      title: '确定吗？',
+      content: '',
       okText: '确认',
       cancelText: '取消',
-    });
-  }
-
-  modalShow = () => {
+      onOk: this.toCreateContract,
+    }); */
     /* this.setState({
       modalVisible: true,
     }); */
   }
+
+  /* toCreateContract = () => {
+    this.props.dispatch(routerRedux.push('/contract/create/info'));
+  } */
 
   modalHandleCancel = () => {
     this.setState({
@@ -46,24 +55,19 @@ export default class Task extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <Row type="flex" justify="space-around" align="middle">
-          <Col span={23}>
-            <Card
-              className={styles.chartCardhover}
-              onClick={this.modalShow}
-              style={{ borderRadius: 10 }}
-            >
+        <Card
+          className={styles.chartCardhover}
+          onClick={this.modalShow}
+          style={{ marginBottom: 24, borderRadius: 10 }}
+        >
+          <Row>
+            <Col span={24}>
               <a className={styles.messageA}><span>物品发放</span></a>：
               <span className={styles.messageA}>今天下午三点请领取个人所上报需要的办公用品</span>
               <span className={styles.messageA} style={{ float: 'right' }}>任务时间：<strong>2018-02-27 15：00</strong></span>
-            </Card>
-          </Col>
-          <Col span={1} style={{ fontSize: 25, textAlign: 'center' }}>
-            <div>
-              <Icon className={styles.chartCardhover} type="close" onClick={this.deleteMessage} />
-            </div>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </Card>
         <Form onSubmit={this.modalFormSubmit}>
           <Modal
             title="待处理事项"

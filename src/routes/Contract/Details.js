@@ -23,11 +23,11 @@ export default class Details extends PureComponent {
     const { tabsKey } = this.state;
     const topColResponsiveProps = {
       xs: 24,
-      sm: 12,
-      md: 12,
-      lg: 12,
+      sm: 24,
+      md: 24,
+      lg: 24,
       xl: 6,
-      style: { marginBottom: 24 },
+      style: { marginBottom: 24, marginTop: 24 },
     };
     return (
       <PageHeaderLayout title="详情页">
@@ -89,18 +89,15 @@ export default class Details extends PureComponent {
             />
           </Col>
         </Row>
-        <Card border="false">
-          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col {...topColResponsiveProps} xl={{ span: 1 }}>
-              <div style={{ display: 'none' }}>123</div>
-            </Col>
+        <Card border="false" style={{ marginBottom: 24 }}>
+          <Row type="flex" justify="space-around" align="middle">
             <Col {...topColResponsiveProps} xl={{ span: 4 }}>
               <h3>发起人：<strong>李雷</strong></h3>
             </Col>
-            <Col {...topColResponsiveProps} xl={{ span: 5 }}>
+            <Col {...topColResponsiveProps} xl={{ span: 6 }}>
               <h3>发起日期：<strong>2017-08-21</strong></h3>
             </Col>
-            <Col {...topColResponsiveProps} xl={{ span: 8 }}>
+            <Col {...topColResponsiveProps} xl={{ span: 9 }}>
               <h3>合同发起部门：<strong>山东高速物流公司管控部</strong></h3>
             </Col>
             <Col {...topColResponsiveProps} xl={{ span: 5 }}>
@@ -108,11 +105,10 @@ export default class Details extends PureComponent {
             </Col>
           </Row>
         </Card>
-        <br />
         <Card border="false">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
             <Col span={22} offset={1}>
-              <Tabs defaultActiveKey={tabsKey} type="card" onChange={this.tabsCallback}>
+              <Tabs defaultActiveKey={tabsKey} onChange={this.tabsCallback}>
                 <Tabs.TabPane tab="合同基本信息" key="1">
                   <Information />
                 </Tabs.TabPane>
