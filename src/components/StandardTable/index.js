@@ -256,11 +256,13 @@ class StandardTable extends PureComponent {
       },
       {
         title: '操作',
-        width: 200,
+        width: 260,
         fixed: 'right',
         render: () => (
           <span>
             <a onClick={() => { message.success('已关注'); }} >关注</a>
+            <Divider type="vertical" />
+            <a onClick={() => { message.success('已取消关注'); }} >取消关注</a>
             <Divider type="vertical" />
             <a onClick={this.updateOne}>修改</a>
             <Divider type="vertical" />
